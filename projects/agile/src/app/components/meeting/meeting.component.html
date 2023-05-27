@@ -1,0 +1,78 @@
+<div *ngIf="usUpdateLoading" class="justify-content-center align-items-center d-flex"
+  style="z-index: 10;position: absolute; width: 100%;height: 100%; background: #0000005c;">
+  <img src="assets/img/loading.gif" style="width: 200px;">
+</div>
+
+<div class="ds-steps-container" *ngIf="dsDashboardColumns">
+  <div class="main-working">
+    <div class="steps-block fixed-width">
+      <h1>{{dsDashboardColumns[0].column_name}}</h1>
+      <div class="parent-us">
+        <perfect-scrollbar class="container" [config]="config">
+          <div class="height-100" [dragula]='"nested-bag"' [attr.data-name]="dsDashboardColumns[0].column_name"
+            [attr.data-id]="dsDashboardColumns[0].main_state" [attr.data-index]="0">
+            <ng-container *ngFor="let userStory of userStories let i = index;">
+              <ng-container *ngIf="stateInStatusList(userStory.stateId , dsDashboardColumns[0].status_ist) === true">
+                <app-user-story [userStory]="userStory" [attr.data-id]="userStory.id" [attr.data-index]="i"
+                  [speaker]="speaker" [currentUser]="currentUser"
+                  (onShowDetail)="ShowDetail($event)"></app-user-story>
+              </ng-container>
+            </ng-container>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+    <app-us-detail (onHideDetail)="hideDetail($event)"
+      *ngIf="selectedUs !== undefined && stateInStatusList(selectedUs.stateId , dsDashboardColumns[0].status_ist) === true"
+      [isDailyScrum]="true" [usId]="selectedUs.id" class="us-detail-collapsed"></app-us-detail>
+
+    <ng-container *ngFor="let column of dsDashboardColumns let i = index;">
+
+      <div *ngIf="(i !== 0) && (i !== (dsDashboardColumns.length - 1) )" class="steps-block">
+        <h1>{{column.column_name}}</h1>
+        <div class="parent-us">
+          <perfect-scrollbar class="container" [config]="config">
+            <div class="height-100" [dragula]='"nested-bag"' [ngClass]='column.column_name'
+              [attr.data-name]="column.column_name" [attr.data-id]="column.main_state" [attr.data-index]="i">
+              <ng-container *ngFor="let userStory of userStories let j = index;">
+                <ng-container *ngIf="stateInStatusList(userStory.stateId , column.status_ist) === true">
+                  <app-user-story [userStory]="userStory" [attr.data-id]="userStory.id" [attr.data-index]="i"
+                    [speaker]="speaker" [currentUser]="currentUser"
+                    (onShowDetail)="ShowDetail($event)"></app-user-story>
+                </ng-container>
+              </ng-container>
+            </div>
+          </perfect-scrollbar>
+        </div>
+      </div>
+      <app-us-detail (onHideDetail)="hideDetail($event)"
+        *ngIf="selectedUs !== undefined && stateInStatusList(selectedUs.stateId , column.status_ist) === true && (i !== 0) && (i !== (dsDashboardColumns.length - 1) )"
+        [isDailyScrum]="true" [usId]="selectedUs.id" class="us-detail-collapsed"></app-us-detail>
+    </ng-container>
+    <app-us-detail (onHideDetail)="hideDetail($event)"
+      *ngIf="selectedUs !== undefined && stateInStatusList(selectedUs.stateId , dsDashboardColumns[dsDashboardColumns.length - 1].status_ist) === true"
+      [isDailyScrum]="true" [usId]="selectedUs.id" class="us-detail-collapsed"></app-us-detail>
+    <div class="steps-block fixed-width">
+      <h1>{{dsDashboardColumns[dsDashboardColumns.length - 1].column_name}}</h1>
+      <div class="parent-us">
+        <perfect-scrollbar class="container" [config]="config">
+          <div class="height-100" [dragula]='"nested-bag"'
+            [attr.data-name]="dsDashboardColumns[dsDashboardColumns.length - 1].column_name"
+            [attr.data-id]="dsDashboardColumns[dsDashboardColumns.length - 1].main_state"
+            [attr.data-index]="dsDashboardColumns.length - 1">
+            <ng-container *ngFor="let userStory of userStories let j = index;">
+              <ng-container
+                *ngIf="stateInStatusList(userStory.stateId , dsDashboardColumns[dsDashboardColumns.length - 1].status_ist) === true">
+                <app-user-story [userStory]="userStory" [attr.data-id]="userStory.id" [attr.data-index]="j"
+                  [speaker]="speaker" [currentUser]="currentUser"
+                  (onShowDetail)="ShowDetail($event)"></app-user-story>
+              </ng-container>
+            </ng-container>
+          </div>
+        </perfect-scrollbar>
+      </div>
+    </div>
+
+  </div>
+
+</div>

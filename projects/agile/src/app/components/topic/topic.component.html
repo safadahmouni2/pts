@@ -1,0 +1,40 @@
+<div  [ngClass]="{'user-storie-global-topic': true, 'expanded': expanded}">
+    <div class="user-storie-topic" >
+        <div class="part-top">
+            <div class="ust-number"(click)="onClick()">TS: {{this.topic.id}}</div>
+            <div class="ust-icons">
+                <div class="postit-close-circle"><i [ngClass]="{'fa': true, 'fa-angle-down': !expanded,'fa-angle-up':expanded}" (click)="toggleExpand()"></i></div>
+            </div>
+        </div>
+        <div class="part-middle">
+            <div class="storie-text" *ngIf="topic.editMode">
+              <textarea [(ngModel)]="topic._text"></textarea>
+                 <div class="action-container">
+                    <div class="aply-chnages"><i class="fa fa-check" (click)="saveTopic(topic)" aria-hidden="true"></i></div>
+                    <div class="deny-chnages"> <i class="fa fa-times" aria-hidden="true" (click)="topic.toggleEditMode()" ></i></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="storie-text" *ngIf="!topic.editMode">
+               <div  class="storie-text" (click)="topic.toggleEditMode()">{{topic.text}}</div>
+            </div>
+            <app-comment-list *ngIf="topic?.ticketId" [objectId]="topic?.ticketId" [(addCommentMode)]="addCommentMode" [(expanded)]="commentsExpanded"></app-comment-list>
+            <div class="postit-progress">
+                <div class="percent-value" [ngStyle]="{ 'width': topic.progress()+'%' }"></div>
+            </div>
+        </div>
+    </div>
+    <div class="postit-toolbar">
+        <div class="user-resp-icon"></div>
+        <div class="user-resp-name"></div>
+        
+        <div class="user-resp-values-task">{{topic.getSumStoryPoints()}}</div>
+        <div class="user-resp-values-task add-user-story" *ngIf="topic.id"><i class="fa fa-plus" (click)="addUserStoryInTopic(topic)" aria-hidden="true"></i></div>
+        <div class="add-comment" (click)="addComment()" *ngIf="topic.id "><img src="https://pts.thinktank.de/images/comments_icn.gif" title="Add comments ..."></div>
+        <div class="add-chat" *ngIf="topic.id" [ngClass]="topic.ticketId?null:'cursor-not-allowed'">
+            <a href="{{appChatUrl}}" target="_blank" [ngClass]="topic.ticketId?null:'disabled-link'">
+                <img src="assets/img/pts_chat_empty.png" title="PTS-Chat ::  start now! ...">
+            </a>
+        </div>
+    </div>
+</div>

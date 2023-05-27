@@ -1,0 +1,151 @@
+<header class="ds-header" [ngClass]="{'managment-header': true, 'expanded-search': displayInput,'colapsed-search':!displayInput}"
+    aria-hidden="true">
+    <div class="push-menu">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <a routerLink="/dashbord">
+                        <img src="assets/img/tt-slogan.png">
+                    </a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <!-- Push Menu Left -->
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+    </div>
+    <div class="project-name">
+        <div class="middle-title">
+            <div class="middle-title-content" *ngFor="let p of products">
+
+                {{p.productName}}
+
+            </div>
+            <div class="middle-title-container">
+                <span class="middle-title-value">User Stories management</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="bch-search">
+        <input type="text" class="form-control" placeholder="Find user story" [(ngModel)]="userStoryStrSearch" (change)="onSearchUserStory()"
+            [ngClass]="{'input-expanded': displayInput,'input-collapsed':!displayInput}">
+        <div class="for-search" (click)="toogleDisplayInput()">
+            <i [ngClass]="{'fa': true, 'fa-search': !displayInput,'fa-times':displayInput}" aria-hidden="true"></i>
+        </div>
+    </div>
+    <app-header></app-header>
+
+    <div class="bch-topics bch-features">
+        <div class="styled-">
+            <angular2-multiselect 
+                [data]="featureFilterOptions" 
+                [(ngModel)]="featureFilterSelected"
+                [settings]="featureFilterDropdownSettings">
+            </angular2-multiselect>
+        </div>
+    </div>
+    <div class="sch-sprints">
+        <div class="styled-select">
+            <select class="form-control" [(ngModel)]="sprintFilterSelected">
+                <option [ngValue]="null" class="disabled text-muted">All sprints</option>
+                <option *ngFor="let sprintOption of sprintOptions" [ngValue]="sprintOption">{{sprintOption.name || sprintOption.id}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="sch-sprints">
+        <div class="styled-select">
+            <select class="form-control" #project (change)="getProjectName(project.value)">
+                <option value='0' class="disabled text-muted">All projects</option>
+                <option *ngFor="let projectItem of dropdownListProject" [value]="projectItem.productName">{{projectItem.productName}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="bch-topics bch-status">
+        <div *ngIf="usStateFilterOptions?.length > 0" class="styled-">
+            <angular2-multiselect 
+                [data]="usStateFilterOptions"
+                [(ngModel)]="usStateFilterSeletcted"
+                [settings]="usStateFilterDropdownSettings">
+            </angular2-multiselect>
+        </div>
+    </div>
+    <button class="export" (click)="exportToCsvFile()">
+        <i class="icon-excel"></i>
+    </button>
+
+    <div class="add-us-feature" title="Add new feature">
+        <i class="icon-add-feature" (click)="addFeature()"></i>
+    </div>
+
+    <div class="sprint-planning-btn-container" (click)="$event.stopPropagation()">
+        <a routerLink="/assign-us-to-sprint/{{myProduct?.productId}}" [state]="{ title: 'SP-'+ myProduct?.productName}">
+            <span alt="" class="sprint-planning-navbar sprint-planning-navbar-sp-view">SP</span>
+        </a>
+    </div>
+    
+    <div class="backlog-btn-container">
+		<a routerLink="/managment-us/{{myProduct?.productId}}" [state]="{ title:'BL-'+myProduct?.productName}">
+			<span alt=""  class="backlog-navbar backlog-navbar-sp-view">BL</span>
+		</a>
+	</div>  
+</header>
+
+<div *ngIf="loading" class="justify-content-center align-items-center d-flex" style="z-index: 10;position: absolute; width: 100%;height: 100%; background: #0000005c;">
+    <img src="assets/img/loading.gif" style="width: 170px;">
+</div>
+
+<div class="container">
+    <vertical-split-pane primary-component-initialratio="0.273">
+        <div class="split-pane-content-primary">
+            <div class="backlog-container-header">
+                <div class="bch-title tooltip-css">
+                    <i class="icon-paper"></i>Backlog
+                </div>
+            </div>
+
+            <div class="backlog-containrer-user-stories">
+                <perfect-scrollbar class="container">
+                    <div class="height-100" [dragula]='"DRAGULA_USS"' [dragulaModel]='nonAssignedUserStories'>
+                        <app-user-story *ngFor="let nonAssignedUserStory of nonAssignedUserStories; let j = index;" [userStory]="nonAssignedUserStory"
+                            (onShowDetail)="ShowDetail($event)" [attr.data-userstoryid]="nonAssignedUserStory.id" [attr.data-index]="j"
+                            [currentUser]="currentUser"></app-user-story>
+                    </div>
+                </perfect-scrollbar>
+            </div>
+        </div>
+        <div class="sep-assign"></div>
+        <div class="split-pane-content-secondary">
+            <div class="sprints-container-header">
+                <div class="sch-title">
+                    <i class="icon-calendar"></i>Features
+                </div>
+            </div>
+            <div class="sprints-container-devided">
+                <div [dragula]='"DRAGULA_FEATURES"' class="container user-stories" [dragulaModel]="features">
+                    <app-us-detail (onHideDetail)="hideDetail($event)" *ngIf="usId" [usId]="usId" class="us-detail-collapsed"></app-us-detail>
+                    <ng-container *ngFor="let feature of features | managementUSFeatureFilter: [featureFilterSelected, strSearchinput , 'features',sprintFilterSelected?.ticketId, projectNameSelected] ;">
+                        <div resizable class="user-storie-container" [attr.data-featureid]=[feature.id] [attr.data-featuretext]=[feature.text]
+                            [attr.data-featureorder]=[feature.order]>
+                            <app-feature [feature]="feature" (onShowFeatureDetail)="showFeatureDetail($event)"></app-feature>
+                            <div [dragula]='"DRAGULA_USS"' 
+                                [dragulaModel]="feature.userStories" 
+                                class="user-storie-list" 
+                                [attr.data-featureid]="feature.id"
+                                 *ngIf="feature.id">
+                                <app-user-story *ngFor="let userStr of feature.userStories | managementUSFeatureFilter: [featureFilterSelected, strSearchinput , 'userStories',sprintFilterSelected?.ticketId, projectNameSelected ,usStateFilterSeletcted]; let i = index;"
+                                    (onShowDetail)="ShowDetail($event)" [userStory]="userStr" [attr.data-userstoryid]=[userStr.id]
+                                    [attr.data-userstoryorder]=[userStr.orderByTopic] >
+                                </app-user-story>
+                            </div>
+                        </div>
+                        <app-feature-detail (onHideFeatureDetail)="hideFeatureDetail($event)" *ngIf="editFeatureMode && feature.id === featureSubject" [myProduct]="myProduct" [feature]="feature"  class="us-detail-collapsed"></app-feature-detail>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </vertical-split-pane>
+</div>
+                

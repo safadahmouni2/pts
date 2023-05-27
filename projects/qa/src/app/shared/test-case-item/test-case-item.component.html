@@ -1,0 +1,43 @@
+<div class="test-case-section">
+    <div class="test-case-item">
+        <div class="d-flex test-case-result-container">
+            <h3 class="flex-grow-1" >TC{{testCase.usTestCaseId}}-L{{testCase.testCaseLibraryId|| "?"}}-V{{testCase.testCaseVersion}}</h3>
+
+            <span *ngIf="isTestCaseView" class="badge badge-US">U: {{testCase.userStoryId}}</span>
+        </div>
+      <p>{{testCase.shortDescription}}</p>
+
+        <div class="d-flex">
+            <div class="status-container">
+                <span class="test-case-statistics statistics-tc-green">
+                </span>
+            </div>
+            <div class="right-action-buttons d-flex justify-content-end align-items-center flex-grow-1">
+                <button class="btn btn-primary" (click)="collapse()" *ngIf="withTestResult && testCase.totalTestResult">
+                    <!-- Display the arrows only if testRun?.tests?.length > 0 -->
+                    <ng-container>
+                        <i class="icon-arrow-up mr-1" *ngIf="collapsed"></i>
+                        <i class="icon-arrow-right mr-1" *ngIf="!collapsed"></i>
+                    </ng-container>
+                  {{testCase.totalTestResult}} Test Results
+
+                </button>
+                <app-show-actor-info
+                    [actorInfo]=testCase
+                    [right_aligned]="true"
+                    [append_to]="containerSelector">
+                </app-show-actor-info>
+                <button (click)="deleteTestCase(testCase.usTestCaseId)" class="btn btn-light" title="Unassign Test Case">
+                    <i class="icon-unlink"></i>
+                </button>
+                <a  class="btn btn-light"
+                    title="Chat"
+                    href="{{chatUrl}}"
+                    target="_blank"
+                    [ngClass]="{'disabled': !isProd}" >
+                    <i class="icon-person-chat"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

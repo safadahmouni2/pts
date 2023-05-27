@@ -1,0 +1,218 @@
+<div class="container-fluid">
+  <div class="row">
+    <app-menu   *ngIf='stockedInSession'
+      class="col-xl-2 col-lg-2 col-md-2 col-sm-3 p-0 expanded-menu menu-mobile-on"
+      [ngClass]="{ 'collapsed-menu': this.collapsed }"
+    ></app-menu>
+    <app-menu *ngIf='stockedInSession'
+      class="col-xl-2 col-lg-2 col-md-2 col-sm-3 p-0  d-lg-none d-md-none menu-mobile-on"
+      [ngClass]="{ 'menu-mobile-off': this.collapsed }"
+    ></app-menu>
+
+    <div class="col w-resp-content p-0">
+      <app-search-bar *ngIf='stockedInSession' (freeSearch)='onSearch($event)' ></app-search-bar>
+
+      <div class="container-fluid scroll-bar-content">
+        <accordion>
+          <div class="row main-content mr-0">
+            <div class="col-lg-9">
+              <div class="main-block">
+                <accordion-group
+                  [isOpen]="this.isOpen1"
+                  [isDisabled]="this.isDisabled1"
+                >
+                  <div
+                    class="header d-flex justify-content-between"
+                    accordion-heading
+                  >
+                    <h1>Smart objective</h1>
+                    <div class="icons-container">
+                      <span
+                        class="icon-full-screen mr-2 cursor-pointer"
+                        (click)="openRating()"
+                      ></span>
+                      <span
+                        class="icon-upload cursor-pointer"
+                        (click)="open1()"
+                      ></span>
+                    </div>
+                  </div>
+                  <div class="content container-fluid">
+                    <app-rating *ngIf='stockedInSession'></app-rating>
+                  </div>
+                </accordion-group>
+              </div>
+              <div class="main-block">
+                <accordion-group
+                  [isOpen]="this.isOpen2"
+                  [isDisabled]="this.isDisabled2"
+                >
+                  <div
+                    class="header d-flex justify-content-between"
+                    accordion-heading
+                  >
+                    <h1>My points obtained Vs Points to reach</h1>
+                    <div class="icons-container">
+                      <span
+                        class="icon-full-screen mr-2 cursor-pointer"
+                        (click)="openBars()"
+                      ></span>
+                      <span
+                        class="icon-upload cursor-pointer"
+                        (click)="open2()"
+                      ></span>
+                    </div>
+                  </div>
+                  <div class="content container-fluid">
+                    <app-bars></app-bars>
+                  </div>
+                </accordion-group>
+              </div>
+              <div class="main-block">
+                <accordion-group
+                  [isOpen]="this.isOpen3"
+                  [isDisabled]="this.isDisabled3"
+                >
+                  <div
+                    class="header d-flex justify-content-between"
+                    accordion-heading
+                  >
+                    <h1>My skills to work on</h1>
+                    <div class="icons-container">
+                      <span
+                        class="icon-full-screen mr-2 cursor-pointer"
+                        (click)="openHorizentalBars()"
+                      ></span>
+                      <span
+                        class="icon-upload cursor-pointer"
+                        (click)="open3()"
+                      ></span>
+                    </div>
+                  </div>
+                  <div class="content container-fluid">
+                    <app-horizental-bars></app-horizental-bars>
+                  </div>
+                </accordion-group>
+              </div>
+            </div>
+            <div class="col-lg-3 pl-0 pr-0">
+              <div class="main-block">
+                <accordion-group
+                  [isOpen]="this.isOpen4"
+                  [isDisabled]="this.isDisabled4"
+                >
+                  <div
+                    class="header d-flex justify-content-between"
+                    accordion-heading
+                  >
+                    <h1>Create smart objective</h1>
+                    <div class="icons-container">
+                      <span
+                        class="icon-upload cursor-pointer"
+                        (click)="open4()"
+                      ></span>
+                    </div>
+                  </div>
+
+                  <div class="content container-fluid">
+                    <app-create-so></app-create-so>
+                  </div>
+                </accordion-group>
+              </div>
+              <div class="main-block">
+                <accordion-group
+                  [isOpen]="this.isOpen6"
+                  [isDisabled]="this.isDisabled6"
+                >
+                  <div
+                    class="header d-flex justify-content-between"
+                    accordion-heading
+                  >
+                    <h1>My Performances</h1>
+                    <div class="icons-container">
+                      <span
+                        class="icon-full-screen mr-2 cursor-pointer"
+                        (click)="openPie()"
+                      ></span>
+                      <span
+                        class="icon-upload cursor-pointer"
+                        (click)="open6()"
+                      ></span>
+                    </div>
+                  </div>
+                  <div class="content container-fluid">
+                    <div class="row">
+                      <div class="col-12 text-center ">
+                        <app-performance-pie></app-performance-pie>
+                      </div>
+                    </div>
+                  </div>
+                </accordion-group>
+              </div>
+              <div class="main-block">
+                <accordion-group
+                  [isOpen]="this.isOpen7"
+                  [isDisabled]="this.isDisabled7"
+                >
+                  <div
+                    class="header d-flex justify-content-between"
+                    accordion-heading
+                  >
+                    <h1>My Attitudes and behavior at work</h1>
+                    <div class="icons-container">
+                      <span
+                        class="icon-full-screen mr-2 cursor-pointer"
+                        (click)="openPie2()"
+                      ></span>
+                      <span
+                        class="icon-upload cursor-pointer"
+                        (click)="open7()"
+                      ></span>
+                    </div>
+                  </div>
+                  <div class="content container-fluid">
+                    <div class="row">
+                      <div class="col-12 text-center">
+                        <app-behavior-pie class="mw-100p"></app-behavior-pie>
+                      </div>
+                    </div>
+                  </div>
+                </accordion-group>
+              </div>
+              <div class="main-block">
+                <accordion-group
+                  [isOpen]="this.isOpen8"
+                  [isDisabled]="this.isDisabled8"
+                >
+                  <div
+                    class="header d-flex justify-content-between"
+                    accordion-heading
+                  >
+                    <h1>Technology</h1>
+                    <div class="icons-container">
+                      <span
+                        class="icon-full-screen mr-2 cursor-pointer"
+                        (click)="openRadar()"
+                      ></span>
+                      <span
+                        class="icon-upload cursor-pointer"
+                        (click)="open8()"
+                      ></span>
+                    </div>
+                  </div>
+                  <div class="content container-fluid">
+                    <div class="row">
+                      <div class="col-12 text-center ">
+                        <app-radar></app-radar>
+                      </div>
+                    </div>
+                  </div>
+                </accordion-group>
+              </div>
+            </div>
+          </div>
+        </accordion>
+      </div>
+    </div>
+  </div>
+</div>

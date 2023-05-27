@@ -1,0 +1,154 @@
+<div class="container-fluid">
+  <div class="row">
+    <app-menu
+      class="col-xl-2 col-lg-2 col-md-2 col-sm-3 p-0 expanded-menu menu-mobile-on"
+      [ngClass]="{ 'collapsed-menu': this.collapsed }"
+    >
+    </app-menu>
+
+    <div class="col w-resp-content p-0">
+      <app-search-bar (freeSearch)='onSearch($event)'></app-search-bar>
+
+      <div class="container-fluid scroll-bar-content">
+        <div class="main-content">
+          <div class="main-block col-12 pr-0 pl-0">
+            <div class="header">
+              <h1 class="f-s-18">My propositions</h1>
+            </div>
+            <div class="col-12 d-flex justify-content-between filter-container">
+              <input
+                type="text"
+                placeholder="Type"
+                tooltip="Filter by smart objective types"
+                [(ngModel)]="searchtype"
+                list="propositions"
+              />
+              <datalist id="propositions">
+                <select>
+                  <option *ngFor="let proposition of filterName">{{
+                    proposition.name
+                  }}</option>
+                </select>
+              </datalist>
+              <input
+                type="text"
+                placeholder="Urgency"
+                tooltip="Filter by urgency"
+                [(ngModel)]="searchurgency"
+                list="propositions3"
+              />
+              <datalist id="propositions3">
+                <select>
+                  <option *ngFor="let proposition of filterUrgency">{{
+                    proposition.urgency
+                  }}</option>
+                </select>
+              </datalist>
+              <input
+                type="text"
+                placeholder="Decision"
+                tooltip="Filter by decision"
+                [(ngModel)]="searchdecision"
+                list="propositions4"
+              />
+              <datalist id="propositions4">
+                <select>
+                  <option *ngFor="let proposition of filterDecision">{{
+                    proposition.status
+                  }}</option>
+                </select>
+              </datalist>
+            </div>
+            <table class="table table-hover proposition-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th width="20%">Type</th>
+                  <th width="20%">Subject</th>
+                  <th width="20%" class="text-center">Date</th>
+                  <th class="text-center">Urgency</th>
+                  <th class="text-center">Status</th>
+                  <th width="40%">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="cursor-pointer"
+                  *ngFor="
+                    let proposition of smartobject
+                    | myfilter: [searchtype , 'type']
+                    | myfilter: [searchurgency , 'urgency']
+                    | myfilter: [searchdecision , 'decision']
+                    | freeSearch: freeSearch;
+                    let i = index
+                  "
+                >
+                <ng-container *ngIf="proposition.type != 'pt' ">
+
+                  <th>{{ i + 1 }}</th>
+                  <td>{{ proposition.name}}</td>
+                  <td>{{ proposition.subject }}</td>
+                  <td class="text-center">{{ proposition.date }}</td>
+                  <td class="text-center" [ngSwitch]="proposition.urgency">
+                    <div *ngSwitchCase="'Extremly urgent'">
+                      <img
+                        src="assets/images/extremly_urgent_icn.png"
+                        tooltip="Extremly urgent"
+                      />
+                    </div>
+                    <div *ngSwitchCase="'Meduim'">
+                      <img
+                        src="assets/images/medium_icn.png"
+                        tooltip="Medium"
+                      />
+                    </div>
+                    <div *ngSwitchCase="'High'">
+                      <img src="assets/images/high_icn.png" tooltip="High" />
+                    </div>
+                    <div *ngSwitchCase="'low'">
+                      <img src="assets/images/low_icn.png" tooltip="Low" />
+                    </div>
+                    <div *ngSwitchCase="'Urgent'">
+                      <img
+                        src="assets/images/extremly_urgent_icn.png"
+                        tooltip="Urgent"
+                      />
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div
+                      class="position-relative"
+                      dropdown
+                      placement="bottom left"
+                      dropdownToggle
+                    >
+                      <div
+                        [ngClass]="{
+                          'accepted-prop': proposition.status == 'Accepted',
+                          'rejected-prop': proposition.status == 'Rejected',
+                          'onhold-prop': proposition.status == 'Onhold'
+                        }"
+                      >
+                        <div *ngIf="proposition.status == 'Accepted'">Accepted</div>
+                        <div *ngIf="proposition.status == 'Rejected'">Rejected</div>
+                        <div *ngIf="proposition.status == 'Onhold'">On hold</div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="position-relative" dropdown placement="bottom" dropdownToggle>{{proposition.description}}
+                    <ul   id="dropdown-split" *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="button-split">
+                    <li role="menuitem"><a class="dropdown-item" >Creator: {{proposition.creator}} </a></li>
+                    <li role="menuitem"><a class="dropdown-item" >Created At: {{proposition.createdAt}}</a></li>
+                    <li role="menuitem" *ngIf="proposition.updator!=null"><a class="dropdown-item" >Updated At: {{proposition.updatedAt}}</a></li>
+                      </ul>
+                  </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

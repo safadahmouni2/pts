@@ -1,0 +1,15 @@
+@charset "utf-8";
+/* CSS Document */
+/* Name: pts-agile.css
+ * Version: 1.0
+ * Date: 15.08.2017
+ */
+ @media screen and (max-width: 1550px) {
+	.main-working .steps-block.fixed-width{
+		width: 200px;
+		min-width: 200px;
+	}
+	.main-working .steps-block:not(.fixed-width) {
+		width: calc((100% - 400px) / 4);
+	}
+ }

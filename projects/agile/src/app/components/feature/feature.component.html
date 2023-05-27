@@ -1,0 +1,37 @@
+<div  [ngClass]="{'user-storie-global-topic': true, 'expanded': expanded, 'user-storie-global-feature': true }">
+    <div class="user-storie-feature" >
+        <div class="part-top">
+            <div class="ust-number" (click)="onClickId()">FF: {{feature.id}}</div>
+            <div class="ust-icons">
+                <div class="postit-close-circle"><i [ngClass]="{'fa': true, 'fa-angle-down': !expanded,'fa-angle-up':expanded}" (click)="toggleExpand()"></i></div>
+            </div>
+        </div>
+        <div class="part-middle">
+            <div class="storie-text" *ngIf="feature.editMode">
+              <textarea [(ngModel)]="feature._text"></textarea>
+                 <div class="action-container">
+                    <div class="aply-chnages"><i class="fa fa-check" (click)="saveFeature(feature)" aria-hidden="true"></i></div>
+                    <div class="deny-chnages"> <i class="fa fa-times" aria-hidden="true" (click)="feature.toggleEditMode()" ></i></div>
+                    <div></div>
+                </div>
+            </div>
+            <div class="storie-text" *ngIf="!feature.editMode">
+               <div  class="storie-text" (click)="feature.toggleEditMode()">{{feature.text}}</div>
+            </div>
+            <div class="postit-progress">
+                <div class="percent-value" [ngStyle]="{ 'width': feature.progress()+'%' }"></div>
+            </div>
+        </div>
+    </div>
+    <div class="postit-toolbar">
+        <div class="user-resp-icon"></div>
+        <div class="user-resp-name"></div>
+        
+        <div class="user-resp-values-task">{{feature.getSumStoryPoints()}}</div>
+        <div class="add-chat" *ngIf="feature.id">
+            <a href="{{appChatUrl}}" target="_blank">
+                <img src="assets/img/pts_chat_empty.png" title="PTS-Chat ::  start now! ...">
+            </a>
+        </div>
+    </div>
+</div>

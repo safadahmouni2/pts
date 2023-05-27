@@ -1,0 +1,12 @@
+<div class="filter-container">
+  <select [compareWith]="compareId3" id="y3">
+    <option *ngFor="let year3 of listYears3" [ngValue]="year3">{{
+      year3.name
+    }}</option>
+  </select>
+</div>
+<div class="row">
+  <div class="col-12 text-left mr-t-20 mw-100p">
+    <nvd3 [options]="options" [data]="data"></nvd3>
+  </div>
+</div>

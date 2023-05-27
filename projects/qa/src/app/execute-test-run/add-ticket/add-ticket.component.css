@@ -1,0 +1,42 @@
+.add-ticket-textarea-form-control {
+    resize: vertical;
+}
+.status-container {
+    position: relative;
+    background: #efebec;
+    padding: 0 9px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.status-value {
+    font-size: 10px;
+    font-weight: 600;
+    color: #444444;
+}
+.conbobox-conatainer{
+    position: absolute;
+    top: 41px;
+    background: #fff;
+    border: 1px solid #8888;
+    border-right: 1px solid #c8c8c8;
+    z-index: 3;
+    width: 100%;
+}
+
+.conbobox-item{
+    padding: 4px 5px;
+    border-bottom: 1px solid #c8c8c8;
+    font-size: 15px;
+}
+.conbobox-item:hover{
+    background: #f1f1f1;
+}
+.conbobox-item:last-child{
+    border-bottom: none;
+}
+.form-control-pts-qa.focused .label {
+	font-size: 12px;
+	height: 20px;
+	line-height: 20px;
+	top: 0px;
+}

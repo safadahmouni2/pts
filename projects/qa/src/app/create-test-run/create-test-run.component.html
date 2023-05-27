@@ -1,0 +1,136 @@
+<app-header></app-header>
+<div class="container-fliud px-4">
+  <div class="create-test-run-header d-flex justify-content-between align-items-center">
+    <h2 class="d-inline-block">Create Test Run</h2>
+    <button class="close-btn" routerLink="/product-dashboard" >
+    <i class="icon-close"></i>
+    </button>
+  </div>
+
+  <div class="create-test-run-filter d-flex align-items-end">
+
+    <!-- Filter buttons -->
+    <div class="create-test-run-btn-group mr-4"
+         btnRadioGroup
+         [(ngModel)]="tabModel">
+      <label class="create-test-run-btn-group-btn"
+             [class.active]="stateSelected === 'TEST'"
+             btnRadio="inTest"
+             tabindex="0"
+             role="button"
+             (click)="filterWith('TEST')">Test case in Test</label>
+
+      <label class="create-test-run-btn-group-btn"
+             [class.active]="stateSelected === 'DEV'"
+             btnRadio="inTestDone"
+             tabindex="0"
+             role="button"
+             (click)="filterWith('DEV')">In Test or Done</label>
+
+      <label class="create-test-run-btn-group-btn"
+             [class.active]="stateSelected === 'InLibrary'"
+             btnRadio="inLibrary"
+             tabindex="0"
+             role="button"
+             (click)="filterWith('InLibrary')">Test Case in library</label>
+    </div>
+
+    <!-- Filter text -->
+    <div class="create-test-run-form-group flex-grow-1">
+      <div class="label">Search Test case</div>
+      <input id="searchField"
+             [(ngModel)]="testCaseFilter"
+             type="text"
+             class="create-test-run-form-control"
+             (focus)="fieldFocus($event)"
+             (blur)="fieldBlur($event)" />
+      <label class="search-label"
+             for="searchField"><i class="icon-search align-middle"></i></label>
+    </div>
+  </div>
+
+  <div class="test-case-list-table-container d-flex">
+
+    <!-- Test suites list -->
+    <div class="test-suite-library"
+         [ngClass]="{'toggled': toggleTestSuitesList}"
+         [ngStyle]="{
+        'min-width': toggleTestSuitesList ? '50px' : panelWidth + 'px',
+        'max-width': toggleTestSuitesList ? '50px' : panelWidth + 'px'
+      }">
+      <!-- Toggle button -->
+      <button class="create-test-run-collapse ml-auto"
+              (click)="onToggleTestSuitesList()">
+        <i [ngClass]="{'icon-right':!toggleTestSuitesList, 'icon-left':toggleTestSuitesList}"></i>
+        <i [ngClass]="{'icon-left':!toggleTestSuitesList, 'icon-right':toggleTestSuitesList}"></i>
+      </button>
+
+      <!-- Collapsed -->
+      <div class="hidden-panel">
+        <div class="hidden-panel-name-container">
+          <div class="hidden-panel-name">Test suites list</div>
+        </div>
+      </div>
+
+      <!-- Expanded -->
+      <app-test-suite-library (selectedTestSuiteId)="onSelectTestSuite($event)"
+                              [testCaseState]="stateSelected"
+                              [ngClass]="{'d-none': toggleTestSuitesList}"></app-test-suite-library>
+    </div>
+
+    <!-- Resize handler -->
+    <div class="resize-handler"
+         [ngClass]="{'resizable': !toggleTestSuitesList}"
+         (mousedown)="onResizeStart($event)"></div>
+
+    <div class="d-flex flex-column flex-grow-1">
+      <!-- Test cases list -->
+      <div class="table-container flex-grow-1">
+        <app-test-case-list [testCaseState]="stateSelected"
+                            [testCaseFilter]="testCaseFilter"
+                            [selectedTestSuite]="selectedTestSuiteId"
+                            (sendTestCasesSelectedToParent)="testRunDTO.tests = $event"
+                            (sendFlagToParent)="testRunDTO.flag = $event"
+                            (sendTotalEstimatedToParent)="detectTotalEstimated($event)"></app-test-case-list>
+      </div>
+
+      <!-- Test run form -->
+      <div class="create-test-run-form">
+        <form [formGroup]="testRunForm">
+          <div class="create-test-run-container d-flex align-items-center">
+            <!-- Test run name -->
+            <div class="d-flex align-items-end flex-grow-1 mr-3">
+              <div class="create-test-run-form-group flex-grow-1">
+                <div class="label">Test run name *</div>
+                <input [(ngModel)]="this.testRunDTO.shortDescription"
+                       type="text"
+                       formControlName="shortDescription"
+                       class="create-test-run-form-control"
+                       (focus)="fieldFocus($event, 'Short description')"
+                       (blur)="fieldBlur($event)" />
+              </div>
+            </div>
+
+            <!-- Estimated effort -->
+            <span class="mr-1">Estimated Effort:</span>
+            <span class="estimated-effort-value mr-3">{{ receivedTotalEstimatedEffort }}</span>
+
+            <!-- Create test suite checkbox -->
+            <label class="test-case-list-checkbox mr-1">
+              <input type="checkbox"
+                     formControlName="createTestSuite"
+                     class="checkbox" />
+              <i class="checkbox-checked icon-success"></i>
+            </label>
+            <span class="mr-3">Create test suite</span>
+
+            <!-- Submit button -->
+            <button class="btn-create-test-run"
+                    [disabled]="!testRunForm.valid"
+                    (click)="createTestRun()">create test run</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

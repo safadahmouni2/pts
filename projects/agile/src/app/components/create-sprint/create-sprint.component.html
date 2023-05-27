@@ -1,0 +1,163 @@
+<div class="user-story-details-container" style="position: relative;">
+  <div *ngIf="sprintLoading" class="justify-content-center align-items-center d-flex"
+  style="z-index: 10;position: absolute; width: 100%;height: 100%; background: #0000005c;">
+    <img src="assets/img/loading.gif" style="width: 170px;">
+  </div>
+  <div class="create-sprint-container-header">
+      <div class="create-sprint-title">
+        <div class="create-sprint-sp" *ngIf="sprint.id">SP:&nbsp;</div>
+        <div class="create-sprint-sp" *ngIf="!sprint.id">New Sprint</div>
+        <div class="create-sprint-id" *ngIf="sprint.id">{{sprint.id}}{{sprint?.ticketId ? ' / ' + sprint.ticketId:''}}</div>
+      </div>
+      <button class="create-sprint-save-btn"  *ngIf="sprintCreationView" (click)="onSaveSprint()">
+        Save
+      </button>
+      <div class="pull-right close-us-details"><i aria-hidden="true" class="icon-cancel" (click)="onDisplaySprintDetail()"></i></div>
+  </div>
+  <div class="user-story-details-main-content">
+      <perfect-scrollbar>
+          <div class="sprint-parent" *ngIf="sprintParentId">
+              <div class="sprint-parent-p">Parent:</div>
+              <div class="sprint-parent-id">{{sprintParentId}}</div>
+          </div>
+          <div class="form-row">
+              <div class="col-6">
+                <div class="create-sprint-form-group" [ngClass]="{'focused': sprint.name, 'required-field': emptyRequiredField}">
+                    <div class="label">Name *</div>
+                    <input  [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" type="text" class="create-sprint-form-control" (focus)="fieldFocus($event,'name')" [(ngModel)]="sprint.name" (blur)="fieldBlur($event)"/>
+                    <div class="form-buttons-container" *ngIf="showFieldButton == 'name' && !sprintCreationView">
+                        <button class="create-sprint-form-button" (click)="onUpdateFields('name',sprint.name)"><i class="icon-checked align-middle"></i></button>
+                        <button class="create-sprint-form-button" (click)="onGetFields()"><i class="icon-close align-middle"></i></button>
+                    </div>
+                </div>
+              </div>
+              <div class="col-6"  >
+                  <div class="create-sprint-form-group" *ngIf="!sprintCreationView" [ngClass]="{'focused': stateName}">
+                      <div class="label">Status</div>
+                      <div class="create-sprint-dropdown-container" (click)="(isSMOrSMDByProduct || isSMOrSMDBySprint) && toggleStatusDropdown('status')" [ngClass]="{'show': showStatusDropdown}" (clickOutside)="showStatusDropdown = false">
+                        <input [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" type="text" class="dropdown-value" [(ngModel)]="stateName">
+                        <ul class="create-sprint-dropdown-items" *ngIf="showStatusDropdown" (click)="changeStatusValue($event)">
+                          <li class="create-sprint-dropdown-item"  *ngFor="let state of allowedStateList" [attr.data-value]="state.stateName">{{state.stateName}}</li>
+                        </ul>
+                      </div>
+                      <div class="form-buttons-container extra-field" *ngIf="showFieldButton == 'status' && !sprintCreationView">
+                          <button class="create-sprint-form-button" (click)="onUpdateState()"><i class="icon-checked align-middle"></i></button>
+                          <button class="create-sprint-form-button" (click)="onGetFields()" ><i class="icon-close align-middle"></i></button>
+                      </div>
+                      <button class="create-sprint-form-button form-control-icon"><i class="icon-down align-middle"></i></button>
+                  </div>
+              </div>
+
+              <div class="col-6">
+                <div class="create-sprint-form-group" [ngClass]="{'focused': sprint.shortName}">
+                    <div class="label">Short Name</div>
+                    <input [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" type="text" class="create-sprint-form-control" (focus)="fieldFocus($event, 'shortName')" [(ngModel)]="sprint.shortName" (blur)="fieldBlur($event)"/>
+                    <div class="form-buttons-container" *ngIf="showFieldButton == 'shortName' && !sprintCreationView">
+                        <button class="create-sprint-form-button" (click)="onUpdateFields('shortName',sprint.shortName)"><i class="icon-checked align-middle"></i></button>
+                        <button class="create-sprint-form-button" (click)="onGetFields()"><i class="icon-close align-middle"></i></button>
+                    </div>
+                </div>
+              </div>
+              <div class="col-6">
+                  <div class="create-sprint-form-group" [ngClass]="{'focused': sprint.project}">
+                      <div class="label">Project</div>
+                      <div class="create-sprint-dropdown-container cursor-pointer" (click)="(isSMOrSMDByProduct || isSMOrSMDBySprint) && toggleProjectDropdown('project')" [ngClass]="{'show': showProjectDropdown}" (clickOutside)="showProjectDropdown = false">
+                        <input [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" type="text" class="dropdown-value" [(ngModel)]="sprint.project">
+                        <ul class="create-sprint-dropdown-items" *ngIf="showProjectDropdown" (click)="changeProjectValue($event)">
+                          <li class="create-sprint-dropdown-item"  *ngFor="let project of projectsList" [attr.data-value]="project">{{project}}</li>
+                        </ul>
+                      </div>
+                      <div class="form-buttons-container extra-field" *ngIf="showFieldButton == 'project' && !sprintCreationView">
+                          <button class="create-sprint-form-button" (click)="onUpdateFields('project',sprint.project)"><i class="icon-checked align-middle"></i></button>
+                          <button class="create-sprint-form-button" (click)="onGetFields()" ><i class="icon-close align-middle"></i></button>
+                      </div>
+                      <button class="create-sprint-form-button form-control-icon"><i class="icon-down align-middle"></i></button>
+                  </div>
+              </div>
+
+              <div class="col-6">
+                <div class="create-sprint-form-group" [ngClass]="{'focused': sprint.startDate, 'required-field': invalidStartDateValue}">
+                    <div class="label">Start Date</div>
+                    <input [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" type="text" class="create-sprint-form-control cursor-pointer" (focus)="datePickerFocus('startDate')" bsDatepicker
+                    [(ngModel)]="sprint.startDate" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', customTodayClass: 'custom-today-class' }">
+                    <div class="form-buttons-container extra-field" *ngIf="showFieldButton == 'startDate' && !sprintCreationView">
+                        <button class="create-sprint-form-button" (click)="onUpdateFields('startDate',sprint.startDate)"><i class="icon-checked align-middle"></i></button>
+                        <button class="create-sprint-form-button" (click)="onGetFields()"><i class="icon-close align-middle"></i></button>
+                    </div>
+                    <button class="create-sprint-form-button form-control-icon"><i class="icon-calendar align-middle"></i></button>
+                </div>
+              </div>
+              <div class="col-6">
+                <div class="create-sprint-form-group" [ngClass]="{'focused': sprint.endDate , 'required-field': invalidEndDateValue}">
+                    <div class="label">End Date</div>
+                    <input [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" type="text"  class="create-sprint-form-control cursor-pointer" (focus)="datePickerFocus('endDate')" bsDatepicker
+                    [(ngModel)]="sprint.endDate" [bsConfig]="{ dateInputFormat: 'YYYY-MM-DD', customTodayClass: 'custom-today-class' }" >
+                     <div class="form-buttons-container extra-field" *ngIf="showFieldButton == 'endDate' && !sprintCreationView">
+                        <button class="create-sprint-form-button" (click)="onUpdateFields('endDate',sprint.endDate)"><i class="icon-checked align-middle"></i></button>
+                        <button class="create-sprint-form-button" (click)="onGetFields()"><i class="icon-close align-middle"></i></button>
+                    </div>
+                    <button class="create-sprint-form-button form-control-icon"><i class="icon-calendar align-middle"></i></button>
+                </div>
+              </div>
+
+                <div class="col-6">
+                  <div class="create-sprint-form-group" [ngClass]="{'focused': sprint.appDsStartTime, 'required-field': invalidStartTimeValue}">
+                      <div class="label">DS Start Time</div>
+                      <div (clickOutside)="hideDsStartPicker()">
+                        <div class="create-sprint-form-control cursor-pointer" (click)="showDsStartPicker('dsStartTime')">
+                            <!--DS Start time should be displayed here-->{{sprint.appDsStartTime | date:'HH:mm' }}
+                        </div>
+                        <div class="timepicker-container" [ngClass]="{'timepicker-warning': !sprint.appDsStartTime && isDsStartPickerOkClicked}" *ngIf="showDsSTartTimePicker">
+                            <timepicker [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" [showMeridian]="false" [(ngModel)]="sprint.appDsStartTime"></timepicker>
+                            <button class="time-picker-button" (click)="onSubmitDsStartTime()">OK</button>
+                        </div>
+                      </div>
+                      <div class="form-buttons-container extra-field" *ngIf="showFieldButton == 'dsStartTime' && !sprintCreationView">
+                          <button class="create-sprint-form-button" (click)="onUpdateFields('dsStartTime',sprint.appDsStartTime)"><i class="icon-checked align-middle"></i></button>
+                          <button class="create-sprint-form-button" (click)="onGetFields()"><i class="icon-close align-middle"></i></button>
+                      </div>
+                      <button class="create-sprint-form-button form-control-icon"><i class="icon-clock align-middle"></i></button>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="create-sprint-form-group" [ngClass]="{'focused': sprint.dsDuration}">
+                      <div class="label">DS Duration</div>
+                      <input [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" id="ds_duration" type="text" class="create-sprint-form-control" (focus)="fieldFocus($event, 'dsDuration')" [(ngModel)]="sprint.dsDuration" (blur)="fieldBlur($event)" [typeahead]="dsDurationList" [typeaheadMinLength]="0"/>
+                      <div class="form-buttons-container extra-field" *ngIf="showFieldButton == 'dsDuration' && !sprintCreationView">
+                          <button class="create-sprint-form-button" (click)="onUpdateFields('dsDuration',sprint.dsDuration)"><i class="icon-checked align-middle"></i></button>
+                          <button class="create-sprint-form-button" (click)="onGetFields()"><i class="icon-close align-middle"></i></button>
+                      </div>
+                      <label for="ds_duration" class="create-sprint-form-button typeahead-dropdown-icon"><i class="icon-down align-middle"></i></label>
+                  </div>
+                </div>
+          </div>
+          <div class="form-row">
+              <div class="col-12">
+                <div class="create-sprint-form-group" [ngClass]="{'focused': sprint.dsMeetingUrl}">
+                    <div class="label">Meeting Url</div>
+                    <input  [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" type="text" class="create-sprint-form-control" (focus)="fieldFocus($event,'dsMeetingUrl')" [(ngModel)]="sprint.dsMeetingUrl" (blur)="fieldBlur($event)"/>
+                    <div class="form-buttons-container" *ngIf="showFieldButton == 'dsMeetingUrl' && !sprintCreationView">
+                        <button class="create-sprint-form-button" (click)="onUpdateFields('dsMeetingUrl',sprint.dsMeetingUrl)"><i class="icon-checked align-middle"></i></button>
+                        <button class="create-sprint-form-button" (click)="onGetFields()"><i class="icon-close align-middle"></i></button>
+                    </div>
+                </div>
+              </div>
+          </div>
+          <div class="form-row" *ngIf="!sprintCreationView && sprint.ticketId">
+              <div class="col-12">
+                  <div class="create-sprint-textarea-form-group" [ngClass]="{'focused': sprint.addComment !== ''}">
+                      <label>Comment</label>
+                      <textarea #textareaAddComment [disabled]="!(isSMOrSMDByProduct || isSMOrSMDBySprint)" class="create-sprint-form-control" [(ngModel)]="sprint.addComment" (focus)="fieldFocus($event,'comment')" (blur)="fieldBlur($event)" (keyup)="onCommentValueChange()"></textarea>
+                      <div #addCommentButtons class="form-buttons-container" *ngIf="showFieldButton == 'comment' && !sprintCreationView">
+                          <button class="create-sprint-form-button" (click)="addComment(sprint.addComment)"><i class="icon-checked align-middle"></i></button>
+                          <button class="create-sprint-form-button" (click)="onGetFields()"><i class="icon-close align-middle"></i></button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <app-meeting-config [productId]= "productId" [sprintTicketId]= "sprintTicketId" *ngIf="sprint.id" (actionLoading) = "onActionLoading($event)"></app-meeting-config>
+          <app-management-sp-team  [sprintId]="sprint.id" [productId]= "productId" [productName]= "productName" *ngIf="sprint.id" (actionLoading) = "onActionLoading($event)"></app-management-sp-team>
+      </perfect-scrollbar>
+  </div>
+ </div>

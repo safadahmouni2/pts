@@ -1,0 +1,16 @@
+<div class="test-cases-list-container d-flex flex-column">
+  <div class="test-cases-header d-flex">
+    <div class="test-cases-header-col flex-grow-1">Test suites list</div>
+    <div class="test-cases-header-col pl-0">ESTIM. EFFORT</div>
+  </div>
+
+  <div class="test-cases-list flex-grow-1">
+    <div *ngFor="let testSuite of testSuiteList;"
+         class="test-cases-list-item d-flex align-items-start"
+         [class.active]="testSuite.testSuiteLibraryId === currentTestSuite"
+         (click)="loadTestCases(testSuite.testSuiteLibraryId)">
+      <div class="test-case-name flex-grow-1 flex-shrink-1">TS {{ testSuite.shortDescription }}</div>
+      <div class="test-case-actions">{{ testSuite.estimatedEffort }}</div>
+    </div>
+  </div>
+</div>

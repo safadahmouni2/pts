@@ -1,0 +1,272 @@
+.create-test-run-header {
+    border-bottom: 1px solid #5c78a7;
+    margin-top: 10px;
+}
+
+.create-test-run-header h2{
+	margin-top: 4px;
+	font-size: 24px;
+    color: #294898;
+    font-weight: 100;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.create-test-run-filter {
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+.icon-close:before{
+    content: "\e906";
+}
+
+.close-btn{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.close-btn:hover {
+  color: #4f7ec2;
+}
+
+.create-test-run-btn-group {
+    border: 1px solid #516ea6;
+    padding: 0;
+}
+
+.create-test-run-btn-group-btn {
+    border-right: 1px solid #516ea6;
+    color: #516ea6;
+    font-size: 14px;
+    background: #fff;
+    padding: 3px 12px;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+}
+
+.create-test-run-btn-group-btn:last-child {
+    border-right: none;
+}
+
+.create-test-run-btn-group-btn.active {
+    color: #fff;
+    background: #516ea6;
+}
+
+.create-test-run-form {
+    font-weight: 500;
+    color: #444;
+    margin-left: 60px;
+    position: relative;
+    border: 1px solid #949293;
+    margin-top: 15px;
+}
+
+.create-test-run-form::before {
+    content: "";
+    display: block;
+    height: 40px;
+    width: 1px;
+    background: #949293;
+    position: absolute;
+    top: -16px;
+    left: -40px;
+}
+
+.create-test-run-form::after {
+    content: "";
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: #949293;
+    position: absolute;
+    top: 24px;
+    left: -40px;
+}
+
+.create-test-run-form-group {
+	height: 42px;
+    position: relative;
+}
+
+.create-test-run-form-group .label {
+	color: #b2b2b2;
+	font-size: 17px;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    top: 10px;
+	left: 4px;
+	z-index: 2;
+	pointer-events: none;
+	transition-duration: .2s;
+}
+
+.create-test-run-form-control {
+    border: none;
+    border-bottom: 2px solid #b2b2b2;
+    color: #444444;
+    display: block;
+    width: 100%;
+    height: 42px;
+    padding: 12px 58px 0 8px;
+    outline: none;
+    background: none;
+}
+
+.search-label {
+	display: block;
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    font-size: 23px;
+	color: #b2b2b2;
+	cursor: pointer;
+}
+
+.test-suite-library {
+    flex: 0 0 310px;
+}
+
+.test-suite-library.toggled {
+    flex: 0 0 auto;
+}
+
+.resize-handler {
+    flex: 0 0 35px;
+    max-width: 35px;
+}
+
+.resize-handler.resizable {
+    cursor: e-resize;
+}
+
+.test-case-list-table-container {
+    margin-top: 20px;
+}
+
+.table-container {
+    height: 100%;
+    border: 1px solid #949293;
+}
+
+.create-test-run-container {
+    padding: 15px;
+}
+
+.create-test-run-form-group.focused .label {
+	font-size: 12px;
+	height: 20px;
+	line-height: 20px;
+	top: 0px;
+}
+
+.btn-create-test-run {
+    height: 32px;
+    line-height: 32px;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+    background: #516ea6;
+    padding: 0 20px;
+    outline: none;
+    cursor: pointer;
+    border: none;
+}
+
+.btn-create-test-run:disabled {
+    opacity: .65;
+    pointer-events: none;
+}
+
+.estimated-effort-value {
+    min-width: 20px;
+    color: #0f5cb4;
+}
+
+.test-case-list-checkbox {
+    position: relative;
+    top: 4px;
+    height: 26px;
+    width: 26px;
+    vertical-align: middle;
+    display: inline-block;
+    cursor: pointer;
+    border: 3px solid #d3d3d3;
+    border-radius: 3px;
+    background: #fbf9fa;
+}
+
+.test-case-list-checkbox .checkbox {
+    cursor: pointer;
+    opacity: 0;
+}
+
+.checkbox-checked {
+    color: #4bbd05;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 16px;
+    pointer-events: none;
+    display: none;
+}
+
+.test-case-list-checkbox .checkbox:checked + .checkbox-checked {
+    display: block;
+}
+
+.icon-move {
+    cursor: move;
+}
+
+/* Collapse */
+.create-test-run-collapse {
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 12px;
+    color: #0f5cb4;
+    margin-top: -20px;
+    display: block;
+    margin-right: 6px;
+    margin-left: 3px;
+}
+
+.create-test-run-collapse i{
+    margin: 0 1px;
+}
+
+/* hide panel */
+.hidden-panel {
+    width: 50px;
+    height: 100%;
+    background: #e8e6e7;
+    border: 1px solid #939192;
+    display: none;
+}
+
+.toggled .hidden-panel {
+    display: block;
+}
+
+.hidden-panel-name-container {
+    transform: rotate(270deg);
+    margin-top: -20px;
+    pointer-events: none;
+}
+
+.hidden-panel-name {
+    display: inline-block;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transform: translateX(-100%);
+    font-weight: 500;
+    color: #444;
+}
+
+.panel-hidden {
+    max-width: 50px;
+}

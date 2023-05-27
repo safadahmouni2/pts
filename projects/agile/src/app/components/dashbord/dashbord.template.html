@@ -1,0 +1,154 @@
+<header class="ds-header  scrum-dashboiard-header">
+  <div class="push-menu">
+    <nav class="navbar navbar-default" role="navigation">
+      <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <img src="assets/img/tt-slogan.png"> </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Push Menu Left -->
+        <!-- /.navbar-collapse -->
+      </div>
+      <!-- /.container-fluid -->
+    </nav>
+  </div>
+  <div class="project-name">
+    <div class="middle-title">
+      <div class="middle-title-content dashboard-title-central">
+        Scrum Dashboard
+      </div>
+    </div>
+  </div>
+  <app-header></app-header>
+
+
+</header>
+<div class="container scrum-dashboard">
+
+  <div class="scrum-dashboard-container">
+    <perfect-scrollbar class="container-scrollbar-general">
+      <div
+        [ngClass]="{'scrum-dashboard-container-block': true, 'change-display-inherit':  usId,'change-display-float': !usId}">
+
+        <div class="first-block">
+          <div class="scrum-dashboard-dailyscrums">
+            <div class="sdp-header">My daily scrums</div>
+            <div class="sdp-pannel">
+              <perfect-scrollbar class="container-scrollbar">
+                <div class="table">
+                  <div *ngFor="let sprint of sprints let i = index;" class="{{this.dsStyleClassMap[sprint.dsState]}}">
+                    <div class="cell">
+                      <a routerLink="/daily-scrum/{{sprint.ticketId}}" [state]="{ title: sprint?.product?'DS-'+ sprint.product :'DS'}">
+                        <div class="border-right">
+                          <div class="product-name"> {{sprint.product}}</div>
+                          <div class="sprint-name">{{sprint.name}}</div>
+                        </div>
+                      </a>
+                    </div>
+                    <div class="cell">{{sprint.startDate|date:'dd.MM'}} - {{sprint.endDate|date:'dd.MM'}}
+                      <div class="planned-time">{{sprint.dsStartTime |slice:0:5}} - {{sprint.dsEndTime |slice:0:5}}</div>
+                    </div>
+                    <div class="cell">
+                      <div class="product-progress {{sprint.progressColor}}">{{sprint.progress}} %</div>
+                    </div>
+                    <div class="cell" *ngIf="sprint.dsState === 'Now'">
+                      <div class="ds-label">{{sprint.dsState}}</div>
+                      <div class="ds-text">
+                        <div class="for-timer">
+                          <i class="glyphicon icon-old-timer"></i>
+                        </div>
+                        <div [ngClass]="{'for-time-red' : sprint.dsTimerDeadLineReached,'for-time' : !sprint.dsTimerDeadLineReached}">{{sprint.dsTimer}}
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cell" *ngIf="sprint.dsState === 'Not done' || sprint.dsState === 'Planned' ">
+                      <div class="ds-label">{{sprint.dsState}}</div>
+                      <div class="ds-text">
+                        <div class="planned-time"></div>
+                      </div>
+                    </div>
+                    <div class="cell" *ngIf="sprint.dsState === 'Done earlier' || sprint.dsState === 'Done'">
+                      <div class="ds-label">{{sprint.dsState}}</div>
+                      <div class="ds-text">
+                        <div class="planned-time">{{sprint.dsStartTimeDone}} - {{sprint.dsEndTimeDone}}</div>
+                      </div>
+                    </div>
+                    <div class="cell">
+                      <div class="ds-label">SM :</div>
+                      <div class="ds-text">{{sprint.sm}}</div>
+                    </div>
+                  </div>
+                </div>
+              </perfect-scrollbar>
+            </div>
+          </div>
+
+        </div>
+        <div [ngClass]="{'expanded-us': usId,'collapsed-us':!usId }">
+          <app-us-detail *ngIf="usId" [usId]="usId" class="us-detail-collapsed" (onHideDetail)="hideDetail($event)">
+          </app-us-detail>
+        </div>
+        <div class="second-block">
+          <div class="scrum-dashboard-products">
+            <div class="sdp-header">My products</div>
+            <div class="sdp-pannel">
+              <perfect-scrollbar class="container-scrollbar">
+                <accordion>
+                  <accordion-group *ngFor="let myProduct of myProducts let j = index;" #product2 (isOpenChange)="loadMySprintByProduct($event,myProduct)">
+                    <div accordion-heading>
+                      <i class="pull-left float-xs-left fa" 
+                        [ngClass]="{'fa-angle-right': !product2?.isOpen, 'fa-angle-up': product2?.isOpen}"></i>
+                      <div class="product-name-label"> {{myProduct.productName}}</div>
+                      <div class="pull-right product-link-pages" (click)="$event.stopPropagation()">
+                        <a routerLink="/assign-us-to-sprint/{{myProduct?.productId}}" [state]="{ title: 'SP-'+ myProduct?.productName}">SP</a>
+                      </div>
+                      <div class="pull-right product-link-pages" (click)="$event.stopPropagation()">
+                        <a routerLink="/managment-us/{{myProduct?.productId}}" [state]="{ title: 'BL-'+ myProduct?.productName}" >BL</a>
+                      </div>
+                    </div>
+                    <div class="sprint-accordian">
+                      <accordion-group *ngFor="let mySprint of myProduct.sprints let i = index;" #Sprint21 (isOpenChange)="loadStatusCountUsBySprint($event,mySprint)">
+                        <div accordion-heading class="d-flex align-items-center">
+                          <div>
+                            <i class="pull-left float-xs-left fa" 
+                              [ngClass]="{'fa-angle-right': !Sprint21?.isOpen, 'fa-angle-up': Sprint21?.isOpen}"></i>
+                          </div>
+                          <div class="sprint-name-accordion">{{mySprint.name}}</div>
+                          <div class="bars-chart-container">
+                            <a>
+                              <img class="bars-chart" src="./assets/img/analytics.png" alt="">
+
+                            </a>
+                          </div>
+                          <div class="sprint-status-accordion text-center" (click)="openMeetingDashbord($event , mySprint)">
+                            <a>{{mySprint.state}}</a>
+                          </div>
+                        </div>
+                        <div>
+                          <div class="status-sprint-container"
+                            *ngFor="let stateBySprint of mySprint.allStateBySprint">
+                            <div class="ssc-status">{{stateBySprint.stateName}}</div>
+                            <div class="ssc-counter">{{stateBySprint.count}}</div>
+                          </div>
+                        </div>
+                      </accordion-group>
+
+                    </div>
+                  </accordion-group>
+                </accordion>
+              </perfect-scrollbar>
+            </div>
+          </div>
+
+
+        </div>
+
+
+
+      </div>
+    </perfect-scrollbar>
+
+  </div>
+
+
+</div>

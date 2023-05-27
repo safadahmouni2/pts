@@ -1,0 +1,79 @@
+<header class="ds-header scrum-dashboiard-header">
+    <div class="push-menu">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid"> 
+                <div class="navbar-header"> <a routerLink="/dashbord"><img src="assets/img/tt-slogan.png"></a> </div>
+         
+            </div>
+        </nav>
+    </div>
+    <div class="project-name">
+        <div class="middle-title">
+            <div  class="middle-title-content">
+                <div class="styled-select">
+                    <select class="choose-product">
+                        <option >{{productName}}</option>
+
+                    </select>
+                </div>
+            </div>
+            <div class="middle-title-container"><span class="middle-title-value">Management QM</span></div>
+        </div>
+    </div>
+      <app-header></app-header>  
+
+</header>
+<div class="container managment-qm">
+    	<vertical-split-pane primary-component-initialratio="0.24">
+
+	<div class="split-pane-content-primary">
+        <div class="backlog-container-header">
+            <div class="bch-title tooltip-css"><i class="icon-paper"></i>{{stateName}}</div>
+
+            <div class="bch-search">
+                <input type="text" class="form-control" placeholder="Find user story" [(ngModel)]="userStorySearch" (change)="onSearchUserStory()" >
+                <i class="fa fa-search" aria-hidden="true"></i></div>
+        </div>    
+        <div class="backlog-containrer-user-stories scrollbar-custom">
+            <div class="height-100" [dragula]='"nested-bag"' [dragulaModel]='UserStories' [attr.data-stateid]="stateId" [attr.data-statename]="stateName">
+                <ng-container *ngFor="let userStory of UserStories | filterUserStory: [strSearchinput]">
+                    <app-user-story [userStory]="userStory" [attr.data-id]="userStory.id" [attr.data-stateid]="userStory.stateId" [attr.data-statename]="userStory.state"  [attr.data-userStories]="UserStories"  [attr.data-index]="i" [speaker]="speaker" [currentUser]="currentUser" (onShowDetail)="ShowDetail($event)" ></app-user-story>
+
+
+                </ng-container>
+            </div>
+
+
+
+        </div>
+    </div>
+    <div class="sep-assign"></div>
+
+	<div class="split-pane-content-secondary">
+        <div class="sprints-container-header">
+            <div class="sch-title">Target status</div>
+          
+        </div>
+        <div class="sprints-container-devided scrollbar-custom">
+			<app-us-detail (onHideDetail)="hideDetail($event)" *ngIf="usId" [usId]="usId" class="us-detail-collapsed"></app-us-detail>
+            <div class="sc-srprint-block" *ngFor="let state of status ">
+                 <div class="scs-header"  >
+                    <div class="scs-header-left">
+                        <div class="scs-title" >{{state.stateName}}</div>
+                    </div>
+                </div>
+                <div class="scs-container scrollbar-custom">
+                    <perfect-scrollbar class="container" >
+                        <div class="height-100" [dragula]='"nested-bag"' [dragulaModel]="state.userStories" [attr.data-stateid]="state.stateId" [attr.data-statename]="state.stateName" [attr.data-userStories]="state.userStories" >
+
+                            <app-user-story *ngFor="let userStory of state.userStories" [userStory]="userStory" [attr.data-id]="userStory.id" [attr.data-index]="j" [speaker]="speaker" [currentUser]="currentUser" (onShowDetail)="ShowDetail($event)"></app-user-story> 
+
+                        </div>
+                    </perfect-scrollbar>
+
+                </div>
+            </div>
+        </div>
+    </div>
+        </vertical-split-pane>
+</div>

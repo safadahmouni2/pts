@@ -1,0 +1,157 @@
+<div class="user-story-details-container">
+  <div *ngIf="dataLoading" class="justify-content-center align-items-center d-flex" 
+  style="z-index: 10;position: absolute; width: 100%;height: 100%; background: #0000005c;">
+    <img src="assets/img/loading.gif" style="width: 170px;">
+  </div> 
+  <div class="sprints-container-header">
+    <div class="sch-title">Topic Details</div>
+    <div class="pull-right close-us-details">
+      <i aria-hidden="true" class="icon-cancel"  (click)="onCloseTopicDetail()"></i>
+    </div>
+    <div class="sch-status">
+      <label>Status: </label>
+      <div class="pull-right edit-status" title="Change Status">
+        <div class="styled-select" [hidden]="!editState">
+          <select class="form-control" #state (change)="changeStatusValue(state.value)">
+            <option></option>
+            <option *ngFor="let stateItem of allowedStatesList">
+              {{stateItem.stateName}}
+            </option>
+          </select>
+        </div>
+        <div class="action-container">
+          <div [hidden]="!editState" class="aply-chnages" (click)="toogleEditState(true)">
+            <i class="fa fa-check" aria-hidden="true"></i>
+          </div>
+          <div [hidden]="!editState" class="deny-chnages" (click)="toogleEditState(false)">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div [hidden]="editState" (click)="toogleEditState(false)" class="status-text" title="Change Status">
+        <span *ngIf="stateName">{{stateName}}</span>
+      </div>
+      </div>
+      </div>
+  <!---->
+  <div class="user-story-details-main-content">
+    <perfect-scrollbar class="container">
+      <div class="usdmc-group-title">
+        <div class="usdmc-group-epic topic-group">
+          <div class="epic-id">T: {{topic.id}}{{topic?.ticketId ? ' / ' + topic.ticketId:''}}</div>
+          <div class="edit-epic-container">
+            <div class="epic-name"> Project: 
+              <span class="group-name" *ngIf="!editModeProject">{{oldTopic.project}} </span>
+              <ng-container *ngIf="editModeProject">
+                <select class="form-control" #project [(ngModel)]="editableTopic.project">
+                  <option [ngValue]="null" class="disabled text-muted">All projects</option>
+                  <option *ngFor="let projectItem of dropdownListProduct" [value]="projectItem.name">
+                    {{projectItem.name}}</option>
+                </select>
+                <div class="action-container-us">
+                  <div class="aply-chnages" (click)="updateTopicProject()">
+                    <i aria-hidden="true" class="fa fa-check"></i>
+                  </div>
+                  <div class="deny-chnages" (click)="restoreData('project')">
+                    <i aria-hidden="true" class="fa fa-times"></i>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="uacct-icon" *ngIf="!editModeProject" (click)="changeData('project')">
+              <i aria-hidden="true" class="fa fa-pencil"></i>
+            </div>
+          </div>
+          <div class="edit-epic-container">
+            <div class="epic-name">
+              <span class="epic-name-bold"> Name: </span>
+              <span class="group-id" *ngIf="!editModeName"> {{oldTopic.name}} </span>
+              <ng-container *ngIf="editModeName">
+                <input type="text" class="form-control" [(ngModel)]="editableTopic.name" *ngIf="editModeName" />
+                <div class="action-container-us">
+                  <div class="aply-chnages" (click)="updateTopicName()">
+                    <i aria-hidden="true" class="fa fa-check"></i>
+                  </div>
+                  <div class="deny-chnages" (click)="restoreData('name')">
+                    <i aria-hidden="true" class="fa fa-times"></i>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="uacct-icon" *ngIf="!editModeName" (click)="changeData('name')">
+              <i aria-hidden="true" class="fa fa-pencil"></i>
+            </div>
+          </div>
+          <div class="edit-epic-container">
+            <div class="epic-name">
+              <span class="epic-name-bold"> Is default: </span>
+              <div class="toggle" [ngClass]="{ active: isChecked }">
+                <input type="checkbox" id="toggle"  [(ngModel)]="isChecked">
+                <div class="toggle-switch" (click)="onToggleClick()">
+                  <div class="toggle-switch-inner"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="usdmc-main-content">
+        <div class="usdmc-editable-area">
+          <div class="topic-description-container">
+            <div class="uacc-title">
+              <div class="uacct-text">Description: </div>
+              <div class="uacct-icon" *ngIf="!editModeDescription" (click)="changeData('description')">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="uacc-content" *ngIf="!editModeDescription">
+              {{oldTopic.description}}
+            </div>
+            <div class="uea-long-description" *ngIf="editModeDescription">
+              <div class="uld-text-text-area">
+                <textarea [(ngModel)]="editableTopic.description"></textarea>
+                <div class="action-container-us">
+                  <div class="aply-chnages"(click)="updateTopicDescription()">
+                    <i aria-hidden="true" class="fa fa-check"></i>
+                  </div>
+                  <div class="deny-chnages" (click)="restoreData('description')">
+                    <i aria-hidden="true" class="fa fa-times"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="usdmc-comments-area">
+            <div class="usca-title">
+              <div class="ut-text">Comments </div>
+              <div class="ut-text-icon" (click)="toogleAddComment()">+</div>
+            </div>
+            <div class="us-comments-container"
+              [ngClass]="{'us-comments-container': true}">
+              <perfect-scrollbar class="container" [config]="config">
+                <div class="usca-content" [hidden]="addComment">
+                  <app-comment *ngFor="let comment of comments;let index = index" [comment]="comment"
+                    [expanded]="index==0" [titleClass]="'uc-title'" [bodyClass]="'uc-comment'"></app-comment>
+                </div>
+                <div class="usca-add-content" [hidden]="!addComment">
+                  <div class="text-area-comment-container">
+                    <textarea cols="" rows="" class="text-area-comment" [(ngModel)]="comment"></textarea>
+                  </div>
+                  <div class="action-container-us">
+                    <div class="aply-chnages"><i aria-hidden="true" class="fa fa-check"
+                        (click)="addCommentToTopic(comment)"></i></div>
+                    <div class="deny-chnages"><i aria-hidden="true" class="fa fa-times" (click)="addComment = false"></i>
+                    </div>
+                  </div>
+                </div>
+              </perfect-scrollbar>
+            </div>
+          </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+  <!---->
+</div>

@@ -1,0 +1,67 @@
+<div class="test-cases-list-container d-flex flex-column">
+
+  <div class="test-cases-header d-flex">
+    <div class="test-cases-header-col flex-grow-1">test cases list</div>
+    <div class="test-cases-header-col">Action</div>
+  </div>
+  <perfect-scrollbar>
+    <div class="test-cases-list">
+
+      <div class="test-cases-list-item"
+           *ngFor="let test of tests"
+           (click)="selectTest(test)"
+           [class.active]="test.testId === selectedTestId">
+        <div class="test-case-number">{{test.testId}}</div>
+        <div class="test-case-name">{{test.shortDescription}}</div>
+      </div>
+
+      <div class="test-case-actions">
+
+        <div class="test-case-action"
+             *ngFor="let test of tests"
+             [class.active]="test.testId === selectedTestId">
+          <div class="btn-group"
+               *ngIf="testRunStatus!== 'COMPLETED'&& counterRunning"
+               dropdown>
+            <i class="icon-more cursor-pointer cases-list-dropdown"
+               dropdownToggle
+               aria-controls="dropdown-basic"></i>
+            <ul *dropdownMenu
+                class="execute-test-run-dropdown-menu dropdown-menu">
+              <li (click)="onClickOpenModal(addProblem, test)">Add Problem</li>
+              <li (click)="onClickOpenModal(addTicket, test)">Add Ticket</li>
+            </ul>
+          </div>
+          <div class="cases-list-divider"></div>
+          <!--
+            Classes for the switcher:
+            Grey switcher: switcher-null
+            Green switcher: switcher-true
+            Red switcher: switcher-false
+          -->
+          <button class="switcher"
+                  [disabled]="!counterRunning"
+                  (click)="switchTestCaseState(test ,$event)"
+                  [ngClass]="{'switcher-null':test.testState === null, 'switcher-true':test.testState === 'OK','switcher-false':test.testState === 'NOT_OK'}">
+            <div class="switcher-view"></div>
+          </button>
+        </div>
+
+      </div>
+
+    </div>
+  </perfect-scrollbar>
+</div>
+
+<ng-template #addTicket>
+  <app-add-ticket [test]="test"
+                  [productName]="globals.getProductName()"
+                  (refreshAssignedTasks)="detectNewItem($event)"></app-add-ticket>
+</ng-template>
+
+
+<ng-template #addProblem>
+  <app-add-problem [test]="test"
+                   [productName]="globals.getProductName()"
+                   (refreshAssignedTasks)="detectNewItem($event)"></app-add-problem>
+</ng-template>

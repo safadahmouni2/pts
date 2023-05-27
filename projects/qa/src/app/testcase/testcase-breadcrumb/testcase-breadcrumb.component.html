@@ -1,0 +1,37 @@
+<div class="d-flex align-items-end justify-content-between flex-wrap mb-2">
+    <div class="library-breadcrumb d-flex flex-wrap cursor-pointer">
+        <div class="library-breadcrumb-item d-flex align-items-center" *ngFor="let folderName of folderPath" (click)="getSelectedName(folderName,'FOLDER')">
+            <i class="icon-folder-opened align-middle"></i>
+            <div>{{folderName}}</div>
+        </div>
+       
+        <div class="library-breadcrumb-item d-flex align-items-center" *ngIf = "hasTestCase">
+            <i class="icon-file align-middle" ></i>
+            <div>{{shortDescription}}</div>
+        </div>
+    </div>
+    <!---->
+    <div class="action-container">
+        <button *ngIf="hasSearchResult && isTestCaseSelected"
+                (click)="goBackToSearchResult()"
+                class="btn btn-secondary">
+            <i class="icon-left"></i>
+            back to results
+        </button>
+        <!---->
+        <div *ngIf="selectedFolderOrProduct"
+             class="create-test-run-form-group">
+            <div class="label">Search Test case</div>
+
+            <input id="searchField"
+                   [(ngModel)]="searchValue"
+                   type="text"
+                   class="create-test-run-form-control"
+                   (focus)="fieldFocus($event)"
+                   (blur)="fieldBlur($event)" />
+            <label class="search-label"
+                   for="searchField"><button (click)="searchInLibrary()"><i
+                       class="icon-search align-middle"></i></button></label>
+        </div>
+    </div>
+</div>

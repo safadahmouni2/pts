@@ -1,0 +1,78 @@
+<app-header></app-header>
+<div class="container-fliud px-4">
+    <div class="row dashboard-row-margin">
+        <div class="col-12">
+            <div class="test-header d-flex justify-content-between align-items-center">
+                <h2 class="d-inline-block">Manage Test Cases by US</h2>
+                <button class="close-btn" routerLink="/product-dashboard" >
+                <i class="icon-close"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="d-flex manage-test-cases-container mt-2 pb-4">
+        <div class="d-flex test-cases-sidebar">
+            <app-user-story-details [refreshedTestCase]="refreshedUserStoryTestCases.asObservable()"
+                                    [userStoryId]="userStoryId"
+                                    [with_search]="true"></app-user-story-details>
+        </div>
+
+        <div class="d-flex flex-column flex-grow-1">
+            <app-testcase-breadcrumb [selectedFolderOrProduct]="selectedLibraryObject"
+                                     (searchResult)="getSearchResult($event)"
+                                     [refreshedTestCase]="refreshedTestCase"
+                                     (ShowSearchResult)="showSearchResult($event)"
+                                     [testCaseSelected]="testCaseSelectedWithProduct"
+                                     (selectedNameFromBreadcrumb) ="selectedNameFromBreadcrumb($event)"
+                                     ></app-testcase-breadcrumb>
+            <div class="library-container d-flex flex-grow-1"
+                 [ngClass]="{'library-opened' : showLibrary}">
+                <app-testcase-library *ngIf="showLibrary && dataLogged"
+                                      [refreshedTestCase]="refreshedTestCase"
+                                      (sendRequestToParent)="eventFromLibrary($event)"
+                                      (sendSelectedFolderForImport)="getSelectedFolderForImportFromLibrary($event)"
+                                      [userStoryId]="userStoryId"
+                                      [testCaseSelected]="testCaseLibrarySelected"
+                                      [currentProductID]="currentProductIdToBeOpened"
+                                      [currentFolderId]="currentFolderIdToBeOpened"
+                                      (resetProductIdAndFolderId)="resetProductAndFolder()"
+                                      (selectedLibraryObject)="detectSelectedObject($event)"
+                                      (initNode)="initNodeHandle($event)"
+                                      [selectedNameFromBreadcrumb]="selectedNameFromBreadCrumb"
+                                      (showLibraryTreeChange)="onShowLibraryTreeChange($event)"
+                                      [ngStyle]="{
+                                        'min-width': !showLibraryTree ? '50px' : panelWidth + 'px',
+                                        'max-width': !showLibraryTree ? '50px' : panelWidth + 'px'
+                                      }">
+                </app-testcase-library>
+
+                <!-- Resize handler -->
+                <div class="resize-handler"
+                [ngClass]="{'resizable': showLibraryTree}"
+                (mousedown)="onResizeStart($event)"
+                [ngStyle]="{
+                    'left': !showLibraryTree ? '50px' : panelWidth + 'px'
+                  }"></div>
+
+                <div class="flex-grow-1 flex-shrink-1">
+                    <app-testcase-form *ngIf="hasTestCase && showLibrary && !showImportComponent"
+                                    (sendRequestToParent)="selectTestCase(null)"
+                                    (requestRefreshLibraryList)="refreshLibraryList($event)"
+                                    [testCaseSelected]="testCaseLibrarySelected"
+                                    [userStoryId]="userStoryId"
+                                    (startRunning)="startRunningEvent($event)"
+                                    [libraryTestCaseEffort]="libraryTestCaseEffort"
+                                    class="flex-grow-1"></app-testcase-form>
+
+                    <app-test-case-import *ngIf="showImportComponent"
+                                          [selectedFolderForImportToParent]="sendProductForImportToParent"></app-test-case-import>
+
+                    <app-test-case-search *ngIf="showSearch  && !showImportComponent "
+                                        [selectedPath]="selectedPath"
+                                        [testCaseLibraryList]="testCaseLibrarySearchResult"
+                                        (selectedTestCase)="selectTestCase($event)"></app-test-case-search>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="test-run-item">
+  <div class="d-flex test-case-result-container">
+    <div class="test-run-title-container">
+      <h3>TR-{{testRun.testRunId}}</h3>
+      <div
+        [ngClass]="{'in-progress': testRun?.state === 'IN_PROGRESS', 'paused': testRun?.state === 'PAUSED', 'completed': testRun?.state === 'COMPLETED', 'created':testRun?.state === 'CREATED', 'ok': testRun?.state === 'OK', 'nok': testRun?.state === 'NOK'}"
+        class="test-run-badge" *ngIf="testRun.state" >{{testRun.state}}</div>
+      <div class="test-run-badge">{{testRun?.responsible || '?'}}</div>
+      <app-show-actor-info
+        [actorInfo]="testRun">
+      </app-show-actor-info>
+    </div>
+    <span class="tests-counters badge tested-ok mr-1" *ngIf="ok">OK: {{ok}}</span>
+    <span class="tests-counters badge tested-nok mr-1" *ngIf="nOk">NOK: {{nOk}}</span>
+    <span class="tests-counters badge to-be-tested" *ngIf="toBeTested">TO BE TESTED: {{toBeTested}}</span>
+  </div>
+  <p>{{testRun.shortDescription}}</p>
+  <div class="d-flex">
+
+    <!-- Actions -->
+    <button class="btn btn-success" [routerLink]="['/executetestrun', testRun.testRunId]"
+      [disabled]="installInProgress||globals.isInvalidSprintSelected() || !isCurrentInstall">
+      <i class="icon-run"></i>
+      run
+    </button>
+    <div class="right-action-buttons d-flex justify-content-end align-items-center flex-grow-1">
+      <button class="btn btn-primary" (click)="collap()">
+        <!-- Display the arrows only if testRun?.tests?.length > 0 -->
+        <ng-container>
+          <!-- Display the icon-arrow-up when expanded -->
+          <i class="icon-arrow-up mr-1" *ngIf="collapsed"></i>
+          <!-- Display the icon-arrow-right when collapsed -->
+          <i class="icon-arrow-right mr-1" *ngIf="!collapsed"></i>
+        </ng-container>
+        <!-- {{tests?.length || 0}} -->
+        {{testRun.totalTests || 0}} Test Case
+      </button>
+      <a class="btn btn-light" title="Chat" href="{{chatUrl}}" target="_blank" [ngClass]="{'disabled': !isProd}">
+        <i class="icon-person-chat"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="test-container" *ngIf="tests && collapsed">
+  <ng-container *ngFor="let test of tests">
+    <app-test-item [test]="test"></app-test-item>
+  </ng-container>
+</div>

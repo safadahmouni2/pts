@@ -1,0 +1,34 @@
+<div class="create-test-run-filter d-flex align-items-center">
+    <div class="create-test-run-btn-group d-flex">
+        <div class="create-test-run-btn-group-btn" *ngIf="ready" (click)="filterUserStoryState($event)" id="Ready" [ngClass]="{'active': isFilterSelected('Ready')}">
+            <span class="mr-1">{{ready}} US</span>Ready
+            <i class="close-button icon-close"(click)="removeUserStoryStateFilter($event,'Ready')"></i>
+        </div>
+        <div class="create-test-run-btn-group-btn" *ngIf="inAnalysis" (click)="filterUserStoryState($event)" id="In Analysis" [ngClass]="{'active': isFilterSelected('In Analysis')}">
+            <span class="mr-1">{{inAnalysis}} US</span>In Analysis
+            <i class="close-button icon-close"(click)="removeUserStoryStateFilter($event,'In Analysis')"></i>
+        </div>
+        <div class="create-test-run-btn-group-btn" *ngIf="inDesign" (click)="filterUserStoryState($event)" id="In Design" [ngClass]="{'active': isFilterSelected('In Design')}">
+            <span class="mr-1">{{inDesign}} US</span>In Design
+            <i class="close-button icon-close" (click)="removeUserStoryStateFilter($event,'In Design')"></i>
+        </div>
+        <div class="create-test-run-btn-group-btn" *ngIf="inDev" (click)="filterUserStoryState($event)" id="In Dev" [ngClass]="{'active': isFilterSelected('In Dev')}">
+            <span class="mr-1">{{inDev}} US</span>In Dev
+            <i class="close-button icon-close" (click)="removeUserStoryStateFilter($event,'In Dev')"></i>
+        </div>
+        <div class="create-test-run-btn-group-btn" *ngIf="inTest" (click)="filterUserStoryState($event)" id="In Test" [ngClass]="{'active': isFilterSelected('In Test')}">
+            <span class="mr-1">{{inTest}} US</span>In Test
+            <i class="close-button icon-close"(click)="removeUserStoryStateFilter($event,'In Test')"></i>
+        </div>
+        <div class="create-test-run-btn-group-btn" *ngIf="done" (click)="filterUserStoryState($event)" id="Done" [ngClass]="{'active': isFilterSelected('Done')}">
+            <span class="mr-1">{{done}} US</span>Done
+            <i class="close-button icon-close"(click)="removeUserStoryStateFilter($event,'Done')"></i>
+        </div>
+        <div class="create-test-run-btn-group-btn" *ngIf="incomplete" (click)="filterUserStoryState($event)" id="Incomplete" [ngClass]="{'active': isFilterSelected('Incomplete')}">
+            <span class="mr-1">{{incomplete}} US</span>Incomplete
+            <i class="close-button icon-close"(click)="removeUserStoryStateFilter($event,'Incomplete')"></i>
+        </div>
+    </div>
+</div>
+<app-user-story-container *ngIf="!dataLoading" [userStoryList]="userStoryList"
+                          [productEnvironments]="productEnvironments"></app-user-story-container>

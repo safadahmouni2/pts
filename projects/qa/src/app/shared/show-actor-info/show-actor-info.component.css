@@ -1,0 +1,55 @@
+.test-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 13px;
+  background: #a0a1a5;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.show-more-btn {
+  height: 17px;
+  width: 17px;
+  border-radius: 50%;
+  padding: 0;
+  background: #556080;
+  color: #fff;
+  border: unset;
+  box-shadow: unset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.show-more-btn .icon-more {
+  font-size: 11px;
+  transform: rotate(90deg);
+}
+
+.details-dropdown {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-column-gap: 8px;
+  grid-row-gap: 4px;
+}
+
+.details-dropdown .test-label{
+  font-size: 14px;
+  font-weight:400;
+  color: #444444;
+  white-space: nowrap;
+  margin-right: 8px;
+}
+
+
+.dropdown-right-align {
+  inset: 100% 0px auto auto!important;
+}
+
+.dropdown-menu:not(.dropdown-right-align){
+  left:-17px;
+}

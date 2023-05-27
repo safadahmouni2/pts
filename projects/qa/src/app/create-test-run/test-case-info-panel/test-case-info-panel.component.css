@@ -1,0 +1,93 @@
+/* Panel */
+.panel-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  animation-name: fadeInBackdrop;
+  animation-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+:host(.closed) .panel-backdrop {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 50%;
+  min-width: 500px;
+  max-width: 900px;
+  background: #fff;
+  z-index: 2;
+  animation-name: slideLeft;
+  animation-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+:host(.closed) .panel {
+  right: -900px;
+}
+
+.panel-header {
+  border-bottom: 2px solid #294898;
+  padding: 12px 25px;
+}
+
+.panel-title {
+  color: #294898;
+  font-weight: 500;
+  margin: 0;
+}
+
+.panel-body {
+  padding: 25px;
+  overflow-y: auto;
+}
+
+.panel-footer {
+  padding: 12px 25px;
+  text-align: right;
+}
+
+.panel-btn {
+  border: 1px solid #939393;
+  background: #fff;
+  color: #434343;
+  width: 100px;
+  padding: 0;
+  margin: 0 0 0 8px;
+  height: 32px;
+  line-height: 30px;
+  font-size: 16px;
+  font-weight: 400;
+  text-transform: uppercase;
+  border-radius: 1px;
+}
+
+/* TC details */
+
+/* Animations */
+@keyframes fadeInBackdrop {
+  from {
+    background-color: rgba(0, 0, 0, 0);
+  }
+  to {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
+
+@keyframes slideLeft {
+  from {
+    right: -900px;
+  }
+  to {
+    right: 0;
+  }
+}

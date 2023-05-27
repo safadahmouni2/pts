@@ -1,0 +1,92 @@
+<!-- Excel import container -->
+
+<ng-container >
+  <div class="d-flex test-case-library-container">
+    <div class="user-story-number">
+      Import Excel in {{selectedFolderForImportToParent?.productName}} {{selectedFolderForImportToParent?.folderName}}
+    </div>
+  </div>
+  <div class="form-container">
+    <div class="row">
+
+      <div class="col-md-6 col-sm-12 source-system-autocomplete">
+        <div class="form-group-pts-qa" (click)="toggleStatusDropdown()"
+             [ngClass]="{'focused' : sourceSystemName}" >
+          <div class="label">Source system </div>
+          <input id="sourceSystem"  type="text" class="form-control-pts-qa"
+                 [(ngModel)]="sourceSystemName"
+                 (focus)="fieldSourceSystemFocus($event)"
+                 (keyup)="onChangeSourceSystem($event)"
+                 (blur)="fieldBlurSourceSystem($event)">
+
+          <div class="conbobox-container" *ngIf="showSourceSystemDropdown">
+            <div *ngFor="let sourceSystem of sourceSystems" class="conbobox-item cursor-pointer"
+                 (keyup)="openDropDown($event)"
+                 (click)="setSourceSystem(sourceSystem.name, $event)">{{sourceSystem.name}}</div>
+          </div>
+          <label for="sourceSystem" class="dropdown-label">
+            <i class="icon-arrow-down align-middle" (click)="toggleStatusDropdown()"></i>
+          </label>
+
+          <div class="dropdown-arrrow">
+            <i class="icon-arrow-down align-middle"></i>
+          </div>
+          <div class="form-buttons-container posotion-after-arrow">
+            <button *ngIf="inputSourceSystemFocused" class="table-button"
+                    (click)="addSourceSystem(sourceSystemName,$event)">
+              <i class="icon-success align-middle"></i>
+            </button>
+            <button *ngIf="inputSourceSystemFocused" class="table-button"
+                    (click)="resetSourceSystem($event)">
+              <i class="icon-close align-middle"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div   class="row">
+      <div class="col">
+        <div class="drag-and-drop-area d-flex align-items-center justify-content-center my-3">
+          <input type="file" class="drag-and-drop-input" (change)="uploadExcelFile($event)" />
+
+          <!-- Initial state -->
+          <ng-container>
+            <i class="icon-upload"></i>
+            Drag &amp; drop to upload or click to browse
+          </ng-container>
+
+          <!-- While file is being uploaded -->
+          <ng-container *ngIf=fileUploaded>
+            <div class="la-ball-spin-fade-rotating">
+            </div>
+            <span class="ml-3"></span>
+            <span class="font-weight-bold ml-1"> {{selectedFile?.name}}</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <!-- Submit button -->
+      <div class="col">
+        <div class="btn-import-container d-flex justify-content-end mb-3">
+          <button class="btn-import" (click)="importTestCases()" [disabled]="!(this.sourceSystemName && this.selectedFile?.name)">Import</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <!-- Display in case the file was successfully uploaded -->
+        <alert *ngIf="fileUploaded && showSuccessMsg && selectedFile && selectedFile?.name" type="success">
+          <div>Success:
+            <pre>{{showSuccessMsg}} </pre>
+          </div>
+        </alert>
+        <!-- Display in case the file failed to upload -->
+        <alert id="errorMsg" *ngIf="showErrorMsg" type="danger">
+          <div>Could not import File !</div>
+          <pre>{{showErrorMsg}}</pre>
+        </alert>
+      </div>
+    </div>
+  </div>
+</ng-container>

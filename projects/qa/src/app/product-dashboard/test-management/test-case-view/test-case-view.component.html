@@ -1,0 +1,70 @@
+<div class="create-test-case-filter d-flex align-items-center">
+    <div *ngIf="stateLoading"
+         class="create-test-run-btn-group d-flex">
+        <div *ngIf="ready!==0"
+             class="create-test-case-btn-group-btn"
+             (click)="filterTestCaseByUserStoryState($event)"
+             id="Ready"
+             [ngClass]="{'active': isFilterSelected('Ready')}">
+            Ready <span class="mr-1">{{ready}} TC</span>
+            <i class="close-button icon-close"
+               (click)="removeFilterForTestCase($event,'Ready')"></i>
+        </div>
+        <div *ngIf="inAnalysis!==0"
+             class="create-test-case-btn-group-btn"
+             (click)="filterTestCaseByUserStoryState($event)"
+             id="In Analysis"
+             [ngClass]="{'active': isFilterSelected('In Analysis')}">
+            In Analysis <span class="mr-1"> {{inAnalysis}} TC</span>
+            <i class="close-button icon-close"
+               (click)="removeFilterForTestCase($event,'In Analysis')"></i>
+        </div>
+        <div *ngIf="inDesign!==0"
+             class="create-test-case-btn-group-btn"
+             (click)="filterTestCaseByUserStoryState($event)"
+             id="In Design"
+             [ngClass]="{'active': isFilterSelected('In Design')}">
+            In Design <span class="mr-1">{{inDesign}} TC</span>
+            <i class="close-button icon-close"
+               (click)="removeFilterForTestCase($event,'In Design')"></i>
+        </div>
+        <div *ngIf="inDev!==0"
+             class="create-test-case-btn-group-btn"
+             (click)="filterTestCaseByUserStoryState($event)"
+             id="In Dev"
+             [ngClass]="{'active': isFilterSelected('In Dev')}">
+            In Dev <span class="mr-1">{{inDev}} TC</span>
+            <i class="close-button icon-close"
+               (click)="removeFilterForTestCase($event,'In Dev')"></i>
+        </div>
+        <div *ngIf="inTest!==0"
+             class="create-test-case-btn-group-btn"
+             (click)="filterTestCaseByUserStoryState($event)"
+             id="In Test"
+             [ngClass]="{'active': isFilterSelected('In Test')}">
+            In Test <span class="mr-1">{{inTest}} TC</span>
+            <i class="close-button icon-close"
+               (click)="removeFilterForTestCase($event,'In Test')"></i>
+        </div>
+        <div *ngIf="done!==0"
+             class="create-test-case-btn-group-btn"
+             (click)="filterTestCaseByUserStoryState($event)"
+             id="Done"
+             [ngClass]="{'active': isFilterSelected('Done')}">
+            Done <span class="mr-1">{{done}} TC</span>
+            <i class="close-button icon-close"
+               (click)="removeFilterForTestCase($event,'Done')"></i>
+        </div>
+        <div *ngIf="incomplete!==0"
+             class="create-test-case-btn-group-btn"
+             (click)="filterTestCaseByUserStoryState($event)"
+             id="Incomplete"
+             [ngClass]="{'active': isFilterSelected('Incomplete')}">
+            Incomplete <span class="mr-1">{{incomplete}} TC</span>
+            <i class="close-button icon-close"
+               (click)="removeFilterForTestCase($event,'Incomplete')"></i>
+        </div>
+    </div>
+</div>
+<app-test-case-container *ngIf="stateLoading && !dataLoading"
+                         [testCaseList]="testCaseList"></app-test-case-container>

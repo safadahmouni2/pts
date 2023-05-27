@@ -1,0 +1,41 @@
+<div class="flex-grow-1 flex-shrink-1">
+    <div class="row">
+        <div class="col-12 mb-2">
+            <span class="tc-details-field-label">Short description</span>
+            <span class="tc-details-field-value">{{testCase.shortDescription}}</span>
+        </div>
+        <div class="col-6">
+            <span class="tc-details-field-label">Category</span>
+            <span class="tc-details-field-value">{{testCase.category}}</span>
+        </div>
+        <div class="col-6">
+            <span class="tc-details-field-label">Execution estimation time(h)</span>
+            <span class="tc-details-field-value">{{testCase.executionEstimationTime}}</span>
+        </div>
+        <div class="col-12 mb-2">
+            <span class="tc-details-field-label">Preconditions</span>
+            <span class="tc-details-field-value">{{testCase.preCondition}}</span>
+        </div>
+
+        <!-- Panel body -->
+        <div class="col-12 mt-2">
+            <table class="tc-details-table">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Test steps</th>
+                        <th>Expected results</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let  testStep of testSteps;">
+                        <td>{{testStep.stepOrder}}</td>
+                        <td>{{testStep.stepDescription}}</td>
+                        <td>{{testStep.expectedResult}}</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

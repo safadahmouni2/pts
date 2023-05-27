@@ -1,0 +1,377 @@
+<div class="environment-section first">
+  <div class="environment-item">
+    <div class="d-flex">
+      <div class="flex-grow-1">
+        <h3 *ngIf="environment.name">{{environment.name}}</h3>
+        <h3>{{environment.Env_name}}</h3>
+      </div>
+      <div class="right-action-buttons pb-1 d-flex align-items-center justify-content-center">
+        <div class="btn-group"
+             dropdown
+             (onShown)="onShowInstallsList()"
+             placement="bottom right"
+             *ngIf="installReleaseExist">
+          <!-- badge-primary if current install // badge-dark if old install -->
+          <button id="btn-installs-loader"
+                  *ngIf="installs?.installSelected"
+                  dropdownToggle
+                  type="button"
+                  [attr.aria-controls]="'install_dropdown-' + environment.Env_id"
+                  class="status badge"
+                  [ngClass]="{'badge-dark':!installs?.isCurrentInstall, 'badge-primary':installs?.isCurrentInstall}"
+                  [disabled]="loadingInstalls">
+            I: {{installs?.installSelected}}
+            <i class="icon-arrow-down ml-2"></i>
+          </button>
+          <div id="install_dropdown-{{environment.Env_id}}"
+               *dropdownMenu
+               class="dropdown-menu dropdown-menu-right mt-2 px-4 py-0"
+               role="menu"
+               aria-labelledby="btn-installs-loader">
+            <!--spinner when load data take time-->
+            <ngx-spinner name="sp-installs" 
+            style="min-height: 60px;" [fullScreen]="false" type="ball-spin-fade-rotating" size="small"></ngx-spinner>
+            <!--placeholder when no installs from test runs-->
+            <div class="install-container" *ngIf="!loadingInstalls && !installs?.installsId?.length">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div class="d-flex">
+                  <h3 class="mr-1 mb-0">I:{{environment.Install_id}}</h3>
+                  <div class="ml-2 install-responsible">
+                    <img title="{{installs?.installsCoreData[environment.Install_id]?.responsibleCode || '---'}}" alt="{{installs?.installsCoreData[environment.Install_id]?.responsibleCode || '---'}}" [src]="'https://pts.thinktank.de' + ((!installs?.installsCoreData[environment.Install_id]?.responsiblePhoto)?'/images/photos/no_photo.jpg':installs.installsCoreData[environment.Install_id]?.responsiblePhoto)">
+                  </div>
+                </div>
+                <div class="right-action-buttons d-flex align-items-center justify-content-center">
+                  <span class="status badge" 
+                  [ngClass]="installs?.installsCoreData[environment.Install_id]?.stateName === 'In Progress' ? 'status-install-warn' : ((installs?.installsCoreData[environment.Install_id]?.stateName === 'Aborded')?'status-install-urgent':'status-install-grey')">{{installs?.installsCoreData[environment.Install_id]?.stateName || '--'}}</span>
+                <a class="btn btn-light ml-2"
+                      (click)="$event.stopPropagation()"
+                      title="Chat"
+                      href="https://chat.thinktank.de/chat?serverId=DEPTSPROTTDC_LLMMG57965XXX_x12_YBB&userCode={{globals.getUserCode()}}&ticketId={{environment.Install_id}}"
+                      target="_blank">
+                    <i class="icon-person-chat"></i>
+                  </a>
+                </div>
+              </div>
+              <div class="mb-1 text-nowrap environment-name">Deadline: {{(installs?.installsCoreData[environment.Install_id]?.deadLine | date:"YYYY.MM.dd HH:mm") || '----.--.-- --:--'}} || Installed release: {{installs.installsCoreData[environment.Install_id]?.installedRelease || '-.-.-.-'}}
+              </div>
+              <div class="environment-name">{{installs?.installsCoreData[environment.Install_id]?.shortDescription || '--'}}</div>
+            </div>
+            <!-- installs from test runs-->
+            <ng-container *ngFor="let installId of installs.installsId">
+              <div class="install-container clickable"
+                   (click)="getTestCaseByInstall($event,installId,environment)">
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="d-flex">
+                    <h3 class="mr-1 mb-0">I:{{installId}}</h3>
+                    <div class="ml-2 install-responsible">
+                      <img title="{{installs.installsCoreData[installId]?.responsibleCode || '---'}}" alt="{{installs.installsCoreData[installId]?.responsibleCode || '---'}}" [src]="'https://pts.thinktank.de' + ((!installs.installsCoreData[installId]?.responsiblePhoto)?'/images/photos/no_photo.jpg':installs.installsCoreData[installId]?.responsiblePhoto)">
+                    </div>
+                  </div>
+                  <div class="right-action-buttons d-flex align-items-center justify-content-center">
+                    <span class="status badge" 
+                    [ngClass]="installs.installsCoreData[installId]?.stateName === 'In Progress' ? 'status-install-warn' : ((installs.installsCoreData[installId]?.stateName === 'Aborded')?'status-install-urgent':'status-install-grey')">{{installs.installsCoreData[installId]?.stateName || '--'}}</span>
+                    <a class="btn btn-light ml-2"
+                       (click)="$event.stopPropagation()"
+                       title="Chat"
+                       href="https://chat.thinktank.de/chat?serverId=DEPTSPROTTDC_LLMMG57965XXX_x12_YBB&userCode={{globals.getUserCode()}}&ticketId={{installId}}"
+                       target="_blank">
+                      <i class="icon-person-chat"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="mb-1 text-nowrap environment-name">Deadline: {{(installs.installsCoreData[installId]?.deadLine | date:"YYYY.MM.dd HH:mm") || '----.--.-- --:--'}} || Installed release: {{installs.installsCoreData[installId]?.installedRelease || '-.-.-.-'}}
+                </div>
+                <div class="environment-name">{{installs.installsCoreData[installId]?.shortDescription || '--'}}</div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <button class="btn btn-primary"
+        (click)="onClickOpenModal(newInstall)"
+        [disabled]="plannedInstallExist||inProgressInstallExist||requestedInstallExist||globals.isInvalidSprintSelected()">
+          new install
+        </button>
+      </div>
+    </div>
+    <div class="environment-name mb-1">{{environment.State}} || {{environment.Installed_release}} ||
+      {{environment.Env_type}} || {{environment.Product}}</div>
+
+
+    <div class="d-flex">
+      <div class="flex-grow-1 env-container">
+        <a *ngIf="environment.Internal_URL"
+           href="{{environment.Internal_URL}}"
+           class="btn btn-environment"
+           title="{{environment.Internal_URL}}"
+           target="_blank">
+          <i class="icon-internal"></i> I</a>
+        <a *ngIf="environment.External_URL"
+           href="{{environment.External_URL}}"
+           class="btn btn-environment"
+           title="{{environment.External_URL}}"
+           target="_blank">
+          <i class="icon-external"></i> E</a>
+      </div>
+      <div class="right-action-buttons d-flex">
+      <!-- Add button for Test Runs -->
+        <button class="btn btn-primary" (click)="loadTestRunsByInstall(installs.installSelected)" 
+        *ngIf="installs?.countTestRunsSelectedInstall"
+        [disabled]="loadingTestRuns">
+          <!-- Display the arrows only if testRun?.tests?.length > 0 -->
+            <i class="icon-arrow-up mr-1" *ngIf="collapsedTestRuns"></i>
+            <i class="icon-arrow-right mr-1" *ngIf="!collapsedTestRuns"></i>
+            <span class="count-test-run">{{installs.countTestRunsSelectedInstall}}</span>Test Runs
+
+        </button>
+        <button class="btn btn-primary"
+                [routerLink]="['/createtestrun',environment.Install_id,environment.Env_id]"
+                [disabled]="inProgressInstallExist||!installReleaseExist||!installs?.isCurrentInstall">
+          new test run
+        </button>
+
+        <a class="btn btn-light"
+           title="Chat"
+           href="{{chatUrl}}"
+           target="_blank"
+           [ngClass]="{'disabled': !isProd}">
+          <i class="icon-person-chat"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="planned-install d-flex justify-content-between align-items-center"
+       *ngIf="undoneInstallExist">
+    <div>
+      <i class="planned-install-icon icon-warning"></i>{{msg}}
+    </div>
+    <div class="right-action-buttons">
+      <a class="btn btn-light"
+         title="Chat"
+         href="{{getPlannedInstallChatUrl()}}"
+         target="_blank"
+         [ngClass]="{'disabled': !isProd}">
+        <i class="icon-person-chat"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="requested-install"
+       *ngIf="installRequestExist">
+    <div class="d-flex align-items-center">
+      <i class="planned-install-icon icon-warning"></i>{{msg}} :{{installVersion}}
+    </div>
+    <button class="btn btn-light"
+        title="Edit"
+        (click)="onClickOpenModal(newInstall,install)">
+      <i class="icon-pen"></i>
+    </button>
+  </div>
+
+  <ng-template #newInstall>
+    <div class="form-modal-header">
+      <h4 class="form-modal-title">{{requestedInstallExist ? 'Edit Install' :'Create Install'}}</h4>
+    </div>
+    <div class="form-modal-body">
+      <div class="row modal-row">
+        <div class="modal-col-6">
+          <div [ngClass]="requestedInstallExist ? 'form-group-pts-qa focused' : 'form-group-pts-qa'">
+            <div class="label">Plan release</div>
+            <input required
+                   #version="ngModel"
+                   id="planRelease"
+                   [(ngModel)]="install.installVersion"
+                   type="text"
+                   class="form-control-pts-qa"
+                   (focus)="fieldFocus($event, 'Plan release')"
+                   (blur)="fieldBlur($event)" />
+            <div class="conbobox-conatainer"
+                 *ngIf="showPlanReleaseDropdown">
+              <div class="conbobox-item cursor-pointer"
+                   *ngFor="let planRelease of ( dropDownPlanRelease.rows )"
+                   (click)="setPlanRelease(planRelease.label, $event)">{{planRelease.label}}
+              </div>
+            </div>
+            <label class="dropdown-label"
+                   for="planRelease"
+                   (click)="togglePlanReleaseDropdown()">
+              <i class="icon-arrow-down align-middle"></i>
+            </label>
+          </div>
+        </div>
+        <div class="modal-col-6">
+          <div [ngClass]="requestedInstallExist ? 'form-group-pts-qa focused' : 'form-group-pts-qa'">
+            <div class="label">Requested release</div>
+            <input #version2="ngModel"
+                   id="requestedRelease"
+                   [(ngModel)]="install.requestedRelease"
+                   type="text"
+                   class="form-control-pts-qa"
+                   (focus)="fieldFocus($event, 'Requested release')"
+                   (blur)="fieldBlur($event)" />
+            <div class="conbobox-conatainer"
+                 *ngIf="showTestReleaseDropdown">
+              <div class="conbobox-item cursor-pointer"
+                   *ngFor="let testRelease of ( dropDownTestRelease.rows )"
+                   (click)="setTestRelease(testRelease.label, $event)">{{testRelease.label}}
+              </div>
+            </div>
+            <label for="requestedRelease"
+                   class="dropdown-label"
+                   (click)="toggleTestReleaseDropdown()">
+              <i class="icon-arrow-down align-middle"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row modal-row">
+        <div class="modal-col-6">
+          <div class="{{requestedInstallExist ? 'form-group-pts-qa focused' : 'form-group-pts-qa'}}"
+                 [ngClass]="{'focused': true}">
+            <div class="label">Date and time</div>
+               <input type="text" id="datepicker"
+                      class="form-control-pts-qa"
+                      #datepicker="bsDatepicker"
+                      [attr.aria-expanded]="datepicker.isOpen"
+                      [bsConfig]="bsConfig"
+                      bsDatepicker
+                      [(ngModel)]="install.date"
+                      (focus)="fieldFocus($event, 'Date and time')">
+
+                <label for="datepicker"
+                       class="dropdown-label">
+              <i class="icon-datepicker align-middle" (click)="datepicker.toggle()"></i>
+            </label>
+           </div>
+        </div>
+        <div class="modal-col-6">
+          <div [ngClass]="requestedInstallExist ? 'form-group-pts-qa focused' : 'form-group-pts-qa'">
+            <div class="label">Urgency</div>
+            <input required
+                   #urgency="ngModel"
+                   [(ngModel)]="install.urgency"
+                   [ngClass]="{'focused': install.urgency}"
+                   type="text"
+                   id="urgency"
+                   class="form-control-pts-qa"
+                   (focus)="fieldFocus($event, 'Urgency')"
+                   (blur)="fieldBlur($event)" />
+            <div class="conbobox-conatainer"
+                 *ngIf="showUrgencyDropdown">
+              <div class="conbobox-item cursor-pointer"
+                   (click)="setUrgency('Low', $event)">Low</div>
+              <div class="conbobox-item cursor-pointer"
+                   (click)="setUrgency('Medium', $event)">Medium</div>
+              <div class="conbobox-item cursor-pointer"
+                   (click)="setUrgency('High', $event)">High</div>
+              <div class="conbobox-item cursor-pointer"
+                   (click)="setUrgency('Extremely_urgent', $event)">Extremely urgent
+              </div>
+            </div>
+            <label for="urgency"
+                   class="dropdown-label"
+                   (click)="toggleUrgencyDropdown()">
+              <i class="icon-arrow-down align-middle"></i>
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row modal-row">
+        <div class="modal-col">
+          <div [ngClass]="requestedInstallExist ? 'form-group-pts-qa focused' : 'form-group-pts-qa'">
+            <div class="label">Short Description</div>
+            <input required
+                   #shortDescription="ngModel"
+                   type="text"
+                   [(ngModel)]="install.description"
+                   class="form-control-pts-qa"
+                   (focus)="fieldFocus($event, 'Short description')"
+                   (blur)="fieldBlur($event)" />
+          </div>
+        </div>
+      </div>
+
+      <div class="row modal-row">
+        <div class="modal-col-6">
+          <div [ngClass]="requestedInstallExist ? 'form-group-pts-qa focused' : 'form-group-pts-qa'">
+            <div class="label">User story *</div>
+            <input required
+                   #userStoryId="ngModel"
+                   [(ngModel)]="userStoryObj.userStoryName"
+                   [ngClass]="{'focused': install.userStoryId}"
+                   type="text"
+                   id="userStoryId"
+                   class="form-control-pts-qa"
+                   (focus)="fieldFocus($event, 'User story')"
+                   (blur)="fieldBlur($event)" />
+            <div class="conbobox-conatainer"
+                 *ngIf="showUSDropdown">
+              <div class="conbobox-item cursor-pointer"
+                   *ngFor="let us of listUserStory"
+                   (click)="setUserStory(us,$event)">{{us.text}}</div>
+            </div>
+            <label for="userStoryId"
+                   class="required dropdown-label"
+                   (click)="toggleUserStoryDropdown()">
+              <i class="icon-arrow-down align-middle"></i>
+            </label>
+          </div>
+        </div>
+        <div class="modal-col-6">
+          <div [ngClass]="{'form-group-pts-qa': true,'focused' : install.project}">
+            <div class="label">Project</div>
+            <input #project="ngModel"
+                   id="project"
+                   [(ngModel)]="install.project"
+                   type="text"
+                   class="form-control-pts-qa"
+                   (focus)="fieldFocus($event, 'Project')"
+                   (blur)="fieldBlur($event)" />
+            <div class="conbobox-conatainer"
+                 *ngIf="showProjectDropdown" style="max-height: 313px;">
+              <div class="conbobox-item cursor-pointer"
+                   *ngFor="let project of projectOptions"
+                   (click)="setInstallProject(project.project_name, $event)">
+                   {{project.project_name}}
+              </div>
+            </div>
+            <label for="project"
+                   class="dropdown-label"
+                   (click)="toggleProjectDropdown()">
+              <i class="icon-arrow-down align-middle"></i>
+            </label>
+          </div>
+        </div>        
+      </div>
+
+      <div class="row modal-row">
+        <div class="modal-col buttons-col">
+          <button class="modal-btn modal-btn-secondary"
+                  (click)="cancel()">cancel</button>
+          <button *ngIf="!requestedInstallExist"
+                  [disabled]="shortDescription.invalid || version.invalid"
+                  class="modal-btn modal-btn-primary"
+                  [ngClass]="{'btn-disabled':shortDescription.invalid || version.invalid}"
+                  (click)="addInstall()">save
+          </button>
+          <button *ngIf="requestedInstallExist"
+                  [disabled]="shortDescription.invalid || version.invalid"
+                  class="modal-btn modal-btn-primary"
+                  [ngClass]="{'btn-disabled':shortDescription.invalid || version.invalid}"
+                  (click)="updateInstall()">update
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-container *ngFor="let testRun of installs?.testRuns">
+      <div class="test-run-section">
+        <app-test-run-item class="test-run-item"
+          [testRun]="testRun"
+          [inProgress]="inProgress"
+          [isCurrentInstall]="installs?.isCurrentInstall"
+        ></app-test-run-item>
+      </div>
+  </ng-container>
+</div>

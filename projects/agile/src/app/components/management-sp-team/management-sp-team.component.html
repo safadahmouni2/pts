@@ -1,0 +1,55 @@
+<div class="sprint-team-members-header">
+    <div class="sprint-team-members-title">Team Members</div>
+  </div>
+  <div class="team-members-main-content">
+    <table *ngIf="!!sprintMembers" class="sprint-team-members">
+      <thead>
+        <tr>
+          <th>USER</th>
+          <th>ROLES</th>
+          <th>STATUS</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let sm of sprintMembers | keyvalue;let index = index" >
+          <td>
+            <div *ngIf="getSprintMemberPhoto(sm.key) != null && getSprintMemberPhoto(sm.key) != ''" tooltip="{{sm.key}}: {{getSprintMemberFullName(sm.key)}}" placement="right">
+                <img  class="team-member-image" [src]="serverpath + getSprintMemberPhoto(sm.key)" >
+            </div>
+            <div *ngIf="getSprintMemberPhoto(sm.key) == null || getSprintMemberPhoto(sm.key) == ''"  class="user-name-abbreviation" tooltip="{{sm.key}}: {{getSprintMemberFullName(sm.key)}}" placement="right">
+                <div class="user-name-code">{{sm.key}}</div>
+            </div>
+          </td>
+          <td>
+            <div class="create-sprint-form-group autocomplete-container" (clickOutside)="queryInput.value = ''; onClickedOutside(index)">
+              <div class="roles-container">
+             <div class="team-member-role" [ngClass]="{'disabled': smr.stateId === 1030059}"  *ngFor="let smr of sm.value"
+             (click)="(isSM_SMD_By_Product || isSM_SMD_By_Sprint) && updateSprintMemberRoleState(sm.key, smr.id)">{{smr.role}} </div>
+              </div>
+             <input id="id_{{index}}" class="create-sprint-form-control" type="text" autocomplete="off" (keyup.enter)="displaySprintMemberNotAssignedRoles(index, sm.key, $event.target.value)"
+               (focus)="fieldFocus($event)" (blur)="fieldBlur($event)" [disabled]="!(isSM_SMD_By_Product || isSM_SMD_By_Sprint)" #queryInput>
+              <button id="btn_id_{{index}}" class="create-sprint-form-button team-member-dropdown-icon" (click)="queryInput.value = ''; displaySprintMemberNotAssignedRoles(index, sm.key)">
+                <i class="align-middle" [ngClass]="{'icon-up': showDropdown[index], 'icon-down': !showDropdown[index]}"
+                ng-reflect-ng-class="[object Object]" ></i></button>
+              <div [ngClass]="{'team-roles-dropdown' : true, 'd-block': showDropdown[index]}">
+                <div class="team-roles-dropdown-item" *ngFor="let role of notAssignedRoles"
+                  (click)="(isSM_SMD_By_Product || isSM_SMD_By_Sprint) && queryInput.value = ''; assignRoleToSprintMember($event, index, sm.key, role)">{{role}}</div>
+              </div>
+            </div>
+          </td>
+          <td>
+
+            <div class="team-members-checkbox-container" [ngClass]="{'disabled':!isSprintMemberActive(sm.key)}" >
+
+              <span *ngIf="!isSprintMemberActive(sm.key)" class="team-members-checkbox-status">OFF</span>
+              <span *ngIf="isSprintMemberActive(sm.key)" class="team-members-checkbox-status">ON</span>
+
+              <input type="checkbox" [value] ='isSprintMemberActive(sm.key)' class="team-members-checkbox"
+              (change)="updateSprintMemberState(sm.key)" [disabled]="!(isSM_SMD_By_Product || isSM_SMD_By_Sprint)" />
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>

@@ -1,0 +1,18 @@
+<div class="panel d-flex flex-column">
+    <!-- Panel header -->
+    <div class="panel-header">
+        <h4 class="panel-title">{{getTitle()}}</h4>
+    </div>
+    <app-test-case-details class="panel-body"
+                           [testCase]="testCaseDetails"
+                           [testSteps]="testSteps"></app-test-case-details>
+    <!-- Panel footer -->
+    <div class="panel-footer">
+        <button class="panel-btn"
+                (click)="onClosePanel()">Close</button>
+    </div>
+</div>
+
+<!-- Panel Backdrop -->
+<div class="panel-backdrop"
+     (click)="onClosePanel()"></div>

@@ -1,0 +1,11 @@
+<div class="home-container">
+    <div class="d-flex flex-column">
+        <div class="d-flex">
+            <div class="welcome-date flex-grow-1">{{today | date:'EEEE, MMMM dd'}}</div>
+            <div class="action-container">
+                <button mat-stroked-button class="d-flex align-items-center action-section-stroked-button"><mat-icon class="mr-1">add</mat-icon><span>Customize</span></button>
+            </div>
+        </div>
+        <div class="welcome-greeting">Good {{greetingTime}}, {{(currentUser?.firstName || '') + ' ' + (currentUser?.lastName || '')}}</div>
+    </div>
+</div>

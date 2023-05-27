@@ -1,0 +1,266 @@
+<header>
+  <div class="container-fluid container-padding">
+    <div class="slim-header-left">
+      <img src="https://pts.thinktank.de/scrum/assets/img/tt-slogan.png" class="slim-logo-img">
+      <h2 class="slim-logo">
+        <a href="index.html">HR.
+          <span class="tt-blue">Boarding</span>
+        </a>
+      </h2>
+    </div>
+    <div class="slim-header-right">
+      <div class="search-box">
+        <input type="text" [(ngModel)]="searchString" class="form-control" placeholder="Search">
+        <button class="btn btn-primary">
+          <i class="icon-magnifying-glass"></i>
+        </button>
+      </div>
+      <div class="dropdown dropdown-c">
+        <a href="#" class="logged-user" data-toggle="dropdown">
+          <img [src]="'https://pts.thinktank.de' + ((!loggedUser || !loggedUser.photo)?'/images/photos/no_photo.jpg':loggedUser?.photo)">
+          <span>{{loggedUser?.code}}</span>
+          <i class="fa fa-angle-down"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="container-fluid container-padding">
+  <div class="row row-sm mg-t-20">
+    <div class="col-lg-2">
+      <div class="pd-10 bd bg-white left-navigation">
+        <ul class="nav nav-pills flex-column" role="tablist">
+          <li class="nav-item" *ngFor="let processType of processTypes">
+            <a href="javascript:void(0)" [ngClass]="{'nav-link':true,'active':selectedProcessTypeId==processType.id, 'alert-dark':processType.id == -1000 ,'alert-danger':processType.id == -1001}"
+              data-toggle="tab" (click)="selectedProcessTypeId=processType.id;" role="tab">
+              <i class="icon-left-arrow" *ngIf="selectedProcessTypeId==processType.id"></i>{{processType.name }}
+            </a>
+          </li>
+        </ul>
+      </div>
+      <div class="pd-10 bd bg-white left-navigation" style="margin-top:  20px;">
+        <ul class="nav nav-pills flex-column" role="tablist">
+          <li class="nav-item" *ngFor="let departement of departements">
+            <a href="javascript:void(0)" [ngClass]="{'nav-link':true,'active':selectedDepartementValue === departement.value}"
+              data-toggle="tab" (click)="selectedDepartementValue = departement.value;" role="tab">
+              <i class="icon-left-arrow" *ngIf="selectedDepartementValue === departement.value"></i>{{departement.label}}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-10">
+      <div class="row row-sm" *ngIf="false">
+        <div class="col-lg-6">
+          <div class="card card-info circular-progress">
+            <div class="card-header">
+              <h6 class="slim-card-title">Tasks to be implemented</h6>
+            </div>
+            <div class="text-center pd-10">
+              <div class="inline m-20">
+                <div class="progress red-progress" data-percentage="21">
+                  <span class="progress-left">
+                    <span class="progress-bar"></span>
+                  </span>
+                  <span class="progress-right">
+                    <span class="progress-bar"></span>
+                  </span>
+                  <div class="progress-value">
+                    <div> 21%
+                      <br>
+                      <span>Tickets</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="font-bold m-t">Total 150</div>
+              </div>
+              <div class="inline m-20">
+                <div class="progress orange-progress" data-percentage="67">
+                  <span class="progress-left">
+                    <span class="progress-bar"></span>
+                  </span>
+                  <span class="progress-right">
+                    <span class="progress-bar"></span>
+                  </span>
+                  <div class="progress-value">
+                    <div> 67%
+                      <br>
+                      <span>Requirements</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="font-bold m-t">Total 150</div>
+              </div>
+              <div class="inline m-20">
+                <div class="progress green-progress" data-percentage="86">
+                  <span class="progress-left">
+                    <span class="progress-bar"></span>
+                  </span>
+                  <span class="progress-right">
+                    <span class="progress-bar"></span>
+                  </span>
+                  <div class="progress-value">
+                    <div> 86%
+                      <br>
+                      <span>Install</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="font-bold m-t">Total 150</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6 mg-t-20 mg-lg-t-0">
+          <div class="card card-info">
+            <div class="card-header">
+              <h6 class="slim-card-title">Tasks to be implemented</h6>
+            </div>
+            <dl>
+              <dd class="percentage percentage-11">
+                <span class="text">Warn (608)</span>
+              </dd>
+              <dd class="percentage percentage-49">
+                <span class="text">Classified (370)</span>
+              </dd>
+              <dd class="percentage percentage-16">
+                <span class="text">Not employed (37)</span>
+              </dd>
+              <dd class="percentage percentage-5">
+                <span class="text">Employed (26)</span>
+              </dd>
+              <dd class="percentage percentage-2">
+                <span class="text">Rejected (20)</span>
+              </dd>
+              <dd class="percentage percentage-2">
+                <span class="text">Did not come (11)</span>
+              </dd>
+            </dl>
+          </div>
+        </div>
+      </div>
+      <div class="row row-sm">
+        <div class="col-lg-12 mg-t-20 mg-lg-t-0">
+          <div class="card card-table">
+            <div class="card-header">
+              <h6 class="slim-card-title">Dashboard</h6>
+            </div>
+            <div class="table-responsive">
+              <table class="table mg-b-0 tx-13">
+                <thead>
+                  <tr class="tx-10">
+                    <th class="pd-y-5">ID</th>
+                    <th class="pd-y-5 pos-left" align="left">User</th>
+                    <th class="pd-y-5">Process</th>
+                    <th class="pd-y-5">PROGRESS</th>
+                    <th class="pd-y-5">Status</th>
+                    <th class="pd-y-5">Deadline</th>
+                    <th class="pd-y-5">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                  <tr *ngFor="let pr of processList | processType: {processTypeId: selectedProcessTypeId,departementValue: selectedDepartementValue,searchString : searchString}; let i = index"
+                    [routerLink]="['/process-detail/'+pr.id] " [ngClass]="{'alert-dark':(pr. process_type_id == -1000 )  ,'alert-danger':( pr. process_type_id == -1001 )}">
+                    <td width="50px">{{pr.id}}</td>
+                    <td align="left">
+                      <a href="javascript:void(0)" class="tx-inverse tx-14 font-bold d-block">{{pr.USER }}</a>
+                      <span class="tx-11 d-block pos-left">{{pr.department}}</span>
+                      <span class="tx-11 d-block pos-left">{{pr.object_id}}</span>
+                    </td>
+
+                    <td>{{pr.pr_name}}
+                      <span class="tx-11 d-block">{{pr.process_type_id}}</span>
+                    </td>
+
+
+                    <td>
+                      <div class="progress progress-color">
+                       <div class="progress-bar" role="progressbar" [attr.aria-valuenow]="pr.progress"
+                           aria-valuemin="0" aria-valuemax="100"  *ngIf="pr.progress 	&gt; 22" [style.width]="pr.progress+'%'" >
+                        {{pr.progress}}%
+                      </div>  
+                      <div class="progress-bar width-prg-under-22" role="progressbar" [attr.aria-valuenow]="pr.progress"
+                           aria-valuemin="0" aria-valuemax="100" *ngIf="pr.progress &lt; 22" >
+                        {{pr.progress}}%
+                      </div>   
+					</div>
+                   </td>
+                    <td class="tx-12">
+                      <span [ngClass]="{'square-8':true,'bg-success':pr.STATUS=='GREEN','bg-warning':pr.STATUS=='ORANGE','bg-danger':pr.STATUS=='RED','mg-r-5 rounded-circle':true}"></span>
+                    </td>
+
+
+                    <td>{{pr.dead_line | date:'dd MMMM yyyy'}}</td>
+
+                    <td style="border-top: 1px solid #dee2e6;">
+                      <div *ngIf="pr.closable == 1" (click)="closeProcess(pr.id)">
+                        <a href="#">
+                          <svg width="20" version="1.1" xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 0 64 64" xmlns:xlink="http://www.w3.org/1999/xlink"
+                            enable-background="new 0 0 64 64">
+                            <g>
+                              <path fill="#1D1D1B" d="M28.941,31.786L0.613,60.114c-0.787,0.787-0.787,2.062,0,2.849c0.393,0.394,0.909,0.59,1.424,0.59   c0.516,0,1.031-0.196,1.424-0.59l28.541-28.541l28.541,28.541c0.394,0.394,0.909,0.59,1.424,0.59c0.515,0,1.031-0.196,1.424-0.59   c0.787-0.787,0.787-2.062,0-2.849L35.064,31.786L63.41,3.438c0.787-0.787,0.787-2.062,0-2.849c-0.787-0.786-2.062-0.786-2.848,0   L32.003,29.15L3.441,0.59c-0.787-0.786-2.061-0.786-2.848,0c-0.787,0.787-0.787,2.062,0,2.849L28.941,31.786z"
+                              />
+                            </g>
+                          </svg>
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+              </table>
+            </div>
+            <div class="card-footer tx-12 pd-y-15 bg-transparent" *ngIf="mode == 'with'">
+              <a href="#">
+                <i class="icon-down-arrow"></i>View All On Boarding</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row row-sm mg-t-20">
+        <div class="col-lg-12 mg-t-20 mg-lg-t-0">
+          <div class="card card-table">
+            <div class="card-header">
+              <h6 class="slim-card-title">Opened tasks</h6>
+            </div>
+            <div class="table-responsive">
+              <ul class="task-feature d-flex flex-column">
+
+                <aside [ngClass]="{'task-opened':task.expanded,'clearfix':true}" *ngFor="let task of tasks">
+                  <div class="panel-header d-flex flex-row justify-content-center align-items-center">
+
+                    <div (click)="openLinkInNewTab(task.pts_url)">{{task.type.substring(0,1)}}{{task.ticket_id}}
+                      <br>
+                      <span class="pts-description">{{task.category}}</span>
+                    </div>
+                    <div class="title-project" (click)="toggleTaskExpanded(task)" >{{task.short_description}}</div>
+                    <div class="ml-auto">
+                      <img *ngIf="task.urgencyIcon" [src]="'https://pts.thinktank.de'+task.urgencyIcon">
+                      <img *ngIf="!task.urgencyIcon" src="assets/img/default_prio_icn.png">
+
+                      <img *ngIf="task.responsible_photo" [src]="'https://pts.thinktank.de'+task.responsible_photo" class="img-resp">
+                      <img *ngIf="!task.responsible_photo" src="assets/img/default_prio_icn.png" class="img-resp">
+                    </div>
+                    <div class="bloc-icon">
+                      <a href="{{task.chat_url}}" target="PTS">
+                        <img src="https://pts.thinktank.de/images/chat/pts_chat_empty.png"> </a>
+
+                      <a target="PTS" href={{task.mailto_url}}>
+                        <img src="assets/img/mail.png" class="pts-email-icon"> </a>
+                    </div>
+                    <div>{{task.dead_line | date:'dd MMMM yyyy'}}
+                      <br> {{task.status}}</div>
+                    <div class="last-child"> </div>
+                  </div>
+                  <div class="panel-body" *ngIf="task.expanded">
+                    <span class="tx-11 d-block pos-left">
+                      <b>Description:</b> {{task.long_description}}</span>
+                    <span class="tx-11 d-block pos-left">
+                      <b>Solution:</b> {{task.solution}}</span>
+                  </div>
+                </aside>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>

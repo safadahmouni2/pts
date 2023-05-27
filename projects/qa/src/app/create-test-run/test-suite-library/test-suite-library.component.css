@@ -1,0 +1,50 @@
+.test-cases-list-container {
+    border: 1px solid #949293;
+    height: calc(100vh - 215px);
+    overflow-y: scroll;
+}
+
+.test-cases-header {
+    background: #e8e6e7;
+    color: #444444;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.test-cases-header-col {
+    padding: 6px 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.test-cases-list {
+    position: relative;
+}
+
+.test-cases-list-item {
+    font-weight: 100;
+    font-size: 16px;
+    line-height: 27px;
+}
+
+.test-cases-list-item:nth-child(even) {
+    background: #f5f5f5;
+}
+
+.test-cases-list-item.active {
+    background-color: #516ea6;
+    color: #fff;
+}
+
+.test-case-name {
+    padding: 6px 16px 6px 10px;
+    display: inline-block;
+    word-break: break-word;
+}
+
+.test-case-actions {
+    padding: 6px 10px 6px 0;
+}

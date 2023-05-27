@@ -1,0 +1,1441 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i');
+
+
+html, body{
+/*font-family: 'Raleway', sans-serif;*/
+    font-family: 'Helvetica', 'Arial', sans-serif;
+	background-color: #c6cfd4;
+    /* overflow-x: hidden;
+    overflow-y: hidden; */
+    height: 100%;
+    font-size: 15px;
+}
+.bg-blue-1{
+	background-color: #2e3a5c;
+}
+.h-all{
+	height: 100%;
+}
+.logo-container img{
+	
+}
+.logo-container span{
+	font-size: 30px;
+    position: relative;
+    top: 8px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+.mw-320{
+	max-width: 320px !important;
+}
+.user-avatar {
+	margin-top: 50px;
+}
+.user-name{
+	font-size: 30px;
+    color: #e4ebf7;
+    font-weight: bold;
+    line-height: 33px;
+    margin-top: 15px;
+}
+.sidebar-navigation{
+    position: relative;
+    top: 12px;
+}
+.sidebar-navigation li {
+	color: #e4ebf7;
+	list-style: none;
+	line-height: 40px;
+	position: relative;
+    padding-left: 16px;
+    cursor: pointer;
+    font-size: 13px;
+
+}
+
+.sidebar-navigation span{
+	font-size: 20px;
+    margin-right: 15px;
+}
+.sidebar-navigation a {
+	color: #e4ebf7;
+    text-decoration: none;
+
+}
+.sidebar-navigation li:hover {
+	color: #e4ebf7;
+	background-color: #343f5f;
+	list-style: none;
+	line-height: 40px;
+	position: relative;
+    padding-left: 16px;
+    cursor: pointer;
+
+}
+.sidebar-navigation ul{
+	padding-left: 0px !important;
+}
+.sidebar-navigation li.active {
+	background-color: #0c1224;
+
+}
+.sidebar-navigation li.active:before {
+	content: '';
+    position: absolute;
+    bottom: 0;
+    background: #17469e;
+    width: 5px;
+    right: 0;
+    height: 100%;
+}
+.top-bar{
+	background: #fff;
+    padding: 16px;
+    height: 66px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0px 0px 28px -2px rgba(0,0,0,0.15);
+}
+.top-bar input{
+	width: 100%;
+    height: 36px;
+    background: white;
+    border: 1px solid #c6c9cc;
+    padding: 8px;
+    font-size: 12px;
+    font-weight: bold;
+}
+.top-bar button{
+    background: #718cb2;
+    color: white;
+    border: none;
+    padding: 6px 30px 7px 30px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+.top-bar .user-avatar{
+	margin-top: initial;
+	margin-bottom: initial;
+}
+.top-bar .user-avatar img{
+	border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: 2px solid #17469e;
+
+}
+input:focus {
+    color: #495057;
+    background-color: #fff;
+    border-color:#9acffa !important;
+    outline: none;
+    -webkit-box-shadow: 0 0 0 0.2rem rgba(33,150,243,.25);
+    box-shadow: 0 0 0 0.2rem rgba(33,150,243,.25);
+}
+.main-content{
+    margin-top: 12px;
+}
+.main-block{
+	background-color: white;
+    /*min-height: 220px;*/
+    margin-bottom: 12px;
+    /*padding-bottom: 35px;*/
+}
+.main-block:hover {
+	-webkit-box-shadow: 0px 0px 28px -2px rgba(0,0,0,0.15);
+    -moz-box-shadow: 0px 0px 28px -2px rgba(0,0,0,0.15);
+    box-shadow: 0px 0px 28px -2px rgba(0,0,0,0.15);
+}
+.main-block h1{
+	font-size: 12px;
+    font-weight: bold;
+    color: #515974;
+    padding: 8px 5px 8px 10px;
+    margin-bottom: 0px;
+}
+.main-block .header{
+	border-bottom: 1px solid #c6c9cc;
+    width: 100%;
+}
+
+.filter-container select{
+	background: transparent;
+    color: #515974;
+    border: 1px solid #c6c9cc; ;
+    padding: 3px 10px 3px 10px;
+    border-radius: 20px;
+
+}
+.mw-100p{
+    max-width: 100%;
+    overflow-y: hidden;
+    overflow-x: auto;
+    width: 100%;
+}
+.my-score{
+	background-color: #62b58f;
+	margin-top: 20px;
+	position: relative;
+	-webkit-box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.39);
+    -moz-box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.39);
+    box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.39);
+}
+.my-score h1{
+	color: white;
+	font-weight: bold;
+    font-size: 20px;
+    padding: 8px 5px 8px 10px;
+
+}
+.my-score h2{
+	color: white;
+    font-weight: bold;
+    font-size: 50px;
+    padding: 8px 5px 8px 10px;
+    margin-top: 25px;
+
+}
+.my-score img {
+	position: absolute;
+    opacity: 0.3;
+    right: 25px;
+    top: 12px;
+    width: 70px;
+}
+.top-score{
+	background-color: #62b58f;
+	margin-top: 20px;
+	position: relative;
+	-webkit-box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.39);
+    -moz-box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.39);
+    box-shadow: 0px 0px 28px -2px rgba(0, 0, 0, 0.39);
+}
+.top-score h1{
+	color: white;
+	font-weight: bold;
+    font-size: 20px;
+    padding: 8px 5px 8px 10px;
+
+}
+.top-score h2{
+	color: white;
+    font-weight: bold;
+    font-size: 50px;
+    padding: 8px 5px 8px 10px;
+    margin-top: 25px;
+
+}
+.top-score img {
+	position: absolute;
+    opacity: 0.3;
+    right: 14px;
+    top: 7px;
+    width: 100px
+}
+.mr-t-20{
+	margin-top: 20px;
+}
+.new-smart-container select {
+    background: transparent;
+    color: #515974;
+    height: 35px;
+    border: 1px solid #c6c9cc;
+    padding: 3px 10px 3px 10px;
+    width: 100%;
+}
+.new-smart-container button {
+    background: #57c059;
+    color: #fff;
+    border: none;
+    padding: 6px 30px 7px 30px;
+    border-radius: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 17px;
+    cursor: pointer;
+}
+
+.cursor-pointer{
+	cursor: pointer;
+}
+.icons-container{
+	padding-top: 5px;
+    padding-right: 13px;
+}
+.user-avatar .icon-download{
+	font-size: 11px;
+    margin-left: 7px;
+}
+.f-s-12{
+	font-size: 12px;
+}
+.next-event-container{
+	width: 80px;
+    height: 80px;
+    background-color: #54a6de;
+    color: white;
+}
+.event-block h2{
+	font-size: 18px;
+    padding: 0;
+    margin-bottom: 11px;
+    margin-top: 9px;
+    color: #2f2f2f;
+    font-weight: bold;
+}
+.event-block p{
+	color: #8c8c8c;
+    font-size: 14px;
+    line-height: 15px;
+}
+.next-event-container{
+	font-size: 33px;
+    font-weight: bold;
+    text-align: center;
+}
+.next-event-container span{
+	font-size: 22px;
+    font-weight: normal;
+    position: relative;
+    top: -22px;
+
+}
+
+
+.prev-event-container{
+	width: 80px;
+    height: 80px;
+    background-color: #888888;
+    color: white;
+}
+.event-block h2{
+	font-size: 18px;
+    padding: 0;
+    margin-bottom: 11px;
+    margin-top: -2px;
+    color: #2f2f2f;
+    font-weight: bold;
+}
+.event-block p{
+	color: #8c8c8c;
+    font-size: 13px;
+    line-height: 15px;
+}
+.prev-event-container{
+	font-size: 33px;
+    font-weight: bold;
+    text-align: center;
+}
+.prev-event-container span{
+	font-size: 22px;
+    font-weight: normal;
+    position: relative;
+    top: -22px;
+
+}
+input,button,select:focus {
+    outline: none !important; 
+}
+.collapsed-menu{
+    max-width: 50px;
+    transition: max-width 0.2s;
+}
+.collapsed-menu .user-name{
+	display: none;
+	}
+.user-avatar img {
+    border-radius: 50%;
+    border: 6px solid #17469e;
+    width: 50%;
+    height: 50%;
+}
+.collapsed-menu .user-avatar{
+	    margin-top: 50px;
+    margin-bottom: 88px;
+    }
+.menu-icon{
+    font-size: 18px;
+    line-height: 36px;
+}
+.menu-icon i::before{
+    color: #718cb2 !important;
+}
+.gauge-chart{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 100% !important;
+}
+.collapsed-menu .sidebar-navigation a {
+    display: none;
+
+}
+.collapsed-menu .sidebar-navigation span {
+    font-size: 20px;
+    margin-right: 15px;
+    position: relative;
+    left: -4px;
+}
+.expanded-menu{
+    transition: max-width 0.2s;
+}
+.collapsed-menu .logo-container{
+    height: 66px;
+    background-image: url(assets/images/logo.png);
+    background-repeat: no-repeat;
+    background-position: 5px;
+    background-size: 350%;
+}
+.card {
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+     background-color: none; 
+    background-clip: border-box;
+     border: 1px solid none; 
+    border-radius: .25rem;
+}
+.card-header {
+    padding: 0; 
+    margin-bottom: 0;
+    background-color:none;
+    border-bottom: none;
+}
+
+.collapsed-menu .logo-content {
+    height: 66px;
+    width: 200px;
+    position: relative;
+    left: -12px;
+    top: 13px;
+}
+.collapsed-menu .user-avatar img {
+    border-radius: 50%;
+    border: 3px solid #17469e;
+    width: 80%;
+}
+.hr-search-icon{
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 16px;
+    opacity: 0.4;
+}
+ .new-smart-container input{
+    width: 100%;
+    height: 36px;
+    background: #fff;
+    border: 1px solid #c6c9cc;
+    padding: 8px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.ng-scroll-view, .ng-scrollbar-layout,{
+    position: relative;
+    height: -webkit-fill-available !important;
+    width: 100%;
+    padding-bottom: 20px;
+}
+ng-scrollbar-x.ng-scrollbar-visible, ng-scrollbar-y.ng-scrollbar-visible {
+    display: block;
+    width: 0px !important;
+}
+.logo-content{
+    height: 66px;
+    width: 100%;
+}
+.card{
+    border:none;
+}
+.card-header{
+    background-color: transparent;
+}
+.scroll-bar-content{
+    height: -webkit-fill-available;
+    overflow-y: auto;  
+    padding-bottom: 60px;
+}
+.w-100px{
+    width: 100px;
+}
+.l-h-24{
+    line-height: 24px !important;
+}
+.theme-green .bs-datepicker-head {
+    background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA -26%, #77A1D3 100%);
+}
+.theme-green .bs-datepicker-body table td span.selected, .theme-green .bs-datepicker-body table td.selected span, .theme-green .bs-datepicker-body table td span[class*="select-"]:after, .theme-green .bs-datepicker-body table td[class*="select-"] span:after {
+    background-image: linear-gradient(to right, #77A1D3 0%, #79CBCA -26%, #77A1D3 100%);
+}
+.theme-green .bs-datepicker-body table td.week span {
+    color: #77a4d2;
+}
+.f-s-18{
+    font-size: 18px !important;
+}
+.fa-th-large:before {
+    content: "\f009";
+    font-size: 22px;
+    color: #2e3a5c;
+}
+.dropdown-item.active, .dropdown-item:active {
+     background-color: transparent;
+}
+.logout-popover {
+    right: 0 !important;
+    width: 275px;
+    left: auto !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,.2);
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .logout-popover .bs-popover-top .arrow, .bs-popover-bottom .arrow {
+    left: initial !important;
+    right: 6%;
+}
+.logout-popover img {
+    width: 50px;
+    border: 3px solid #17469e;
+    border-radius: 50%;
+}
+.logout-popover h1 {
+    font-size: 11px;
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+.logout-popover h2 {
+    font-size: 11px;
+}
+.logout-btn{
+    background: #f12c00c9 !important;
+}
+.logout-popover button {
+    background: #718cb2;
+    color: #fff;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-left: 10px;
+    width: 90px;
+    height: 30px;
+    margin-top: 6px;
+    padding: 0px;
+    font-size: 12px;
+}
+.notification-popover {
+    max-width: 320px;
+    width: 320px;
+    left: auto !important;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+.notification-popover img {
+    width: 50px;
+    border: 3px solid #17469e;
+    border-radius: 50%;
+}
+.notification-popover h1 {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 0;
+}
+.notification-popover p {
+    font-size: 11px;
+    margin-bottom: 9px;
+}
+.notification-popover h3 {
+    font-size: 12px;
+    font-weight: bold;
+}
+.notification-popover h2 {
+    font-size: 13px;
+    font-weight: bold;
+}
+.pos-arrow .popover-arrow.arrow {
+    left: initial !important;
+    right: 20% !important;
+}
+.notification-popover .header{
+    border-bottom: 1px solid #c6c9cc;
+    width: 100%;
+    padding: 10px;
+}
+.notif-content{
+    border-bottom: 1px solid #c6c9cc;
+    padding: 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    background: #fff;
+    cursor: pointer;
+}
+.notif-content:hover{
+    background: #f1f1f1;
+}
+.notification-popover .popover-body {
+    padding: 0; 
+    color: #212529;
+}
+.accepted-notif h2{
+    color: #62b58f; 
+}
+.accepted-notif img{
+    border: 3px solid #62b58f;
+}
+.rejected-notif h2{
+    color: #f2726f; 
+}
+.rejected-notif img{
+    border: 3px solid #f2726f;
+}
+.created-notif h2{
+    color: #ffc533; 
+}
+.created-notif img{
+    border: 3px solid #ffc533;
+}
+.assigned-notif h2{
+    color: #c6cfd4; 
+}
+.assigned-notif img{
+    border: 3px solid #c6cfd4;
+}
+.rating-detail-table{
+    width: calc(100% - -16px);
+}
+.rating-detail-table th {
+    font-size: 12px;
+    vertical-align: middle;    
+    text-align: center;
+}
+.rating-detail-table tr {
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+    border-top: 1px solid #dee2e6;
+    border-bottom: 1px solid #dee2e6;
+}
+.rating-detail-table tr:first-child {
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+    border-top: none !important;
+    border-bottom: 1px solid #dee2e6;
+}
+.rating-detail-table td {
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+    padding: 10px;
+}
+.img-responsable{
+    width: 40px;
+    border-radius: 50%;
+    border: 2px solid #17469e;
+}
+.good-status{
+    color: #fff;
+    background-color: #62b58f;
+    font-weight: bold;
+    padding: 6px 10px 6px 10px;
+    border-radius: 9px;
+    width: 50%;
+    margin: 0 auto;
+}
+.bad-status{
+    color: #fff;
+    background-color: #f2726f;
+    font-weight: bold;
+    padding: 6px 10px 6px 10px;
+    border-radius: 9px;
+    width: 50%;
+    margin: 0 auto;
+}
+.medium-status{
+    color: #fff;
+    background-color: #ffc533;
+    font-weight: bold;
+    padding: 6px 10px 6px 10px;
+    border-radius: 9px;
+    width: 50%;
+    margin: 0 auto;
+}
+.rating-header-table{
+    width: 100%;
+}
+.rating-header-table th {
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+    padding: 12px;
+    border-bottom: 1px solid #dee2e6;
+    border-top: 1px solid #dee2e6;
+
+}
+.rating-header-table td {
+    font-size: 12px;
+    vertical-align: middle;
+    text-align: center;
+}
+.container-rating-table{
+    width: 100%;;
+}
+.table-scroller{
+    max-height: 308px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.rating-modal h4{
+    font-size: 18px;
+    font-weight: bold;
+    color: #515974;
+    margin-bottom: 0px;
+}
+.rating-modal .close{
+    padding-top: 20px;
+}
+
+@media (max-width: 991px){
+    .w-resp-content {
+       
+        max-width: 83.3% !important;
+    
+}
+.pl-0{
+    padding-left: 15px !important;
+}
+}
+@media (max-width: 768px){
+.w-resp-content {
+    max-width: 100% !important;
+}
+.d-xs-block{
+    display: none;
+}
+.menu-mobile-on{
+    position: absolute;
+    z-index: 1;
+    max-width: 51%;
+    top: 67px;
+    height: 100%;
+    transition: left 0.4s;
+    left: 0;
+    display: block !important;
+}
+.menu-mobile-off{
+    position: absolute;
+    z-index: 1;
+    max-width: 51%;
+    top: 67px;
+    height: 100%;
+    left: -370px !important;
+    transition: left 0.4s;
+    display: block !important;
+}
+}
+@media (min-width: 576px){
+.modal-dialog {
+    max-width: 66%;
+    margin: 1.75rem auto;
+}
+}
+/* You can add global styles to this file, and also import other style files */
+/* nvd3 version 1.8.1 (https://github.com/novus/nvd3) 2015-06-15 */
+@import '~bootstrap/dist/css/bootstrap.min.css';
+.nvd3 .nv-axis {
+    pointer-events:none;
+    opacity: 1;
+}
+
+.nvd3 .nv-axis path {
+    fill: none;
+    stroke: #000;
+    stroke-opacity: .75;
+    shape-rendering: crispEdges;
+}
+
+.nvd3 .nv-axis path.domain {
+    stroke-opacity: .75;
+}
+
+.nvd3 .nv-axis.nv-x path.domain {
+    stroke-opacity: 0;
+}
+
+.nvd3 .nv-axis line {
+    fill: none;
+    stroke: #e5e5e5;
+    shape-rendering: crispEdges;
+}
+
+.nvd3 .nv-axis .zero line,
+    /*this selector may not be necessary*/ .nvd3 .nv-axis line.zero {
+    stroke-opacity: .75;
+}
+
+.nvd3 .nv-axis .nv-axisMaxMin text {
+    font-weight: bold;
+}
+
+.nvd3 .x  .nv-axis .nv-axisMaxMin text,
+.nvd3 .x2 .nv-axis .nv-axisMaxMin text,
+.nvd3 .x3 .nv-axis .nv-axisMaxMin text {
+    text-anchor: middle
+}
+
+.nvd3 .nv-axis.nv-disabled {
+    opacity: 0;
+}
+
+.nvd3 .nv-bars rect {
+    fill-opacity: .75;
+
+    transition: fill-opacity 250ms linear;
+    -moz-transition: fill-opacity 250ms linear;
+    -webkit-transition: fill-opacity 250ms linear;
+}
+
+.nvd3 .nv-bars rect.hover {
+    fill-opacity: 1;
+}
+
+.nvd3 .nv-bars .hover rect {
+    fill: lightblue;
+}
+
+.nvd3 .nv-bars text {
+    fill: rgba(0,0,0,0);
+}
+
+.nvd3 .nv-bars .hover text {
+    fill: rgba(0,0,0,1);
+}
+
+.nvd3 .nv-multibar .nv-groups rect,
+.nvd3 .nv-multibarHorizontal .nv-groups rect,
+.nvd3 .nv-discretebar .nv-groups rect {
+    stroke-opacity: 0;
+
+    transition: fill-opacity 250ms linear;
+    -moz-transition: fill-opacity 250ms linear;
+    -webkit-transition: fill-opacity 250ms linear;
+}
+
+.nvd3 .nv-multibar .nv-groups rect:hover,
+.nvd3 .nv-multibarHorizontal .nv-groups rect:hover,
+.nvd3 .nv-candlestickBar .nv-ticks rect:hover,
+.nvd3 .nv-discretebar .nv-groups rect:hover {
+    fill-opacity: 1;
+}
+
+.nvd3 .nv-discretebar .nv-groups text,
+.nvd3 .nv-multibarHorizontal .nv-groups text {
+    font-weight: bold;
+    fill: rgba(0,0,0,1);
+    stroke: rgba(0,0,0,0);
+}
+
+/* boxplot CSS */
+.nvd3 .nv-boxplot circle {
+  fill-opacity: 0.5;
+}
+
+.nvd3 .nv-boxplot circle:hover {
+  fill-opacity: 1;
+}
+
+.nvd3 .nv-boxplot rect:hover {
+  fill-opacity: 1;
+}
+
+.nvd3 line.nv-boxplot-median {
+  stroke: black;
+}
+
+.nv-boxplot-tick:hover {
+  stroke-width: 2.5px;
+}
+/* bullet */
+.nvd3.nv-bullet { font: 10px sans-serif; }
+.nvd3.nv-bullet .nv-measure { fill-opacity: .8; }
+.nvd3.nv-bullet .nv-measure:hover { fill-opacity: 1; }
+.nvd3.nv-bullet .nv-marker { stroke: #000; stroke-width: 2px; }
+.nvd3.nv-bullet .nv-markerTriangle { stroke: #000; fill: #fff; stroke-width: 1.5px; }
+.nvd3.nv-bullet .nv-tick line { stroke: #666; stroke-width: .5px; }
+.nvd3.nv-bullet .nv-range.nv-s0 { fill: #eee; }
+.nvd3.nv-bullet .nv-range.nv-s1 { fill: #ddd; }
+.nvd3.nv-bullet .nv-range.nv-s2 { fill: #ccc; }
+.nvd3.nv-bullet .nv-title { font-size: 14px; font-weight: bold; }
+.nvd3.nv-bullet .nv-subtitle { fill: #999; }
+
+
+.nvd3.nv-bullet .nv-range {
+    fill: #bababa;
+    fill-opacity: .4;
+}
+.nvd3.nv-bullet .nv-range:hover {
+    fill-opacity: .7;
+}
+
+.nvd3.nv-candlestickBar .nv-ticks .nv-tick {
+    stroke-width: 1px;
+}
+
+.nvd3.nv-candlestickBar .nv-ticks .nv-tick.hover {
+    stroke-width: 2px;
+}
+
+.nvd3.nv-candlestickBar .nv-ticks .nv-tick.positive rect {
+    stroke: #2ca02c;
+    fill: #2ca02c;
+}
+
+.nvd3.nv-candlestickBar .nv-ticks .nv-tick.negative rect {
+    stroke: #d62728;
+    fill: #d62728;
+}
+
+.with-transitions .nv-candlestickBar .nv-ticks .nv-tick {
+    transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
+    -moz-transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
+    -webkit-transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
+
+}
+
+.nvd3.nv-candlestickBar .nv-ticks line {
+    stroke: #333;
+}
+
+
+.nvd3 .nv-legend .nv-disabled rect {
+    /*fill-opacity: 0;*/
+}
+
+.nvd3 .nv-check-box .nv-box {
+    fill-opacity:0;
+    stroke-width:2;
+}
+
+.nvd3 .nv-check-box .nv-check {
+    fill-opacity:0;
+    stroke-width:4;
+}
+
+.nvd3 .nv-series.nv-disabled .nv-check-box .nv-check {
+    fill-opacity:0;
+    stroke-opacity:0;
+}
+
+.nvd3 .nv-controlsWrap .nv-legend .nv-check-box .nv-check {
+    opacity: 0;
+}
+
+/* line plus bar */
+.nvd3.nv-linePlusBar .nv-bar rect {
+    fill-opacity: .75;
+}
+
+.nvd3.nv-linePlusBar .nv-bar rect:hover {
+    fill-opacity: 1;
+}
+.nvd3 .nv-groups path.nv-line {
+    fill: none;
+}
+
+.nvd3 .nv-groups path.nv-area {
+    stroke: none;
+}
+
+.nvd3.nv-line .nvd3.nv-scatter .nv-groups .nv-point {
+    fill-opacity: 0;
+    stroke-opacity: 0;
+}
+
+.nvd3.nv-scatter.nv-single-point .nv-groups .nv-point {
+    fill-opacity: .5 !important;
+    stroke-opacity: .5 !important;
+}
+
+
+.with-transitions .nvd3 .nv-groups .nv-point {
+    transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
+    -moz-transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
+    -webkit-transition: stroke-width 250ms linear, stroke-opacity 250ms linear;
+
+}
+
+.nvd3.nv-scatter .nv-groups .nv-point.hover,
+.nvd3 .nv-groups .nv-point.hover {
+    stroke-width: 7px;
+    fill-opacity: .95 !important;
+    stroke-opacity: .95 !important;
+}
+
+
+.nvd3 .nv-point-paths path {
+    stroke: #aaa;
+    stroke-opacity: 0;
+    fill: #eee;
+    fill-opacity: 0;
+}
+
+
+
+.nvd3 .nv-indexLine {
+    cursor: ew-resize;
+}
+
+/********************
+ * SVG CSS
+ */
+
+/********************
+  Default CSS for an svg element nvd3 used
+*/
+svg.nvd3-svg {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -ms-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    display: block;
+    width:100%;
+    height:100%;
+}
+
+/********************
+  Box shadow and border radius styling
+*/
+.nvtooltip.with-3d-shadow, .with-3d-shadow .nvtooltip {
+    -moz-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    -webkit-box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+
+.nvd3 text {
+    font: normal 12px Arial;
+}
+
+.nvd3 .title {
+    font: bold 14px Arial;
+}
+
+.nvd3 .nv-background {
+    fill: white;
+    fill-opacity: 0;
+}
+
+.nvd3.nv-noData {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+
+/**********
+*  Brush
+*/
+
+.nv-brush .extent {
+    fill-opacity: .125;
+    shape-rendering: crispEdges;
+}
+
+.nv-brush .resize path {
+    fill: #eee;
+    stroke: #666;
+}
+
+
+/**********
+*  Legend
+*/
+
+.nvd3 .nv-legend .nv-series {
+    cursor: pointer;
+}
+
+.nvd3 .nv-legend .nv-disabled circle {
+    fill-opacity: 0;
+}
+
+/* focus */
+.nvd3 .nv-brush .extent {
+    fill-opacity: 0 !important;
+}
+
+.nvd3 .nv-brushBackground rect {
+    stroke: #000;
+    stroke-width: .4;
+    fill: #fff;
+    fill-opacity: .7;
+}
+
+
+.nvd3.nv-ohlcBar .nv-ticks .nv-tick {
+    stroke-width: 1px;
+}
+
+.nvd3.nv-ohlcBar .nv-ticks .nv-tick.hover {
+    stroke-width: 2px;
+}
+
+.nvd3.nv-ohlcBar .nv-ticks .nv-tick.positive {
+    stroke: #2ca02c;
+}
+
+.nvd3.nv-ohlcBar .nv-ticks .nv-tick.negative {
+    stroke: #d62728;
+}
+
+
+.nvd3 .background path {
+    fill: none;
+    stroke: #EEE;
+    stroke-opacity: .4;
+    shape-rendering: crispEdges;
+}
+
+.nvd3 .foreground path {
+    fill: none;
+    stroke-opacity: .7;
+}
+
+.nvd3 .nv-parallelCoordinates-brush .extent 
+{
+    fill: #fff;
+    fill-opacity: .6;
+    stroke: gray;
+    shape-rendering: crispEdges;
+}
+
+.nvd3 .nv-parallelCoordinates .hover  {
+    fill-opacity: 1;
+	stroke-width: 3px;
+}
+
+
+.nvd3 .missingValuesline line {
+  fill: none;
+  stroke: black;
+  stroke-width: 1;
+  stroke-opacity: 1;
+  stroke-dasharray: 5, 5; 
+}
+.nvd3.nv-pie path {
+    stroke-opacity: 0;
+    transition: fill-opacity 250ms linear, stroke-width 250ms linear, stroke-opacity 250ms linear;
+    -moz-transition: fill-opacity 250ms linear, stroke-width 250ms linear, stroke-opacity 250ms linear;
+    -webkit-transition: fill-opacity 250ms linear, stroke-width 250ms linear, stroke-opacity 250ms linear;
+
+}
+
+.nvd3.nv-pie .nv-pie-title {
+    font-size: 24px;
+    fill: rgba(19, 196, 249, 0.59);
+}
+
+.nvd3.nv-pie .nv-slice text {
+    stroke: #000;
+    stroke-width: 0;
+}
+
+.nvd3.nv-pie path {
+    stroke: #fff;
+    stroke-width: 1px;
+    stroke-opacity: 1;
+}
+
+.nvd3.nv-pie .hover path {
+    fill-opacity: .7;
+}
+.nvd3.nv-pie .nv-label {
+    pointer-events: none;
+}
+.nvd3.nv-pie .nv-label rect {
+    fill-opacity: 0;
+    stroke-opacity: 0;
+}
+
+/* scatter */
+.nvd3 .nv-groups .nv-point.hover {
+    stroke-width: 20px;
+    stroke-opacity: .5;
+}
+
+.nvd3 .nv-scatter .nv-point.hover {
+    fill-opacity: 1;
+}
+.nv-noninteractive {
+    pointer-events: none;
+}
+
+.nv-distx, .nv-disty {
+    pointer-events: none;
+}
+
+/* sparkline */
+.nvd3.nv-sparkline path {
+    fill: none;
+}
+
+.nvd3.nv-sparklineplus g.nv-hoverValue {
+    pointer-events: none;
+}
+
+.nvd3.nv-sparklineplus .nv-hoverValue line {
+    stroke: #333;
+    stroke-width: 1.5px;
+}
+
+.nvd3.nv-sparklineplus,
+.nvd3.nv-sparklineplus g {
+    pointer-events: all;
+}
+
+.nvd3 .nv-hoverArea {
+    fill-opacity: 0;
+    stroke-opacity: 0;
+}
+
+.nvd3.nv-sparklineplus .nv-xValue,
+.nvd3.nv-sparklineplus .nv-yValue {
+    stroke-width: 0;
+    font-size: .9em;
+    font-weight: normal;
+}
+
+.nvd3.nv-sparklineplus .nv-yValue {
+    stroke: #f66;
+}
+
+.nvd3.nv-sparklineplus .nv-maxValue {
+    stroke: #2ca02c;
+    fill: #2ca02c;
+}
+
+.nvd3.nv-sparklineplus .nv-minValue {
+    stroke: #d62728;
+    fill: #d62728;
+}
+
+.nvd3.nv-sparklineplus .nv-currentValue {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+/* stacked area */
+.nvd3.nv-stackedarea path.nv-area {
+    fill-opacity: .7;
+    stroke-opacity: 0;
+    transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
+    -moz-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
+    -webkit-transition: fill-opacity 250ms linear, stroke-opacity 250ms linear;
+}
+
+.nvd3.nv-stackedarea path.nv-area.hover {
+    fill-opacity: .9;
+}
+
+
+.nvd3.nv-stackedarea .nv-groups .nv-point {
+    stroke-opacity: 0;
+    fill-opacity: 0;
+}
+
+
+.nvtooltip {
+    position: absolute;
+    background-color: rgba(255,255,255,1.0);
+    color: rgba(0,0,0,1.0);
+    padding: 1px;
+    border: 1px solid rgba(0,0,0,.2);
+    z-index: 10000;
+    display: block;
+
+    font-family: Arial;
+    font-size: 13px;
+    text-align: left;
+    pointer-events: none;
+
+    white-space: nowrap;
+
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.nvtooltip {
+    background: rgba(255,255,255, 0.8);
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 4px;
+}
+
+/*Give tooltips that old fade in transition by
+    putting a "with-transitions" class on the container div.
+*/
+.nvtooltip.with-transitions, .with-transitions .nvtooltip {
+    transition: opacity 50ms linear;
+    -moz-transition: opacity 50ms linear;
+    -webkit-transition: opacity 50ms linear;
+
+    transition-delay: 200ms;
+    -moz-transition-delay: 200ms;
+    -webkit-transition-delay: 200ms;
+}
+
+.nvtooltip.x-nvtooltip,
+.nvtooltip.y-nvtooltip {
+    padding: 8px;
+}
+
+.nvtooltip h3 {
+    margin: 0;
+    padding: 4px 14px;
+    line-height: 18px;
+    font-weight: normal;
+    background-color: rgba(247,247,247,0.75);
+    color: rgba(0,0,0,1.0);
+    text-align: center;
+
+    border-bottom: 1px solid #ebebeb;
+
+    -webkit-border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    border-radius: 5px 5px 0 0;
+}
+
+.nvtooltip p {
+    margin: 0;
+    padding: 5px 14px;
+    text-align: center;
+}
+
+.nvtooltip span {
+    display: inline-block;
+    margin: 2px 0;
+}
+
+.nvtooltip table {
+    margin: 6px;
+    border-spacing:0;
+}
+
+
+.nvtooltip table td {
+    padding: 2px 9px 2px 0;
+    vertical-align: middle;
+}
+
+.nvtooltip table td.key {
+    font-weight:normal;
+}
+.nvtooltip table td.value {
+    text-align: right;
+    font-weight: bold;
+}
+
+.nvtooltip table tr.highlight td {
+    padding: 1px 9px 1px 0;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-top-style: solid;
+    border-top-width: 1px;
+}
+
+.nvtooltip table td.legend-color-guide div {
+    width: 8px;
+    height: 8px;
+    vertical-align: middle;
+}
+
+.nvtooltip table td.legend-color-guide div {
+    width: 12px;
+    height: 12px;
+    border: 1px solid #999;
+}
+
+.nvtooltip .footer {
+    padding: 3px;
+    text-align: center;
+}
+
+.nvtooltip-pending-removal {
+    pointer-events: none;
+    display: none;
+}
+
+
+/****
+Interactive Layer
+*/
+.nvd3 .nv-interactiveGuideLine {
+    pointer-events:none;
+}
+.nvd3 line.nv-guideline {
+    stroke: #ccc;
+}
+.nvd3 .nv-bars rect {
+    fill-opacity: .75;
+
+    transition: fill-opacity 250ms linear;
+}
+
+.nvd3 .nv-bars rect.hover {
+    fill-opacity: 1;
+}
+
+.nvd3 .nv-bars .hover rect {
+    fill: lightblue;
+}
+
+.nvd3 .nv-bars text {
+    fill: rgba(0,0,0,0);
+}
+
+.nvd3 .nv-bars .hover text {
+    fill: rgba(0,0,0,1);
+}
+
+.nvd3 .nv-multibar .nv-groups rect,
+.nvd3 .nv-multibarHorizontal .nv-groups rect,
+.nvd3 .nv-discretebar .nv-groups rect {
+    stroke-opacity: 0;
+
+    transition: fill-opacity 250ms linear;
+}
+
+.nvd3 .nv-multibar .nv-groups rect:hover,
+.nvd3 .nv-multibarHorizontal .nv-groups rect:hover,
+.nvd3 .nv-candlestickBar .nv-ticks rect:hover,
+.nvd3 .nv-discretebar .nv-groups rect:hover {
+    fill-opacity: 1;
+}
+
+.nvd3 .nv-discretebar .nv-groups text,
+.nvd3 .nv-multibarHorizontal .nv-groups text {
+    font-weight: bold;
+    fill: rgba(0,0,0,1);
+    stroke: rgba(0,0,0,0);
+}
+.main-container{
+    background-image: url('assets/images/600MINUTES-HUMAN-RESOURCES.jpg');
+    background-size: cover;
+    height: 100%;
+}
+

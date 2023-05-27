@@ -1,0 +1,18 @@
+<div [ngClass]="{'postit-comments':( true || !isChanged) , 'postit-comments-status-changed': isChanged ,'expanded-block': expanded}">
+    <div [ngClass]="isChanged ? 'postit-collpase-in-header postit-collpase-in-header-status-changed' : 'postit-collpase-in-header '" (click)="toggleExpanded()">
+        <div class="label-at">Comments</div><div class="toogle-action"><i [ngClass]="{'fa': true, 'fa-angle-down': !expanded,'fa-angle-up':expanded}"></i></div>
+    </div>
+    <div class="postit-assigned-tasks-panel">
+        <div class="usca-content" *ngIf="!addCommentMode">
+            <app-comment *ngFor="let comment of comments;let index = index" [comment]="comment" 
+                [expanded]="index==0"></app-comment>
+        </div>
+        <div class="usca-content" *ngIf="addCommentMode">
+            <textarea cols="" rows="" class="text-area-comment-us" [(ngModel)]="commentText"></textarea><div class="action-container-us">
+                <div class="aply-chnages"><i class="fa fa-check" aria-hidden="true" (click)="addComment(commentText)"></i></div>
+                <div class="deny-chnages"><i class="fa fa-times" aria-hidden="true" (click)="toggleAddCommentMode()"></i></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>

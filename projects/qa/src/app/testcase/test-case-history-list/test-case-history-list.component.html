@@ -1,0 +1,15 @@
+<div class="row mt-4">
+    <div class="col">
+        <accordion class="history-accordion">
+            <ng-container *ngFor="let  testCaseHistory of testCaseHistoryList;">
+                <accordion-group [heading]="getTestCaseHistoryTitle(testCaseHistory)">
+                    <app-test-case-details class="row"
+                                           [testCase]="testCaseHistory"
+                                           [testSteps]="testCaseHistory.testStepsLibraryHistory"></app-test-case-details>
+
+                </accordion-group>
+
+            </ng-container>
+        </accordion>
+    </div>
+</div>

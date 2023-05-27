@@ -1,0 +1,154 @@
+/* Header */
+.test-header {
+    border-bottom: 1px solid #5c78a7;
+}
+
+.test-header h2 {
+    margin-top: 4px;
+    font-size: 24px;
+    color: #294898;
+    font-weight: 100;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.dashboard-row-margin {
+    margin-top: 10px;
+}
+
+.icon-close:before{
+    content: "\e906";
+}
+
+.close-btn{
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+.close-btn:hover {
+  color: #4f7ec2;
+}
+/**/
+
+.test-case-library-row {
+    min-height: calc(100vh - 75px);
+}
+
+.column-title {
+    font-size: 18px;
+    font-weight: 400;
+    color: #444444;
+    height: 36px;
+    line-height: 36px;
+}
+
+.user-story-section {
+    border: 1px solid #b3b3b3;
+    padding: 8px 10px;
+    margin-top: 4px;
+}
+
+.user-story-test-case-seperator {
+    height: 30px;
+    width: 70%;
+    margin: 0 auto;
+    border-right: 1px solid #b3b3b3;
+    border-left: 1px solid #b3b3b3;
+}
+
+.test-case-container {
+    border: 1px solid #b3b3b3;
+    padding: 10px;
+}
+
+.test-case-section {
+    overflow-y: auto;
+    height: 100%;
+}
+
+.test-case-item {
+    border: 1px solid #b3b3b3;
+    padding: 8px 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.test-case-item:last-child {
+    margin-bottom: 0;
+}
+
+.test-case-number {
+    color: #0f5cb4;
+    display: block;
+}
+
+.test-case-name {
+    color: #666666;
+    display: block;
+}
+
+.status-us-grey {
+    background: #5f7daf;
+    color: #fff;
+}
+
+
+.library-container {
+    border: 1px solid #b3b3b3;
+    margin-top: 4px;
+    position: relative;
+}
+
+.library-opened {
+    background: #f9f9f9;
+    -webkit-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+    -moz-box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.3);
+}
+
+.library-col {
+    flex: 0 0 250px;
+    max-width: 250px;
+    height: 100%;
+    border-right: 1px solid #c8c8c8;
+    padding: 8px 10px;
+}
+
+/**/
+
+.manage-test-cases-container {
+    min-height: calc(100vh - 115px);
+    gap: 35px;
+}
+
+.test-cases-sidebar {
+    max-width: 544px;
+}
+
+@media (max-width: 1306px) {
+    .manage-test-cases-container {
+        flex-wrap: wrap;
+    }
+    .test-cases-sidebar {
+        max-width: 100%;
+    }
+}
+
+.library-col {
+    flex: 0 0 310px;
+}
+
+.library-col.toggled {
+    flex: 0 0 auto;
+}
+
+.resize-handler {
+    width: 35px;
+    position: absolute;
+    height: 100%;
+}
+
+.resize-handler.resizable {
+    cursor: e-resize;
+}

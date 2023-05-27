@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between align-items-center  header">
+  <h1>You have {{ notifications.length }} notifications</h1>
+</div>
+<div
+  class="d-flex justify-content-between align-items-center  notif-content text-center"
+  *ngFor="let notif of notifications"
+  (click)="notifications.splice(notif, 1)"
+>
+  <div class="col-3 p-0">
+    <img src=" {{ user.avatar }} " />
+  </div>
+  <div class="col p-0 text-left">
+    <h3>{{ notif.text }}</h3>
+    <h3>{{ notif.date }}</h3>
+  </div>
+</div>

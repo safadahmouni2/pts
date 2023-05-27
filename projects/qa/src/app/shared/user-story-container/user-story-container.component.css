@@ -1,0 +1,11 @@
+.user-story-container {
+    max-height: calc(100vh - 178px);
+    overflow: auto;
+    height: 100%;
+}
+
+@media (max-width: 1047px) {
+    .user-story-container {
+        max-height: calc(100vh - 211px);
+    }
+}

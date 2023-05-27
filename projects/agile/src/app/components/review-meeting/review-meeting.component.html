@@ -1,0 +1,10 @@
+<app-meeting-header *ngIf="sprintId" [(userStatusUpdateLoading)]="userStatusUpdateLoadingChange"  [sprintId]="sprintId"></app-meeting-header>
+
+<div class="container">
+
+  <app-meeting *ngIf="sprintId"  [sprintId]="sprintId" [currentUser]="currentUser"></app-meeting>
+
+
+  <app-meeting-team-list *ngIf="sprintId" [(userStatusUpdateLoading)]="userStatusUpdateLoadingChange" [sprintId]="sprintId" [currentUser]="currentUser" ></app-meeting-team-list>
+
+</div>

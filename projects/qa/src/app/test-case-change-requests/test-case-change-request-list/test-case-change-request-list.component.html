@@ -1,0 +1,67 @@
+<div class="test-case-change-list-container"
+     [ngClass]="{'panel-hidden':!showChangeRequestList}">
+    <button class="test-case-change-collapse mt-0 ml-auto"
+            (click)="toggleChangeRequestList()">
+        <i [ngClass]="{'icon-right':showChangeRequestList, 'icon-left':!showChangeRequestList}"></i>
+        <i [ngClass]="{'icon-left':showChangeRequestList, 'icon-right':!showChangeRequestList}"></i>
+    </button>
+    <div class="test-cases-list-container d-flex flex-column"
+         *ngIf="showChangeRequestList">
+        <div class="test-cases-header">
+            <span>Change Requests List</span>
+            <div class="d-flex">
+                <span class="status-text align-top">Order by:</span>
+                <div class="status-container"
+                    (click)="toggleOrderbyDropdown()">
+                    <span class="status-value">Date</span>
+                    <i class="icon-arrow-down align-middle"></i>
+                    <div class="conbobox-conatainer"
+                        *ngIf="showOrderbyDropdown">
+                        <div class="conbobox-item cursor-pointer">Date</div>
+                        <div class="conbobox-item cursor-pointer">TC</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <perfect-scrollbar>
+            <div class="test-case-content">
+                <ng-container *ngFor="let testCaseChangeRequest of testCaseChangeRequestList">
+
+                    <div class="test-cases-list-item d-flex justify-content-between"
+                         (click)="selectTestCaseChangeRequest(testCaseChangeRequest)"
+                         [ngClass]="{'selected': testCaseChangeRequest.id === selectedTestCaseChangeRequestId}">
+                        <div class="test-cases-list-content">
+                            <div class="test-case-name">TC-{{testCaseChangeRequest.testCaseId}}</div>
+                            <div class="test-case-identity">
+                                <div class="test-case-date">{{testCaseChangeRequest.modified | date:'yyyy.MM.d'}}</div>
+                                <div class="test-case-id">{{testCaseChangeRequest.creator}}</div>
+                                <div class="test-case-id">CR: {{testCaseChangeRequest.id}}</div>
+                                <div class="test-request">Test ID: {{testCaseChangeRequest.testId}}</div>
+                            </div>
+                        </div>
+
+                        <div class="test-case-action d-flex align-items-center">
+                            <app-show-actor-info
+                                [actorInfo]=testCaseChangeRequest
+                                [right_aligned]="true">
+                            </app-show-actor-info>
+                            <a title="Chat"
+                               href="{{getChatUrl(testCaseChangeRequest.id)}}"
+                               target="_blank"
+                               [ngClass]="{'disabled': !isProd}">
+                                <i class="icon-person-chat"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                </ng-container>
+            </div>
+        </perfect-scrollbar>
+    </div>
+    <div class="hidden-panel"
+         *ngIf="!showChangeRequestList">
+        <div class="hidden-panel-name-container">
+            <div class="hidden-panel-name">Change Request List</div>
+        </div>
+    </div>
+</div>

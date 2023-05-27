@@ -1,0 +1,138 @@
+/* test cases list */
+
+/* test case */
+
+/* hide panel */
+
+/**/
+
+::ng-deep .test-run-user-story-container .hidden-panel {
+    max-height: calc(100vh - 149px) !important;
+}
+
+/* Effort counter */
+
+/* Save effort popup */
+.effort-popup {
+    position: absolute;
+    top: 10px;
+    left: 785px;
+    background-color: #fff;
+    width: 380px;
+    box-shadow: 0 0 12px #999999;
+}
+
+.effort-popup-header {
+    padding: 6px 18px;
+    background: #e8e6e7;
+    color: #444444;
+    font-size: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.effort-popup-notice {
+	margin-left: auto;
+	color: #f77306;
+	background: #f6f6f6;
+	padding: 3px 18px;
+	font-size: 14px;
+}
+
+.effort-popup .error-message{
+    padding: 0 18px 14px 18px;
+}
+
+.effort-popup-notice .icon-warning {
+	font-size: 17px;
+	margin-right: 10px;
+}
+
+.effort-popup-details {
+	padding: 8px 18px;
+    font-weight: 100;
+    font-size: 16px;
+    line-height: 27px;
+}
+
+.effort-test-case-id {
+    color: #516ea6;
+    margin-right: 10px;
+}
+
+.effort-time {
+    color: #516ea6;
+    font-size: 12px;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.effort-popup-fields {
+	padding: 8px 18px 14px 18px;
+}
+
+.ng-invalid .effort-popup-fields {
+	padding: 8px 18px 0 18px;
+}
+
+.btn-save-effort {
+    border: 1px solid #516ea6;
+    color: #fff;
+    font-size: 14px;
+    background: #516ea6;
+    padding: 5px 12px;
+    margin: 0 0 6px 10px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Close circle */
+@keyframes growProgressBar {
+
+    0%,
+    33% {
+        --pgPercentage: 0;
+    }
+
+    100% {
+        --pgPercentage: var(--value);
+    }
+}
+
+@property --pgPercentage {
+    syntax: '<number>';
+    inherits: false;
+    initial-value: 0;
+}
+
+div[role="progressbar"] {
+    --pgPercentage: var(--value);
+    animation: growProgressBar 1s;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(closest-side, #e8e6e7 10px, transparent 0 22px, #e8e6e7 0),
+        conic-gradient(#516ea6 calc(var(--pgPercentage) * 1%), #e8e6e7 0);
+    font-size: 12px;
+}
+
+.error-message {
+    color: #F32525;
+    font-size: 12px;
+}
+
+.is-invalid .form-control-pts-qa{
+    border-bottom: 1px solid #F32525;
+}
+
+.is-invalid .label{
+    color: #F32525;
+}
+
+.ng-invalid .effort-popup-fields .btn-save-effort{
+    opacity: .6;
+    pointer-events: none;
+}

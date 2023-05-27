@@ -1,0 +1,55 @@
+<div class="user-story-container">
+    <div class="test-cases-header d-flex">
+        <div class="test-cases-header-col flex-grow-1">U: {{ userStory[0]?.id }}</div>
+        <div class="test-cases-header-col pl-0">
+            <div class="right-action-buttons">
+                <a class="btn btn-light" title="Chat" href="{{chatUrl}}" target="_blank"
+                    [ngClass]="{'disabled': !isProd}">
+                    <i class="icon-person-chat"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="user-story-section">
+        <span class="user-story-title" (click)="toggleUserStoryDetails()">
+            {{userStory[0]?.text}}
+            <i [ngClass]="{'icon-arrow-down' : showDetails, 'icon-arrow-up' : !showDetails}"></i>
+        </span>
+        <div class="user-story-details" *ngIf="showDetails">
+            <span class="user-story-description">
+                {{userStory[0]?.description}}
+            </span>
+    
+            <span class="user-story-title">Acceptance Criteria :</span>
+            <span [innerHTML]="userStory[0]?.acceptanceCriteria"></span>
+    
+        </div>
+    
+        <div class="attachment-container d-flex flex-column" (click)="toggleAttachments()"
+            (click)="getAttachmentsUS(userStory.id)">
+            <div class="attachment-header d-flex">
+                <div class="flex-grow-1">
+                    <i class="icon-paper-clip align-middle"></i>
+                    Attachments
+                </div>
+                <div class="right-action-buttons">
+    
+                    <button title="Chat" class="btn btn-light">
+                        <i
+                            [ngClass]="{'icon-arrow-down align-middle' : showAttachments, 'icon-arrow-up align-middle' : !showAttachments}"></i>
+    
+                    </button>
+                </div>
+            </div>
+            <div class="attachments-list" *ngIf="showAttachments">
+                <span *ngFor="let item of listAttachments" class="attachment-name">
+                    <a href="{{pathAttachment}}{{userStory[0]?.id}}/{{item.name}}">
+                        {{item.name}}
+                    </a>
+    
+                </span>
+    
+            </div>
+        </div>
+    </div>
+</div>

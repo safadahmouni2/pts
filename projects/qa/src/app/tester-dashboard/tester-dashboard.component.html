@@ -1,0 +1,104 @@
+<app-header></app-header>
+<div class="container-fliud px-4">
+    <div class="row dashboard-row-margin">
+        <div class="col-12">
+            <div class="test-header">
+                <h2 class="d-inline-block">Dashboard</h2>
+            </div>
+        </div>
+    </div>
+    <div class="row my-4">
+        <div class="col-12 d-flex justify-content-center align-items-center">
+            <div class="dashboard-container"
+                 *ngIf="productDetailList.length!==0">
+                <!---->
+                <ng-container *ngFor="let productDetails of productDetailList">
+                    <ng-container *ngIf="productDetails?.testCaseCreated || productDetails?.openTestRuns ||productDetails?.userStoryInTest">
+                        <div class="project-card"
+                             *ngIf="productDetails?.sprint?.name"
+                             (click)="showDetail(productDetails)">
+                            <h3 class="project-title">{{productDetails?.product?.product_name}}</h3>
+                            <p class="sprint-name mb-1">{{productDetails?.sprint?.name}}</p>
+                            <div class="sprint-status mb-1">In Progress</div>
+                            <div class="sprint-date">
+                                <p>Start: {{productDetails?.startDate}} - End: {{productDetails?.endDate}}
+                                    <span *ngIf="productDetails?.deadlineInDays !== null && productDetails?.deadlineInDays !== ''" [ngClass]="productDetails?.colorOfDeadline">({{productDetails?.deadlineInDays}})</span>
+                                </p>
+                            </div>
+                            <div class="section-list">
+
+                                <div class="section"
+                                     *ngIf="productDetails?.testCaseCreated ">
+                                    <div class="section-element">
+                                        <div>{{productDetails?.testCaseCreated}}</div>
+                                        <p>Test Cases To Be Created</p>
+                                    </div>
+                                    <div class="section-element ready"
+                                         *ngIf="productDetails?.usReady">
+                                        <div>{{productDetails?.usReady}}</div>
+                                        <p>Ready</p>
+                                    </div>
+                                    <div class="section-element in-analysis"
+                                         *ngIf="productDetails?.usInAnalysis">
+                                        <div>{{productDetails?.usInAnalysis}}</div>
+                                        <p>In Analysis</p>
+                                    </div>
+                                    <div class="section-element in-design"
+                                       *ngIf="productDetails?.usIndesign ">
+                                       <div>{{productDetails?.usIndesign}}</div>
+                                       <p>In Design</p>
+                                   </div>
+                                    <div class="section-element in-dev"
+                                         *ngIf="productDetails?.userStoryInDev ">
+                                        <div>{{productDetails?.userStoryInDev}}</div>
+                                        <p>In Dev</p>
+                                    </div>
+                                    <div class="section-element in-test"
+                                         *ngIf="productDetails?.userStoryToBeCreatedInTest">
+                                        <div>{{productDetails?.userStoryToBeCreatedInTest}}</div>
+                                        <p>In Test</p>
+                                    </div>
+                                    <div class="section-element done"
+                                         *ngIf="productDetails?.userStoryDone ">
+                                        <div>{{productDetails?.userStoryDone}}</div>
+                                        <p>Done</p>
+                                    </div>
+                                  
+                                </div>
+
+                                <div class="section"
+                                     *ngIf="productDetails?.userStoryInTest">
+                                    <div class="section-element">
+                                        <div>{{productDetails?.userStoryInTest}}</div>
+                                        <p>User Stories In Test </p>
+                                    </div>
+
+                                </div>
+                                <!---->
+                                <div class="section"
+                                     *ngIf="productDetails?.openTestRuns">
+                                    <div class="section-element">
+                                        <div>{{productDetails?.openTestRuns}}</div>
+                                        <p>Open Test Runs</p>
+                                    </div>
+                                    <ng-container *ngFor="let env of productDetails?.environment">
+                                        <div class="test-runs"
+                                             *ngIf="env?.envType && env?.numberOfTestRunsToBeExecuted">
+                                            <ng-container>
+                                                <div>{{env?.envType}}</div>
+                                                <div>v {{env?.installedRelease}}
+                                                    ({{env?.numberOfTestRunsExecuted}}/{{env?.numberTotalOfTestRuns}}:
+                                                    {{env?.percentageOfExecutedTestRun}}%)
+                                                </div>
+                                            </ng-container>
+                                        </div>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-container>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</div>

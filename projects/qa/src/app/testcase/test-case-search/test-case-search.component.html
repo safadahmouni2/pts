@@ -1,0 +1,47 @@
+<div class="d-flex test-case-library-container">
+    <div class="user-story-number">
+        Search for test cases in "{{selectedPath}}"
+    </div>
+</div>
+<div class="form-container">
+    <!-- Display when user clicks on a folder -->
+    <div class="row"
+         *ngIf="true">
+        <div class="col">
+            <alert type="info">
+                <div>
+                    You are currently viewing the "{{selectedPath}}" folder.<br>
+                    Use the search field above to search for test cases within this folder.
+                </div>
+            </alert>
+        </div>
+    </div>
+    <!-- Display when user users the search field -->
+    <div class="row"
+         *ngIf="true">
+        <div class="col">
+            <table class="test-case-table">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Test case designation</th>
+                        <th>Path</th>
+                    </tr>
+                </thead>
+            </table>
+            <perfect-scrollbar>
+                <table class="test-case-table">
+                    <tbody>
+
+                        <tr *ngFor="let testCase of testCaseLibraryList"
+                            (click)="openTestCaseForm(testCase)">
+                            <td>{{testCase.testCaseLibraryId}}</td>
+                            <td>{{testCase.shortDescription}}</td>
+                            <td>{{testCase.folder.folderPath}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </perfect-scrollbar>
+        </div>
+    </div>
+</div>

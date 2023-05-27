@@ -1,0 +1,115 @@
+<div class="user-story-details-container">
+  <div *ngIf="dataLoading" class="justify-content-center align-items-center d-flex" 
+  style="z-index: 10;position: absolute; width: 100%;height: 100%; background: #0000005c;">
+    <img src="assets/img/loading.gif" style="width: 170px;">
+  </div>  
+  <div class="sprints-container-header">
+    <div class="sch-title">Feature Details</div>
+    <div class="pull-right close-us-details">
+      <i aria-hidden="true" class="icon-cancel" (click)="onCloseDetail()"></i>
+    </div>
+    <div class="sch-status">
+      <label>status:</label>
+      <div [hidden]="!editModeState" class="pull-right edit-status" title="Change Status">
+        <div class="styled-select">
+          <select class="form-control" #state [(ngModel)]="editableFeature.stateId">
+            <option></option>
+            <option *ngFor="let stateItem of allowedStatesList" [value]="stateItem.stateId">
+              {{stateItem.stateName}}</option>
+          </select>
+        </div>
+        <div class="action-container">
+          <div class="aply-chnages" (click)="updateFeatureState()"><i class="fa fa-check" aria-hidden="true"></i>
+          </div>
+          <div class="deny-chnages" (click)="restoreData('state')"> <i class="fa fa-times" aria-hidden="true"></i>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div [hidden]="editModeState" (click)="changeData('state')" class="status-text" title="Change Status">
+        <span>{{stateName}}</span></div>      
+    </div>
+  </div>
+  <!---->
+  <div class="user-story-details-main-content">
+    <perfect-scrollbar class="container">
+      <div class="usdmc-group-title">
+        <div class="usdmc-group-epic topic-group">
+          <div class="epic-id">FF: {{feature.id}}</div>
+          <div class="edit-epic-container">
+            <div class="epic-name"> Project:
+              <span class="group-name" *ngIf="!editModeProject">{{feature.project}} </span>
+              <ng-container *ngIf="editModeProject">
+                <select class="form-control" #project [(ngModel)]="editableFeature.project">
+                  <option [ngValue]="null" class="disabled text-muted">All projects</option>
+                  <option *ngFor="let projectItem of dropdownListProject" [value]="projectItem.name">
+                    {{projectItem.name}}</option>
+                </select>
+                <div class="action-container-us">
+                  <div class="aply-chnages" (click)="updateFeatureProject()">
+                    <i aria-hidden="true" class="fa fa-check"></i>
+                  </div>
+                  <div class="deny-chnages" (click)="restoreData('project')">
+                    <i aria-hidden="true" class="fa fa-times"></i>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="uacct-icon" *ngIf="!editModeProject" (click)="changeData('project')">
+              <i aria-hidden="true" class="fa fa-pencil"></i>
+            </div>
+          </div>
+          <div class="edit-epic-container">
+            <div class="epic-name">
+              <span class="epic-name-bold">Name:</span>
+              <span class="group-id" *ngIf="!editModeName"> {{feature.name}} </span>
+              <ng-container *ngIf="editModeName">
+                <input type="text" class="form-control" [(ngModel)]="editableFeature.name" *ngIf="editModeName" />
+                <div class="action-container-us">
+                  <div class="aply-chnages" (click)="updateFeatureName()">
+                    <i aria-hidden="true" class="fa fa-check"></i>
+                  </div>
+                  <div class="deny-chnages" (click)="restoreData('name')">
+                    <i aria-hidden="true" class="fa fa-times"></i>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+            <div class="uacct-icon" *ngIf="!editModeName" (click)="changeData('name')">
+              <i aria-hidden="true" class="fa fa-pencil"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="usdmc-main-content">
+        <div class="usdmc-editable-area">
+          <div class="topic-description-container">
+            <div class="uacc-title">
+              <div class="uacct-text">Description:</div>
+              <div class="uacct-icon" *ngIf="!editModeDescription" (click)="changeData('description')">
+                <i class="fa fa-pencil" aria-hidden="true"></i>
+              </div>
+            </div>
+            <div class="uacc-content" *ngIf="!editModeDescription">
+              {{feature.description}}
+            </div>
+            <div class="uea-long-description" *ngIf="editModeDescription">
+              <div class="uld-text-text-area">
+                <textarea [(ngModel)]="editableFeature.description"></textarea>
+                <div class="action-container-us">
+                  <div class="aply-chnages"(click)="updateFeatureDescription()">
+                    <i aria-hidden="true" class="fa fa-check"></i>
+                  </div>
+                  <div class="deny-chnages" (click)="restoreData('description')">
+                    <i aria-hidden="true" class="fa fa-times"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+  <!---->
+</div>

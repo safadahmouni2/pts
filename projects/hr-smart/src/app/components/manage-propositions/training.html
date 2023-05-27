@@ -1,0 +1,116 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ name }}</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-3">Topic/ Technology:</div>
+    <div class="col-9">
+      <input type="text" size="" />
+    </div>
+
+    <div class="col-3">Departement:</div>
+    <div class="col-9">
+      <div class="btn-group">
+        <label
+          class="btn btn-success"
+          [(ngModel)]="checkModel.dev"
+          btnCheckbox
+          tabindex="0"
+          role="button"
+          >devolepment</label
+        >
+        <label
+          class="btn btn-success"
+          [(ngModel)]="checkModel.Qu"
+          btnCheckbox
+          tabindex="0"
+          role="button"
+          >Quality</label
+        >
+        <label
+          class="btn btn-success"
+          [(ngModel)]="checkModel.Des"
+          btnCheckbox
+          tabindex="0"
+          role="button"
+          >Design</label
+        >
+        <label
+          class="btn btn-success"
+          [(ngModel)]="checkModel.Oth"
+          btnCheckbox
+          tabindex="0"
+          role="button"
+          >Other</label
+        >
+      </div>
+    </div>
+    <div class="col-3">Start date/ End date:</div>
+    <div class="col-9">
+      <form [formGroup]="myForm">
+        <div>
+          <div class="form-group">
+            <input
+              type="text"
+              class="form-control mb-3"
+              placeholder="Daterangepicker"
+              bsDaterangepicker
+              formControlName="range"
+            />
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-3">Hours:</div>
+    <div class="col-9">
+      <input
+        type="number"
+        placeholder="Value"
+        [(ngModel)]="value"
+        min="0.5"
+        max="50"
+        step="0.5"
+        width="250"
+      />
+    </div>
+
+    <div class="col-3">Urgency:</div>
+    <div class="col-9">
+      <input name="urgency" list="listurg" [(ngModel)]="currenturg" />
+      <datalist id="listurg">
+        <select>
+          <option *ngFor="let urg of listurg" [value]="urg"></option>
+        </select>
+      </datalist>
+    </div>
+
+    <div class="col-3">Short Description:</div>
+    <div class="col-9">
+      <input type="text" size="" />
+    </div>
+
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea></textarea>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-lg btn-outline-success"
+    (click)="activeModal.close('Close click')"
+    (click)="status.status = 'Accepted'"
+  >
+    OK
+  </button>
+</div>

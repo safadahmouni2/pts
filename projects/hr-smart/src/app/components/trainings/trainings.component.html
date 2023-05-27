@@ -1,0 +1,202 @@
+<div class="container-fluid">
+  <div class="row">
+    <app-menu class="col-xl-2 col-lg-2 col-md-2 col-sm-3 p-0 expanded-menu menu-mobile-on" [ngClass]="{'collapsed-menu': this.collapsed}">
+    </app-menu>
+
+    <div class="col w-resp-content p-0">
+      <app-search-bar (freeSearch)='onSearch($event)'></app-search-bar>
+
+
+      <div class="container-fluid scroll-bar-content">
+        <div class="main-content">
+          <div class="main-block col-12 pr-0 pl-0">
+            <div class="header">
+              <h1 class="f-s-18">Trainings</h1>
+            </div>
+            <!-- star filter bar  -->
+            <div class="col-12 d-flex justify-content-between filter-container">
+              <input type="text" placeholder="Responsable" tooltip="Filter by responsable" [(ngModel)]="searchresponsable" list="propositions2">
+              <datalist id="propositions2">
+                <select>
+                  <option *ngFor="let user of allUser"
+                    class="d-flex justify-content-between align-items-center  notif-content text-center">
+                    <div class="col-3 p-0">
+                      {{
+                        user.code
+                      }}
+                    </div>
+                  </option>
+                </select>
+              </datalist>
+              <input type="text" placeholder="Urgency" tooltip="Filter by urgency" [(ngModel)]="searchurgency" list="propositions3">
+              <datalist id="propositions3">
+                <select>
+                  <option *ngFor="let proposition of filterUrgency">{{
+                    proposition.urgency
+                  }}</option>
+                </select>
+              </datalist>
+            </div>
+             <!-- end filter bar  -->
+              <!-- star training list  -->
+            <table class="table table-hover proposition-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th width="20%">Subject</th>
+                  <th width="4%">Action</th>
+                  <th class="text-center">Departement</th>
+                  <th width="20%" class="text-center">Date</th>
+                  <th width="4%">Hours</th>
+                  <th class="text-center">Urgency</th>
+                  <th width="40%">Description</th>
+                  <th class="text-center"  >Moderator</th>
+
+                </tr>
+              </thead>
+              <tbody>
+                  <tr class="cursor-pointer" *ngFor="let training of trainings
+                | myfilter: [searchresponsable , 'moderator' ]
+                | myfilter: [searchurgency , 'urgency']
+                | freeSearch: freeSearch;
+                let i= index"  >
+                      <th> {{i+1}} </th>
+                      <td>{{training.subject}}</td>
+                    <td class="text-center" *ngIf="userData" class="position-relative" dropdown placement="bottom left" dropdownToggle><i class="fas fa-th-large"></i>
+                      <ul   id="dropdown-split" *dropdownMenu class="dropdown-menu dropdown-menu-trainings"
+                      role="menu" aria-labelledby="button-split">
+                    <li role="menuitem"><a class="dropdown-item" *ngIf="userData.roleID =='employee' &&  training.status != 'Confirmed' "  (click)="meAsModerator(training , 'Planned')"> Me as moderator</a></li>
+                    <li role="menuitem"><a class="dropdown-item"  *ngIf="userData.roleID =='employee' &&  training.status != 'Confirmed'"  (click)="meAsParticipant(training )"> Me as participant</a></li>
+                    <li role="menuitem"><a class="dropdown-item" *ngIf="userData.roleID =='HR-manager' &&  training.status != 'Confirmed'"  (click)="openModalModerator(training , 'Planned')">Add moderator</a></li>
+                    <li role="menuitem"><a class="dropdown-item" *ngIf="userData.roleID =='HR-manager' &&  training.status != 'Confirmed'"  (click)="openModalParticipants(training)">Add participants</a></li>
+                    <li role="menuitem"><a class="dropdown-item"  *ngIf="training.moderator &&  userData.code === training.moderator.code &&  training.status!= 'Confirmed' && training.status != 'Done'" (click)="trainingDone(training ,'Done')"> Training done </a></li>
+                    <li role="menuitem"><a class="dropdown-item"  *ngIf="userData.roleID =='HR-manager' &&  training.status == 'Done'" (click)="confirmeTraining(training)"> Training confirme </a></li>
+                  </ul></td> 
+                  <!-- ModalModerator                  -->
+                  <ng-template #ModalModerator let-c="close" let-d="dismiss">
+                    <div class="modal-header" >
+                      <h4 class="modal-title">Change Moderator</h4>
+                      <button type="button" class="close" aria-label="Close" (click)="d()">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body" >
+                        <div class="row">
+                          <div class="col-1">Moderator:</div>
+                          <div class="col-11 new-smart-container"  >
+                              <select [(ngModel)]="moderator" (change)="onChangeModerator()" >
+                                <option *ngFor="let user of allUser"  >{{user.code}}</option>
+                              </select>
+                          </div>
+                  
+                  
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-lg btn-outline-success"  (click)="onSubmit('Planned')">OK
+                      </button>
+                    </div>
+                  
+                    
+                    </ng-template>
+                    <!-- ModalParticipants -->
+                    <ng-template #ModalParticipants let-c="close" let-d="dismiss">
+                      <div class="modal-header">
+                        <h4 class="modal-title">Pick Participants</h4>
+                        <button
+                          type="button"
+                          class="close"
+                          aria-label="Close"
+                          (click)="d()"
+                        >
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        <div class="row">
+                          <div class="col-md-6 col-12">
+                            <h3>Non Participatns</h3>
+                            <bs-sortable 
+                              [(ngModel)]="userNoParticipants"
+                              fieldName="code"
+                              itemClass="sortable-item"
+                              itemActiveClass="sortable-item-active"
+                              placeholderItem="Drag here"
+                              placeholderClass="placeholderStyle"
+                              wrapperClass="sortable-wrapper"
+                            ></bs-sortable>
+                          </div>
+                          <div class="col-md-6 col-12" >
+                            <h3>Participants</h3>
+                            <bs-sortable
+                              [(ngModel)]="participants"
+                              fieldName="code"
+                              itemClass="sortable-item"
+                              itemActiveClass="sortable-item-active"
+                              placeholderItem="Drag here"
+                              placeholderClass="sortable-item"
+                              wrapperClass="sortable-wrapper"
+                            ></bs-sortable>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="modal-footer">
+                        <button
+                          type="button"
+                          class="btn btn-lg btn-outline-success"
+                          (click)="addParticipants(training,false)"
+                        >
+                          OK
+                        </button>
+                      </div>
+                      
+                      
+                      </ng-template>
+                      <td>
+                      <tr class="text-center"   > {{training.departement}} </tr>
+                      
+                    </td>
+                      <td class="text-center">{{training.date}}</td>
+                      <td class="text-center"> {{training.hours}} </td>
+
+
+                      <td class="text-center" [ngSwitch]="training.urgency">
+                          <div *ngSwitchCase="'Extremly urgent'" >
+                          <img src="assets/images/extremly_urgent_icn.png" tooltip="Extremly urgent">
+                         </div>
+                         <div *ngSwitchCase="'Meduim'" >
+                              <img src="assets/images/medium_icn.png" tooltip="Medium">
+                         </div>
+                          <div *ngSwitchCase="'High'" >
+                              <img src="assets/images/high_icn.png" tooltip="High">
+                          </div>
+                          <div *ngSwitchCase="'low'" >
+                              <img src="assets/images/low_icn.png" tooltip="Low">
+                          </div>
+                          <div *ngSwitchCase="'Urgent'" >
+                              <img src="assets/images/extremly_urgent_icn.png" tooltip="Urgent">
+                          </div>
+                      </td>
+
+                      <td class="position-relative" dropdown placement="bottom" dropdownToggle>{{training.description}}
+                        <ul   id="dropdown-split" *dropdownMenu class="dropdown-menu"
+                        role="menu" aria-labelledby="button-split">
+                      <li role="menuitem"><a class="dropdown-item" >Creator: {{training.moderator.code}} </a></li>
+                    </ul>
+                      </td>
+                      <th class="text-center" *ngIf="training.moderator!=null" >
+                        <img src={{training.moderator.avatar}} [src]="serverpath + training.moderator.avatar " class="img-responsable" tooltip="{{training.moderator.code}}">
+                      </th>
+                      <td  *ngIf="training.moderator == null" >
+                        <p>not yet</p>
+                      </td>
+                    </tr>
+                </tbody>
+                </table>
+                 <!-- end training list  -->
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>
+                </div>

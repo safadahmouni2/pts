@@ -1,0 +1,59 @@
+{
+"testCaseList": [
+  {
+    "testCaseNr": "12457861",
+    "shortDescription": "test of the bottun delete",
+    "description": "test the functionality of the button delete a test case",
+    "category": "Design",
+    "state": "TO_BE_APPROVED",
+    "preconditions": "user logged",
+    "responsibleId": "14785236",
+    "userStoryNr": "15264851"
+  },{
+    "testCaseNr": "12457862",
+    "shortDescription": "test of the bottun delete",
+    "description": "test the functionality of the button delete a test case",
+    "category": "Design",
+    "state": "TO_BE_APPROVED",
+    "preconditions": "user logged",
+    "responsibleId": "14785236",
+    "userStoryNr": "15264851"
+  },{
+    "testCaseNr": "12457863",
+    "shortDescription": "test of the bottun delete",
+    "description": "test the functionality of the button delete a test case",
+    "category": "Design",
+    "state": "TO_BE_APPROVED",
+    "preconditions": "user logged",
+    "responsibleId": "14785236",
+    "userStoryNr": "15264852"
+  },{
+    "testCaseNr": "12457864",
+    "shortDescription": "test of the bottun delete",
+    "description": "test the functionality of the button delete a test case",
+    "category": "Design",
+    "state": "TO_BE_APPROVED",
+    "preconditions": "user logged",
+    "responsibleId": "14785236",
+    "userStoryNr": "15264853"
+  },{
+    "testCaseNr": "12457865",
+    "shortDescription": "test of the bottun delete",
+    "description": "test the functionality of the button delete a test case",
+    "category": "Design",
+    "state": "TO_BE_APPROVED",
+    "preconditions": "user logged",
+    "responsibleId": "14785236",
+    "userStoryNr": "15264856"
+  },{
+    "testCaseNr": "12457867",
+    "shortDescription": "test of the bottun delete",
+    "description": "test the functionality of the button delete a test case",
+    "category": "Design",
+    "state": "TO_BE_APPROVED",
+    "preconditions": "user logged",
+    "responsibleId": "14785236",
+    "userStoryNr": "15264853"
+  }
+]
+}

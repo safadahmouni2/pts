@@ -1,0 +1,53 @@
+.test-case-library-container {
+    padding: 8px 10px;
+}
+
+.form-container {
+    width: calc(100% - 44px);
+    margin: 0 auto;
+}
+
+.test-case-table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.test-case-table tr:nth-child(even) {
+    background: #f5f5f5;
+}
+
+.test-case-table td:nth-child(1),
+.test-case-table th:nth-child(1) {
+    width: 44px;
+    padding: 4px 12px;
+}
+
+.test-case-table td:nth-child(2),
+.test-case-table th:nth-child(2) {
+    padding: 4px 13px;
+}
+
+.test-case-table td:nth-child(3),
+.test-case-table th:nth-child(3) {
+    padding: 4px 13px;
+}
+
+.test-case-table thead {
+    background: #efebea;
+}
+
+.test-case-table th {
+    color: #434343;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.test-case-table td {
+    color: #434343;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+perfect-scrollbar {
+    max-height: calc(100vh - 283px);
+}

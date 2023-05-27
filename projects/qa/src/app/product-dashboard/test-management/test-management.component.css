@@ -1,0 +1,54 @@
+.test-header {
+	border-bottom: 1px solid #5c78a7;
+}
+
+.test-header h2{
+	margin-top: 4px;
+    font-size: 24px;
+    color: #294898;
+    font-weight: 100;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.header-actions {
+    margin-top: -10px;
+}
+
+.btn-group {
+    border: 1px solid #516ea6;
+    padding: 0;
+}
+
+.btn-group-btn {
+    width: 36px;
+    height: 30px;
+	border: none;
+    border-right: 1px solid #516ea6;
+    color: #516ea6;
+    font-size: 16px;
+    background: #fff;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.btn-group-btn:last-child {
+    border-right: none;
+}
+
+.btn-group-btn.active {
+    color: #fff;
+    background: #516ea6;
+}
+
+.btn-excel {
+    height: 32px;
+    width: 32px;
+	font-size: 16px;
+    border: 1px solid #207244 !important;
+    color: #207244;
+}

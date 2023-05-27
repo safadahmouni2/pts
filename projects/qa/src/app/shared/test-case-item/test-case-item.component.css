@@ -1,0 +1,122 @@
+
+.test-case-section {
+	position: relative;
+}
+
+.test-case-section::before,
+.test-case-section::after {
+    content: '';
+    left: 20px;
+    position: absolute;
+    right: auto;
+}
+
+.test-case-section::before {
+    border-left: 1px solid #999999;
+    height: calc(100% + 12px);
+    top: -12px;
+}
+
+.test-case-section::after {
+    border-top: 1px solid #999999;
+    height: 20px;
+    top: 30px;
+    width: 42px;
+}
+.test-case-item {
+	width: calc(100% - 64px);
+	margin: 10px 3px 0 61px;
+	border: 1px solid #999999;
+	padding: 8px 12px;
+}
+
+.test-case-item h3 {
+	color: #0f5cb4;
+    font-size: 14px;
+    font-weight: 400;
+	margin: 0;
+}
+
+.test-case-item p {
+    font-size: 14px;
+	color: #444444;
+    margin: 0 0 4px 0;
+    word-break: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    max-height: 40px;
+}
+
+.test-case-item .test-case-result-container .badge {
+    position: relative;
+    top: -4px;
+    right: -8px;
+}
+
+.test-case-statistics {
+    font-size: 20px;
+    line-height: 23px;
+    position: relative;
+    bottom: -4px;
+}
+
+.test-case-statistics .icon-up,
+.test-case-statistics .icon-down {
+    font-size: 16px;
+    padding: 0 2px 0 10px;
+}
+
+.status-tc-grey {
+	background: #d4d2d3;
+	color: #fff;
+}
+
+.status-tc-blue {
+	background: #5f7daf;
+	color: #fff;
+}
+
+.statistics-tc-red {
+    color: #dc3545!important;
+}
+
+.statistics-tc-green {
+    color: #28a745!important;
+}
+
+.badge-US {
+    color: #5f7daf;
+    border: 1px solid #5f7daf;
+    background: #fff;
+    font-size: 11px;
+    line-height: 18px;
+    font-weight: 500;
+    border-radius: 4px;
+    padding: 0 4px;
+    margin-left: 4px;
+}
+
+
+.btn.btn-primary {
+    color: #fff;
+    padding: 0 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+    border: none;
+    font-weight: 700;
+    height: 19px;
+}
+
+.btn.btn-primary,
+.btn.btn-primary:hover,
+.btn.btn-primary:active,
+.btn.btn-primary:focus {
+    background-color: #556080!important;
+}
+
+.test-case-item .right-action-buttons .btn-primary{
+    margin-right:17px;
+}

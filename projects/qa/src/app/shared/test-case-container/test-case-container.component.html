@@ -1,0 +1,6 @@
+<div class="test-case-container no-hierarchy mt-3">
+  <app-test-case-item (sendRequestToParent)="deleteTestCase($event)" *ngFor="let testCase of testCaseList"
+                      [testCase]="testCase" [isTestCaseView]="isTestCaseView">
+  </app-test-case-item>
+
+</div>

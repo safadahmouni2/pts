@@ -1,0 +1,124 @@
+<div class="sprint-selector mr-auto">
+     <div *ngIf="!globals.product"
+          class="dropdown">
+          <button class="btn btn-light dropdown-toggle"
+                  type="button"
+                  id="dropdownProductMenuButton1"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+               PRODUCT
+          </button>
+          <div class="dropdown-menu"
+               aria-labelledby="dropdownProductMenuButton1">
+               <a *ngFor="let product of productList"
+                  class="dropdown-item"
+                  (click)="selectProduct(product)">{{product.product_name}}</a>
+          </div>
+     </div>
+     <div *ngIf="globals.product"
+          class="dropdown">
+          <button class="btn btn-light dropdown-toggle"
+                  type="button"
+                  id="dropdownProductMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+               {{globals.product?.product_name}}
+          </button>
+          <div class="dropdown-menu"
+               aria-labelledby="dropdowProductMenuButton">
+               <a *ngFor="let product of productList"
+                  class="dropdown-item"
+                  (click)="selectProduct(product)">{{product.product_name}}</a>
+          </div>
+     </div>
+
+     <div *ngIf="!globals.sprint && globals.product"
+          class="dropdown">
+          <button class="btn btn-light dropdown-toggle"
+                  type="button"
+                  id="dropdownSprintMenuButton1"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+               SPRINT
+          </button>
+          <div class="dropdown-menu"
+               aria-labelledby="dropdownSprintMenuButton1">
+               <div *ngFor="let sprint of  sprintList"
+                    class="dropdown-sprint-item d-flex justify-content-between align-items-center"
+                    (click)="selectSprint(sprint)"
+                    [ngClass]="{'active': false}">
+                    <a class="mr-2">{{sprint.name}}</a>
+                    <div *ngIf="globals.sprint"
+                         class="text-nowrap sprint-status"
+                         [ngClass]="{'in-progress': sprint.state === 'In progress', 'review': sprint.state === 'Review', 'retrospective': sprint.state === 'Reprospective' || sprint.state === 'Finished' , 'delayed': sprint.state === 'Delayed' || sprint.state === 'Suspended', 'planned': sprint.state === 'Planned', 'created': sprint.state === 'Created'}">
+                         {{sprint.state}}
+                    </div>
+               </div>
+          </div>
+     </div>
+
+     <div *ngIf="globals.sprint"
+          class="dropdown">
+          <button class="btn btn-light dropdown-toggle"
+                  type="button"
+                  id="dropdownSprintMenuButton"
+                  data-toggle="dropdown"
+                  aria-haspopup="true"
+                  aria-expanded="false">
+               {{globals.sprint?.name}}
+          </button>
+          <div *ngIf="globals.sprint"
+               class="dropdown-menu"
+               aria-labelledby="dropdownSprintMenuButton">
+               <div *ngFor="let sprint of sprintList"
+                    class="dropdown-sprint-item d-flex justify-content-between align-items-center"
+                    (click)="selectSprint(sprint)"
+                    [ngClass]="{'active': false}">
+                    <a class="mr-2">{{sprint.name}}</a>
+                    <div class="text-nowrap sprint-status"
+                         [ngClass]="{'in-progress': sprint.state === 'In progress', 
+                 'review': sprint.state === 'Review', 
+                 'retrospective': sprint.state === 'Reprospective' || sprint.state === 'Finished' , 
+                 'delayed': sprint.state === 'Delayed' || sprint.state === 'Suspended'|| sprint.state === 'Closed', 
+                 'planned': sprint.state === 'Planned', 
+                 'created': sprint.state === 'Created'}">
+                         {{sprint.state}}</div>
+               </div>
+          </div>
+     </div>
+     <span *ngIf="globals.sprint"
+           class="sprint-date align-bottom d-inline-block">
+          start {{datePipe.transform(globals.sprint.startDate,'dd.MM.yyyy')}}, end
+          {{datePipe.transform(globals.sprint.endDate,'dd.MM.yyyy')}}
+     </span>
+     <span *ngIf="globals.sprint"
+           class="sprint-status header-status"
+           [ngClass]="{'in-progress': globals.getSprintState()=== 'In progress' , 
+         'review': globals.getSprintState()=== 'Review',
+         'retrospective': globals.getSprintState()=== 'Reprospective'|| globals.getSprintState() === 'Finished' , 
+         'delayed': globals.getSprintState()=== 'Delayed'|| globals.getSprintState() === 'Suspended'||  globals.getSprintState() === 'Closed', 
+         'planned': globals.getSprintState()=== 'Planned', 
+         'created': globals.getSprintState()=== 'Created'}">{{globals.getSprintState()}}</span>
+
+     <span class="sprint-status header-status review">V: {{appVersion}}</span>
+
+     <button class="btn btn-light "
+             [ngClass]="{'log-out-btn':!globals.sprint, 'log-out-btn-date-aff':globals.sprint}"
+             (click)="logout()"
+             *ngIf="infoCnx.token">Logout</button>
+</div>
+<button *ngIf="globals.product"
+        class="notification d-flex align-items-end"
+        [routerLink]="['/test-case-changes']">
+     <i class="icon-notification"></i>
+     <span class="notification-number">{{changeRequests}}</span>
+</button>
+<div class="user-container d-flex align-items-center"
+     *ngIf="user">
+     <span class="user-code">{{ user?.user_code }}</span>
+     <img class="user-image"
+          [src]="baseURL + user?.photo">
+</div>

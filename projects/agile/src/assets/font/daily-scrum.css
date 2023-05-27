@@ -1,0 +1,126 @@
+@font-face {
+  font-family: 'daily-scrum';
+  src:  url('daily-scrum.eot?y4pgrc');
+  src:  url('daily-scrum.eot?y4pgrc#iefix') format('embedded-opentype'),
+    url('daily-scrum.ttf?y4pgrc') format('truetype'),
+    url('daily-scrum.woff?y4pgrc') format('woff'),
+    url('daily-scrum.svg?y4pgrc#daily-scrum') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'daily-scrum' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-recurrence:before {
+  content: "\e91d";
+}
+.icon-repeat:before {
+  content: "\e91e";
+}
+.icon-microsoft-teams:before {
+  content: "\e91f";
+}
+.icon-user-chat:before {
+  content: "\e91c";
+  color: #475860;
+}
+.icon-deputy:before {
+  content: "\e91a";
+}
+.icon-scrum-master:before {
+  content: "\e91b";
+}
+.icon-velocity:before {
+  content: "\e919";
+}
+.icon-down:before {
+  content: "\e917";
+}
+.icon-up:before {
+  content: "\e918";
+}
+.icon-save:before {
+  content: "\e915";
+}
+.icon-plus:before {
+  content: "\e916";
+}
+.icon-checked:before {
+  content: "\e912";
+}
+.icon-close:before {
+  content: "\e913";
+}
+.icon-team:before {
+  content: "\e914";
+}
+.icon-cancel:before {
+  content: "\e911";
+}
+.icon-binder:before {
+  content: "\e90f";
+}
+.icon-prio:before {
+  content: "\e910";
+}
+.icon-xls-file:before {
+  content: "\e90d";
+}
+.icon-add-topic:before {
+  content: "\e90c";
+}
+.icon-add-feature:before {
+  content: "\e90c";
+}
+.icon-empty-bucket:before {
+  content: "\e90b";
+}
+.icon-upload:before {
+  content: "\e90a";
+}
+.icon-assign-task:before {
+  content: "\e909";
+}
+.icon-voice-speaker:before {
+  content: "\e906";
+}
+.icon-excel:before {
+  content: "\e90e";
+}
+.icon-microphone:before {
+  content: "\e908";
+}
+.icon-paper:before {
+  content: "\e907";
+}
+.icon-calendar:before {
+  content: "\e900";
+}
+.icon-clock:before {
+  content: "\e901";
+}
+.icon-manager-avatar:before {
+  content: "\e902";
+}
+.icon-old-timer:before {
+  content: "\e903";
+}
+.icon-play-button:before {
+  content: "\e904";
+}
+.icon-user:before {
+  content: "\e905";
+}

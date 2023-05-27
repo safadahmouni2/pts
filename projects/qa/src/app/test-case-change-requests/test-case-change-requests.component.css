@@ -1,0 +1,38 @@
+.test-header {
+    border-bottom: 1px solid #5c78a7;
+}
+
+.test-header h2 {
+    margin-top: 4px;
+    font-size: 24px;
+    color: #294898;
+    font-weight: 100;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.dashboard-row-margin {
+    margin-top: 10px;
+}
+
+
+.test-case-change-container {
+    min-height: calc(100vh - 115px);
+    gap: 35px;
+}
+
+::ng-deep .test-case-change-tabset .nav-link {
+    padding: 8px 0;
+}
+.icon-close:before{
+  content: "\e906";
+}
+
+.close-btn{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.close-btn:hover {
+  color: #4f7ec2;
+}

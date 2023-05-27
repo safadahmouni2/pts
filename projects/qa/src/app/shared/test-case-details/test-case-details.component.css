@@ -1,0 +1,56 @@
+/* Panel */
+
+:host(.closed) .panel-backdrop {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+:host(.closed) .panel {
+  right: -900px;
+}
+
+/* TC details */
+.tc-details-field-label {
+  font-size: 14px;
+  font-weight: 600;
+  display: block;
+}
+
+.tc-details-field-value {
+  font-size: 16px;
+  display: block;
+  border-bottom: 2px solid #b2b2b2;
+  margin-bottom: 1rem;
+  height:26px;
+}
+
+.tc-details-table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.tc-details-table th,
+.tc-details-table td {
+  padding: 4px 12px !important;
+}
+
+.tc-details-table th:first-child {
+  width: 50px;
+}
+
+.tc-details-table thead {
+  background: #efebea;
+}
+
+.tc-details-table th {
+  color: #434343;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.tc-details-table td {
+  color: #434343;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+/* Animations */

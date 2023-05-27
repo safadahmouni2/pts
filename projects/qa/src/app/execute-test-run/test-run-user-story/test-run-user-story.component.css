@@ -1,0 +1,6 @@
+.execute-test-run-user-story-container {
+    border: 1px solid #949293;
+    padding: 8px 10px;
+    height: calc(100vh - 150px);
+    background: #fdfbfc;
+}

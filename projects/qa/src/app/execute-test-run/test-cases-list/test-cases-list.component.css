@@ -1,0 +1,78 @@
+.test-cases-list-container {
+    border: 1px solid #949293;
+    height: calc(100vh - 150px);
+}
+.test-cases-header {
+    background: #e8e6e7;
+    color: #444444;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    text-transform: uppercase;
+}
+.test-cases-header-col {
+    padding: 6px 18px;
+}
+.test-cases-list {
+    position: relative;
+}
+.test-cases-list-item {
+    font-weight: 100;
+    font-size: 16px;
+    white-space: nowrap;
+    height: 39px;
+    line-height: 27px;
+}
+.test-cases-list-item:nth-child(even) {
+    background: #f5f5f5;
+}
+.test-cases-list-item.active {
+    background-color: #516ea6;
+    color: #fff;
+}
+.test-case-number {
+    color: #516ea6;
+    padding: 6px 10px;
+    display: inline-block;
+}
+.test-cases-list-item.active .test-case-number {
+    color: #fff;
+}
+.test-case-name {
+    white-space: nowrap;
+    padding: 6px 80px 6px 0;
+    display: inline-block;
+}
+.test-case-actions {
+    width: 102px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.test-case-action {
+    background: #fff;
+    padding: 0 5px;
+    height: 39px;
+}
+.test-case-action:nth-child(even) {
+    background: #f5f5f5;
+}
+.test-case-action.active {
+    background-color: #516ea6;
+    color: #fff;
+}
+.cases-list-divider {
+    height: 100%;
+    width: 1px;
+    background: #e7e7e7;
+    display: inline-block;
+    margin: 0 6px 0 1px;
+}
+.cases-list-dropdown {
+    color: #696969;
+    font-size: 19px;
+    margin-top: -25px;
+}
+.switcher {
+    vertical-align: super;
+}

@@ -1,0 +1,29 @@
+:host {
+    display: block;
+}
+
+.user-story-container {
+    border: 1px solid #b3b3b3;
+}
+
+.user-story-section {
+    padding: 8px 10px;
+}
+
+/**/
+
+.test-cases-header {
+    background: #e8e6e7;
+    color: #444444;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.test-cases-header-col {
+    padding: 6px 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

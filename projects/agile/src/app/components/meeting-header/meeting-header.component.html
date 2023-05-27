@@ -1,0 +1,94 @@
+<header class="ds-header daily-scrum-header">
+    <div class="ds-header-left">
+      <div class="push-menu">
+        <nav class="navbar navbar-default" role="navigation">
+          <div class="container-fluid">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header"><a routerLink="/dashbord"><img src="assets/img/tt-slogan.png"></a> </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <!-- Push Menu Left -->
+            <!-- /.navbar-collapse -->
+          </div>
+          <!-- /.container-fluid -->
+        </nav>
+      </div>
+      <div class="project-name">
+        <div class="middle-title">
+          <div class="middle-title-content">{{product?.product_name}}</div>
+          <div class="middle-title-container"><i class="icon-calendar"></i>{{sprint?.name}} : <span
+              class="middle-title-value">{{sprint?.startDate |date:'dd.MM'}} - {{sprint?.endDate
+              |date:'dd.MM'}}</span></div>
+        </div>
+      </div>
+    </div>
+    <!---->
+    <div class="ds-header-right">
+      <div class="ds-buttons-container">
+        <a href="https://pts.thinktank.de/pts-qa" target="PTS-QA">
+          <span alt="" class="qa-navbar">QA</span>
+        </a>
+        <!---->
+        <a routerLink="/managment-us/{{product?.product_id}}" [state]="{ title: 'BL-'+ product?.product_name}">
+          <span alt="" class="backlog-navbar">BL</span>
+        </a>
+        <!---->
+        <a routerLink="/assign-us-to-sprint/{{product?.product_id}}" [state]="{ title: 'SP-'+ product?.product_name}">
+          <span alt="" class="sprint-planning-navbar">SP</span>
+        </a>
+        <!---->
+        <a href="{{sprint?.dsMeetingUrl}}" target="_blank">
+          <img alt="" class="bars-chart-navbar" src="./assets/img/teams.jpg">
+        </a>
+        <!---->
+        <a  [ngClass]="sprint?.ticketId?null:'disabled-link'" href="{{appSprintChatUrl}}" target="_blank">
+          <i class="icon-user-chat sprint-chat-navbar"></i>
+        </a>
+        <!---->
+        <a [routerLink]="['/sprint-chart/', sprintId]" [state]="{ title: 'Burndown-'+ product?.product_name}">
+          <img alt="" class="bars-chart-navbar" src="./assets/img/analytics.png">
+        </a>
+        <!---->
+        <div class="project-status">{{sprintProgress}}%</div>
+        <!---->
+      </div>
+      <!---->
+      <div class="project-details">
+        <div class="middle-title-container"><i class="icon-manager-avatar"></i> Scrum Master : <span
+            class="middle-title-value">{{dsStarted ? dsModerator : sprintSm }}</span></div>
+        <div class="middle-title-container"><i class="icon-clock"></i> Stand Up : <span
+            class="middle-title-value">{{sprint?.dsStartTime |slice:0:5}} - {{sprint?.appDsEndTime |date:'HH:mm'}}</span></div>
+      </div>
+      <!---->
+      <div class="ds-actions-container">
+        <div class="timer">
+          <div class="timer-container">
+            <div class="for-timer"><i class="glyphicon icon-old-timer"></i></div>
+            <div [ngClass]="{'for-time-red' : deadlineReached,'for-time' : !deadlineReached}">{{diffstr}} </div>
+          </div>
+        </div>
+        <!---->
+        <ng-container *ngIf="(isSM_SMD_By_Sprint || (isSM_SMD_By_Product && dsStarted)) && sprint?.stateId == 1017798">
+          <div *ngIf="loading" class="ds-loading-container">
+            <div class="ds-loading" style="text-align: center"><img src="assets/img/loading.gif" style="width: 70px">
+            </div>
+          </div>
+          <div *ngIf="!loading" class="btn-start-container">
+            <div [ngClass]="{ 'btn btn-stop-content': dsStarted, 'btn btn-start-content': !dsStarted  }"
+              (click)="startDs(sprintId)">
+              <i [ngClass]="{'icon-play-button' : !dsStarted,'fa fa-pause-circle-o' : dsStarted}"></i>
+              <span>{{btnTextDsState}}</span>
+            </div>
+          </div>
+        </ng-container>
+        <!---->
+        <button class="btn btn-ds talking" (click)="talking(dsPartId)" [disabled]="!dsStarted || !canSpeaking">
+          <i class='icon-microphone'></i>
+          <i [ngClass]="{'fa':true,'fa-pause' : isTalking, 'fa-play' : !isTalking }"></i>
+        </button>
+        <!---->
+        <div class="btn btn-ds main-user">
+          <img [src]="serverpath + ((currentUserPhoto)?currentUserPhoto:'/images/photos/no_photo.jpg')">
+        </div>
+      </div>
+    </div>
+  </header>

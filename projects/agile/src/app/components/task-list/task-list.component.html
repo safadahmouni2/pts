@@ -1,0 +1,13 @@
+<div [ngClass]="{'postit-assigned-tasks':( true || !isChanged) , 'postit-assigned-tasks-status-changed': isChanged ,  'expanded-block': expanded}">
+    <div [ngClass]="isChanged ? 'postit-collpase-in-header  postit-collpase-in-header-status-changed' : 'postit-collpase-in-header '" (click)="toggleExpanded()">
+        <div class="label-at">Assigned tasks</div>
+       
+        <div class="toogle-action"><i [ngClass]="{'fa': true, 'fa-angle-down': !expanded,'fa-angle-up':expanded}"></i></div>
+        <div [ngClass]="isChanged ? 'tasks-number-circle tasks-number-circle-status-changed' : 'tasks-number-circle '">{{assignedTasksNumber}}</div>
+    </div>
+    <div class="postit-assigned-tasks-panel">
+        <div [ngClass]="isChanged ? 'assigned-tasks-container assigned-tasks-container-status-changed' : 'assigned-tasks-container '">
+            <app-task *ngFor="let task of tasks;" [task]="task"></app-task>
+        </div>
+    </div>
+</div>

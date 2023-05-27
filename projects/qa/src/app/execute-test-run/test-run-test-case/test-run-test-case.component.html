@@ -1,0 +1,331 @@
+<div class="test-case-container">
+  <button class="btn btn-test-case-resize position-left icon-arrow-left"
+          *ngIf="selectedIndex > 0"
+          (click)="goPrevious()"></button>
+  <button class="btn btn-test-case-resize position-right icon-arrow-right"
+          *ngIf="selectedIndex < tests.length -1"
+          (click)="goNext()"></button>
+
+  <div class="d-flex test-case-section justify-content-between align-items-center">
+    <div class="user-story-number">{{getTitle()}}</div>
+
+    <div class="d-flex flex-grow-1 justify-content-end">
+      <app-show-actor-info [actorInfo]=test
+                           [right_aligned]="true">
+      </app-show-actor-info>
+
+      <!-- counter end -->
+      <div class="right-action-buttons ml-3">
+        <span class="status-test-case align-middle">Status: </span>
+        <!--
+          Classes for the switcher:
+          Grey switcher: switcher-null
+          Green switcher: switcher-true
+          Red switcher: switcher-false
+        -->
+        <button class="switcher align-bottom"
+                [disabled]="!counterRunning"
+                [ngClass]="{'switcher-null':test.testState === null, 'switcher-true':test.testState === 'OK', 'switcher-false':test.testState === 'NOT_OK'}">
+          <div class="switcher-view"></div>
+        </button>
+        <button *ngIf="testRunStatus!== 'COMPLETED'&& counterRunning === true"
+                class="btn btn-light align-middle"
+                title="Edit"
+                (click)="editTest()">
+          <i class="icon-pen"></i>
+        </button>
+        <a class="btn btn-light align-middle"
+           title="Chat"
+           href="{{chatUrl}}"
+           target="_blank"
+           [ngClass]="{'disabled': !isProd}">
+          <i class="icon-person-chat"></i>
+        </a>
+        <div *ngIf="!globals.isInvalidSprintSelected()"
+             class="btn-group align-middle"
+             dropdown>
+          <i class="test-case-icon-more icon-more cursor-pointer"
+             dropdownToggle></i>
+          <ul *dropdownMenu
+              class="execute-test-run-dropdown-menu dropdown-menu">
+            <li (click)="onClickOpenModal(addProblem, null)">Add problem</li>
+            <li (click)="onClickOpenModal(addTicket, null)">Add ticket</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-container-test-case d-flex flex-column">
+    <div class="row">
+      <div class="col">
+        <div class="form-group-pts-qa test-case-group">
+          <div class="form-control-pts-qa">
+            {{test.shortDescription}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="textarea-group test-case-textarea-group focused">
+          <div class="label">Preconditions</div>
+          <textarea class="form-control-pts-qa test-case-textarea-form-control"
+                    disabled>- {{test.preCondition}}</textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mt-4 flex-grow-1">
+      <div class="col">
+        <table class="test-case-steps-table">
+          <thead>
+            <tr>
+              <th>N°</th>
+              <th>Test Steps</th>
+              <th>Expected Results</th>
+              <th></th>
+            </tr>
+          </thead>
+        </table>
+        <perfect-scrollbar style="height: calc(100vh - 508px)">
+          <table class="test-case-steps-table">
+            <tbody>
+              <tr *ngFor="let testStep of testSteps; let index = index;">
+                <td>{{index + 1}}</td>
+                <td>
+                  {{testStep.stepDescription}}
+                </td>
+                <td>
+                  {{testStep.expectedResult}}
+                </td>
+                <td>
+                  <!--
+                  Classes for the switcher:
+                  Grey switcher: switcher-null
+                  Green switcher: switcher-true
+                  Red switcher: switcher-false
+                -->
+                  <button class="align-middle switcher"
+                          [disabled]="!counterRunning"
+                          [ngClass]="{'switcher-null':testStep.testStepState === null, 'switcher-true':testStep.testStepState === 'OK', 'switcher-false':testStep.testStepState === 'NOT_OK'}"
+                          (click)="editTestStepStatus(testStep, $event)">
+                    <div class="switcher-view"></div>
+                  </button>
+                  <a class="btn btn-light"
+                     title="Chat"
+                     href="{{getTestStepChatUrl(testStep.id)}}"
+                     target="_blank"
+                     [ngClass]="{'disabled': !isProd}">
+                    <i class="icon-person-chat"></i>
+                  </a>
+                  <div *ngIf="!globals.isInvalidSprintSelected() && testRunStatus!== 'COMPLETED'&& counterRunning"
+                       class="btn-group step-dropdown"
+                       dropdown>
+                    <i class="icon-more cursor-pointer step-dropdown"
+                       dropdownToggle></i>
+                    <ul *dropdownMenu
+                        class="execute-test-run-dropdown-menu dropdown-menu">
+                      <li (click)="onClickOpenModal(addProblem, testStep)">Add Problem</li>
+                      <li (click)="onClickOpenModal(addTicket, testStep)">Add Ticket</li>
+                    </ul>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </perfect-scrollbar>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col mt-3">
+        <tabset #tabset>
+          <tab heading="Assigned tasks">
+            <perfect-scrollbar style="height: 100%">
+              <accordion>
+                <accordion-group [panelClass]="'assigned-task'"
+                                 *ngFor="let ticket of ticketList">
+                  <button class="assigned-task-header d-flex"
+                          accordion-heading
+                          type="button">
+                    <div class="assigned-task-name flex-grow-1">T{{ ticket.id }}</div>
+                    <span class="badge badge-team-name">{{ ticket.responsible }}</span>
+                  </button>
+                  {{ ticket.shortDescription }}
+                </accordion-group>
+                <accordion-group [panelClass]="'assigned-task'"
+                                 *ngFor="let problem of problemList">
+                  <button class="assigned-task-header d-flex"
+                          accordion-heading
+                          type="button">
+                    <div class="assigned-task-name flex-grow-1">P{{ problem.id }}</div>
+                    <span class="badge badge-team-name"></span>
+                  </button>
+                  {{ problem.shortDescription }}
+                </accordion-group>
+              </accordion>
+            </perfect-scrollbar>
+          </tab>
+          <tab heading="Attachments">
+            <div class="attachment-btn-group-container d-flex align-items-start mb-4">
+              <div class="attachment-btn-group"
+                   btnRadioGroup
+                   [(ngModel)]="attachmentsModel">
+                <label class="attachment-btn-group-btn"
+                       btnRadio="testAttachments"
+                       role="button"
+                       (click)="getAttachments('testAttachments')">Test Attachments</label>
+                <label class="attachment-btn-group-btn"
+                       btnRadio="libraryAttachments"
+                       role="button"
+                       (click)="getAttachments('libraryAttachments')">Library Attachments</label>
+              </div>
+            </div>
+
+            <ng-container>
+              <!-- Drag and drop area -->
+              <!-- Add the class 'uploading' while file being uploaded -->
+              <div class="drag-and-drop-area d-flex align-items-center justify-content-center mt-0 mb-4"
+                   *ngIf="attachmentsModel === 'testAttachments'">
+                <input type="file"
+                       class="drag-and-drop-input"
+                       (change)="onChange($event)" />
+
+                <!-- Initial state -->
+                <ng-container>
+                  <i class="icon-upload"></i>
+                  Drag &amp; drop to upload or click to browse
+                </ng-container>
+
+                <!-- While file is being uploaded -->
+                <ng-container *ngIf=onUploading>
+                  <div class="la-ball-spin-fade-rotating">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                  </div>
+                  <span class="ml-3">Uploading</span>
+                  <span class="font-weight-bold ml-1">{{selectedFile.name}}</span>
+                </ng-container>
+              </div>
+
+              <!-- Attachments table -->
+              <table class="library-table library-attachments-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>File name</th>
+                    <th>Uploaded</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <!-- Iterate through attachments -->
+                  <tr class="library-steps-add-row"
+                      *ngFor="let doc of documentList">
+                    <td>{{doc.id}}</td>
+                    <td>
+                      <span class="attachment-name">{{doc.fileName}}</span>
+
+                      <!-- Hide on edit -->
+                      <span class="attachment-description"
+                            [hidden]="(inputDocShortDescription === getInputDocShortDescription('docShortDescription',doc.id))">{{doc.shortDescription}}</span>
+
+                      <!-- Add the class 'focused' on focus -->
+                      <div class="form-group-pts-qa mt-1"
+                           [hidden]="(inputDocShortDescription !== getInputDocShortDescription('docShortDescription',doc.id))"
+                           [ngClass]="{'focused' : doc.shortDescription }">
+                        <div class="label">{{doc.shortDescription}}</div>
+                        <input type="text"
+                               class="form-control-pts-qa"
+                               [(ngModel)]="doc.shortDescription" />
+                        <div class="form-buttons-container">
+                          <button class="table-button">
+                            <i class="icon-success align-middle"
+                               (click)="updateDocShortDescription(doc)"></i>
+                          </button>
+                          <button class="table-button">
+                            <i class="icon-close align-middle"
+                               (click)="resetChangement(doc)"></i>
+                          </button>
+                        </div>
+                      </div>
+                    </td>
+                    <td>{{doc.uploadDate | date: 'dd.MM.yyyy'}}</td>
+                    <td>
+                      <i class="attachment-action-icon icon-download"
+                         (click)="downloadFile(doc)"></i>
+                      <i class="attachment-action-icon icon-pen"
+                         *ngIf="attachmentsModel === 'testAttachments'"
+                         (click)="editDoc(doc)"></i>
+                      <i class="attachment-action-icon icon-trash"
+                         *ngIf="attachmentsModel === 'testAttachments'"
+                         (click)="deleteDoc(doc)"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </ng-container>
+          </tab>
+          <tab heading="My effort"
+               (selectTab)="getAllTestEffortsByTestId()">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="">My Effort Table</span>
+              <span class="total-effort">{{ totalEffort }}</span>
+            </div>
+            <div class="row mt-4 flex-grow-1">
+              <div class="col">
+                <table class="estimated-effort-table">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Start</th>
+                      <th>End</th>
+                      <th>Duration</th>
+                    </tr>
+                  </thead>
+                </table>
+                <perfect-scrollbar style="height: calc(100vh - 508px)">
+                  <table class="estimated-effort-table">
+                    <tbody>
+                      <tr *ngFor="let testEffort of testEffortList; let index = index;">
+                        <td>{{ testEffort.date }}</td>
+                        <td>{{ testEffort.startTime }}</td>
+                        <td>{{ testEffort.endTime }}</td>
+                        <td>{{ testEffort.effortByLine }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </perfect-scrollbar>
+              </div>
+            </div>
+
+          </tab>
+        </tabset>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<ng-template #addTicket>
+  <app-add-ticket [test]="test"
+                  [testStep]="selectedTestStep"
+                  [productName]="globals.getProductName()"
+                  (refreshAssignedTasks)="detectNewItem($event)">
+  </app-add-ticket>
+
+</ng-template>
+
+
+<ng-template #addProblem>
+  <app-add-problem [test]="test"
+                   [testStep]="selectedTestStep"
+                   [productName]="globals.getProductName()"
+                   (refreshAssignedTasks)="detectNewItem($event)"></app-add-problem>
+</ng-template>

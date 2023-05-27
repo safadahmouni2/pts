@@ -1,0 +1,116 @@
+<div class="form-modal-header">
+    <h4 class="form-modal-title">Add ticket</h4>
+</div>
+<div class="form-modal-body">
+    <form [formGroup]="ticketForm">
+        <div class="row modal-row">
+            <div class="modal-col-6">
+                <div class="form-group-pts-qa">
+                    <div class="label">Responsible</div>
+                    <input id="responsible"
+                           formControlName="responsible"
+                           type="text"
+                           class="form-control-pts-qa"
+                           (focus)="fieldFocus($event, 'Responsible')"
+                           (blur)="fieldBlur($event)" />
+                    <div class="conbobox-conatainer"
+                         *ngIf="showResponsibleDropdown">
+                        <div class="conbobox-item cursor-pointer"
+                             *ngFor="let responsible of responsibleList"
+                             (click)="setResponsible(responsible.user_code, $event)">{{responsible.user_code}}</div>
+                    </div>
+                    <label class="dropdown-label"
+                           for="responsible">
+                        <i class="icon-arrow-down align-middle"
+                           (click)="toggleResponsibleDropdown()"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-col-6">
+                <div class="form-group-pts-qa select">
+                        <div class="label">Urgency</div>
+                        <input type="text"
+                               id="urgency"
+                               formControlName="urgency"
+                               class="form-control-pts-qa"
+                               (focus)="fieldFocus($event, 'Urgency')"
+                               (blur)="fieldBlur($event)" 
+                               [ngClass]="{'focused': ticket.urgency}"
+                               readonly/>
+                        <div class="conbobox-conatainer"
+                             *ngIf="showUrgencyDropdown">
+                            <div class="conbobox-item cursor-pointer"
+                                 (click)="setUrgency('Low', $event)">Low</div>
+                            <div class="conbobox-item cursor-pointer"
+                                 (click)="setUrgency('Medium', $event)">Medium</div>
+                            <div class="conbobox-item cursor-pointer"
+                                 (click)="setUrgency('High', $event)">High</div>
+                            <div class="conbobox-item cursor-pointer"
+                                 (click)="setUrgency('Extremely_urgent', $event)">
+                                Extremely urgent</div>
+                        </div>
+                        <label for="urgency"
+                               class="dropdown-label"
+                               (click)="toggleUrgencyDropdown()">
+                            <i class="icon-arrow-down align-middle"></i>
+                        </label> 
+                   </div>
+                   </div>
+        </div>
+        <div class="row modal-row">
+            <div class="modal-col-6">
+                <div class="form-group-pts-qa">
+                    <div class="label">Project</div>
+                    <input type="text"
+                           id="project"
+                           formControlName="project"
+                           class="form-control-pts-qa"
+                           (focus)="fieldFocus($event, 'Project')"
+                           (blur)="fieldBlur($event)" />
+                    <div class="conbobox-conatainer"
+                         *ngIf="showProjectDropdown">
+                        <div class="conbobox-item cursor-pointer"
+                             *ngFor="let project of projectOptions"
+                             (click)="setProject(project.project_name, $event)">{{project.project_name}}</div>
+                    </div>
+                    <label for="project"
+                           class="dropdown-label">
+                        <i class="icon-arrow-down align-middle"
+                           (click)="toggleProjectDropdown()"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row modal-row">
+            <div class="modal-col">
+                <div class="form-group-pts-qa">
+                    <div class="label">Short description</div>
+                    <input type="text"
+                           formControlName="shortDescription"
+                           class="form-control-pts-qa"
+                           (focus)="fieldFocus($event, 'Short description')"
+                           (blur)="fieldBlur($event)" />
+                </div>
+            </div>
+        </div>
+        <div class="row modal-row">
+            <div class="modal-col">
+                <div class="textarea-group test-case-textarea-group focused">
+                    <div class="label">Long description</div>
+                    <textarea class="form-control-pts-qa add-ticket-textarea-form-control"
+                              formControlName="longDescription"
+                              (focus)="fieldFocus($event, 'Long description')"
+                              (blur)="fieldBlur($event)"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row modal-row">
+            <div class="modal-col buttons-col">
+                <button class="modal-btn modal-btn-secondary"
+                        (click)="cancel()">cancel</button>
+                <button class="modal-btn modal-btn-primary"
+                        (click)="addTicket()">save</button>
+            </div>
+        </div>
+    </form>
+</div>

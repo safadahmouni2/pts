@@ -1,0 +1,44 @@
+<header class="ds-header scrum-dashboiard-header">
+	<div class="push-menu">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a routerLink="/dashbord">
+						<img src="assets/img/tt-slogan.png"></a>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div class="project-name">
+		<div class="middle-title">
+			<div class="middle-title-content">{{sprint?.product}}
+			</div>
+			<span class="middle-title-container">Sprint Burndown Chart </span>
+			<div class="middle-title-container" [style.margin-top.%]="0.5"><i
+					class="icon-calendar"></i>{{sprint?.name}}:
+				<span class="middle-title-value">{{sprint?.startDate}} -
+					{{sprint?.endDate}}</span>
+			</div>
+		</div>
+	</div>
+	<div class="btn btn-ds main-user"><img *ngIf="currentUserPict" [src]="serverpath + currentUserPict"></div>
+</header>
+
+<div class="container d-flex justify-content-around align-items-center">
+	<div [style.margin-left.%]="2" width="30%" height="auto" viewBox="0 0 1300 700">
+		<img [style.width.%]="100" [style.margin-bottom.%]="5" [style.margin-top.%]="3" src="./assets/img/charte.png"
+			alt=" ">
+		<span> <br><b> StoryPoints of Sprint</b> = {{totalPoints}} </span>
+		<span> <br><b>Velocity Of Team In Sprint</b> (storyPoints) = {{storyPointsDone}} </span>
+		<span><br><b>Number Of Team </b>= {{numberofTeam}} </span>
+		<span> <br> <b>Focus Factor</b> = {{focusFactor}}% </span>
+		<span><br><b> Estimated Days By Story Points Of Next Sprint :</b><input [style.width.%]="12"
+				[style.margin-right.%]="2" [style.margin-left.%]="1" type="number" name="storyPoints"
+				[(ngModel)]="storyPointsNextSprint"><button (click)="estimated()">Estimated</button></span><br>
+		<span *ngIf="estimatedDaysnextSprint!== 0"><b>Estimated days Of Next Sprint For this Team</b> =
+			{{estimatedDaysnextSprint}} days </span>
+
+	</div>
+	<svg [style.margin-left.%]="5" [style.margin-top.%]="1" id="svgC" width="1200" height="700"
+		viewBox="0 0 1200 700"></svg>
+</div>

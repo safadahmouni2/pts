@@ -1,0 +1,25 @@
+<div class="filter-container">
+  <select  #currentYear [compareWith]="compareId" id="y1" (change)='changeScore(currentYear.value)'>
+    <option *ngFor="let year of listYears" [ngValue]="year.year" >{{
+      year.year
+    }}</option>
+  </select>
+</div>
+<div class="row">
+  <div class="col-md-4 col-12">
+    <div class="my-score" id="myscore">
+      <h1>MY SCORE</h1>
+      <img src="assets/images/smartbag.png" />
+      <h2>{{ userScore }}</h2>
+    </div>
+  </div>
+  <div class="col text-center">
+    <rg-gauge-chart
+      [canvasWidth]="canvasWidth"
+      [needleValue]="needleValue"
+      [options]="options"
+      [name]="name"
+
+    ></rg-gauge-chart>
+  </div>
+</div>

@@ -1,0 +1,594 @@
+openapi: "3.0.0"
+info: 
+  version: 1.0.0
+  title: HR-Smart Logging-Service
+servers:
+  - url: http://localhost:8080
+    description: local
+paths:
+   /test:
+      get:
+        summary: Test-Endpoint
+        operationId: test
+        responses:
+          '200':
+            description: some info string
+            content:
+              application/json:
+                schema:
+                  type: string
+          default:
+             description: unexpected error
+             content:
+               application/json:
+                 schema:
+                   $ref: '#/components/schemas/Error'
+   /user:
+      post:
+        summary: User-Endpoint-post
+        operationId: addUser
+        requestBody:
+          description: User entry to add
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEntry'
+        responses:
+          200:
+            description: user created succesfully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/UserEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      get:
+        summary: list-User-Endpoint
+        operationId: getUsers
+        responses:
+          200:
+            description: User List
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/UserEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      put:
+        summary: user-Endpoint-put
+        operationId: updateUserRole
+        requestBody:
+          description: Update user data Role
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserEntry'
+        responses:
+        
+          200:
+            description: Smart Object created succefully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/UserEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'              
+   /training:
+      post:
+        summary: Training-Endpoint-post
+        operationId: addTraining
+        requestBody:
+          description: Training entry to add
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingEntry'
+        responses:
+          200:
+            description: training created succefully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/TrainingEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      get:
+        summary: Training-Endpoint-get
+        operationId: getTrainings
+        responses:
+          200:
+            description: Training List
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/TrainingEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+      put:
+        summary: Training-Endpoint-put
+        operationId: updateTrainings
+        requestBody:
+          description: null
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TrainingEntry'
+        responses:
+        
+          200:
+            description: Training created succefully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/TrainingEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'         
+   /smartActionType:
+      post:
+        summary: smartActionType-Endpoint-post
+        operationId: addSmartActionType
+        requestBody:
+          description: SmartActionType entry to add
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartActionTypeEntry'
+        responses:
+          200:
+            description: SmartActionType created succefully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SmartActionTypeEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'  
+   /smartActionType/{id}:
+      get:
+        summary: SmartActionType-Endpoint-get
+        operationId: getSmartActionType
+        parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+          description:  Smart Action Type 
+        responses:
+          200:
+            description: Smart Action Type 
+            content:
+              application/json:
+                schema:
+                  items:
+                    $ref: '#/components/schemas/SmartActionTypeEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'   
+   /userSmartObject/{id}:
+       get:
+        summary: UserSmartObject-Endpoint-get
+        operationId: getUserSmartObjects
+        parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+          description: The user ID
+        responses:
+          200:
+            description: Smart Object List
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SmartObjectEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'                                  
+   /smartObject:
+      post:
+        summary: SmartObject-Endpoint-post
+        operationId: addSmartObject
+        requestBody:
+          description: null
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartObjectEntry'
+        responses:
+          200:
+            description: Smart Object created succefully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SmartObjectEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      get:
+        summary: SmartObject-Endpoint-get
+        operationId: getSmartObjects
+        responses:
+          200:
+            description: Smart Object List
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/SmartObjectEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+      put:
+        summary: SmartObject-Endpoint-put
+        operationId: updateSmartObject
+        requestBody:
+          description: null
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SmartObjectEntry'
+        responses:
+        
+          200:
+            description: Smart Object created succefully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SmartObjectEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+   /participant:
+      post:
+        summary: participants-Endpoint-post
+        operationId: addParticipants
+        requestBody:
+          description: null
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipantEntry'
+        responses:
+          200:
+            description: Smart Object created succefully
+            content:
+              application/json:
+                schema:
+                    $ref: '#/components/schemas/ParticipantEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      get:
+        summary: SmartObject-Endpoint-get
+        operationId: getParticipants
+        responses:
+          200:
+            description: Smart Object List
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/ParticipantEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'
+      
+      put:
+        summary: SmartObject-Endpoint-put
+        operationId: updateParticipants
+        requestBody:
+          description: null
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ParticipantEntry'
+        responses:
+        
+          200:
+            description: Smart Object created succefully
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/ParticipantEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+   /participant/{id}:
+       get:
+        summary: SmartObject-Endpoint-get
+        operationId: getParticipant
+        parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+          description: The Participant  ID
+        responses:
+          200:
+            description: Participant data
+            content:
+              application/json:
+                schema:
+                  items:
+                    $ref: '#/components/schemas/ParticipantEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error'               
+       delete:
+        summary: participants-Endpoint-delete
+        operationId: deleteParticipant
+        parameters:
+        - in: path
+          name: id   # Note the name is the same as in the path
+          required: true
+          schema:
+            type: string
+          description: The Participant  ID
+        responses:
+          200:
+            description: Smart Object created succefully
+            content:
+              application/json:
+                schema:
+                    $ref: '#/components/schemas/ParticipantEntry'
+          default:
+            description: unexpected error
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/Error' 
+components:
+    schemas:
+      DepartementEnum:
+        type: object
+        enum:
+        - development
+        - Quality
+        - Design
+        - Other
+      statusEnum:
+        type: object
+        enum:
+        - Accepted
+        - Rejected
+        - Onhold
+      trainingStatusEnum:
+        type: object
+        enum:
+        - Proposed
+        - Planned
+        - Done
+        - Confirmed
+      Error:
+        required:
+        - code
+        - message
+        properties:
+          code:
+            type: integer
+            format: int32
+          message:
+            type: string
+   
+      ParticipantEntry:
+        properties:
+          participantId:
+            type: string
+          training:
+            $ref: '#/components/schemas/TrainingEntry' 
+          trainings:
+            $ref: '#/components/schemas/UserEntry'          
+      UserEntry:
+        properties:
+          code:
+            type: string
+          roleID:
+            type: string
+          avatar:
+            type: string
+          trainings:
+            type: array
+            items:
+              $ref: '#/components/schemas/ParticipantEntry'  
+      UserList:
+        type: object
+        properties:
+          code:
+            type: string
+          roleID:
+            type: string
+          avatar:
+            type: string
+          participantId:
+            type: string
+      TrainingEntry:
+        properties:
+          id:
+            type: string
+          subject:
+            type: string
+          topic:
+            type: string
+          departement:
+            type: string
+            $ref: '#/components/schemas/DepartementEnum'
+          date:
+            type: string
+            format: date
+          urgency:
+            type: string
+          hours:
+            type: integer
+            format: int32
+          description:
+            type: string
+          status:
+            type: string
+            $ref: '#/components/schemas/trainingStatusEnum'
+          moderator:
+            $ref: '#/components/schemas/UserEntry' 
+          allParticipant:
+            type: array
+            items:
+              $ref: '#/components/schemas/ParticipantEntry'   
+      SmartObjectEntry:
+        properties:
+          id:
+            type: string
+          creator:
+            type: string
+          type:
+            type: string
+          points:
+            type: integer
+            format: int32
+          subject:
+            type: string
+          departement:
+            type: string
+            $ref: '#/components/schemas/DepartementEnum'
+          date:
+            type: string
+            format: date
+          hours:
+            type: integer
+            format: int32
+          description:
+            type: string
+          status:
+            type: string
+            $ref: '#/components/schemas/statusEnum'
+          name:
+            type: string
+          urgency:
+            type: string
+          createdAt:
+            type: string
+            format: date
+          updatedAt:
+            type: string
+            format: date
+          moderator:
+            type: string
+      SmartActionTypeEntry:
+        properties:
+          idSAT:
+            type: string
+          type:
+            type: string
+          name:
+            type: string
+          points:
+            type: integer
+            format: int32
+          year:
+            type: string
+      SmartObjectDisplayedDataEntry:
+        properties:
+          type:
+            type: string
+          points:
+            type: integer
+            format: int32
+          subject:
+            type: string
+          departement:
+            type: string
+            $ref: '#/components/schemas/DepartementEnum'
+          date:
+            type: string
+            format: date
+          hours:
+            type: integer
+            format: int32
+          description:
+            type: string
+          status:
+            type: string
+            $ref: '#/components/schemas/statusEnum'
+          name:
+            type: string
+          urgency:
+            type: string
+          moderator:
+            type: string
+          createdAt:
+            type: string
+            format: date
+          updatedAt:
+            type: string
+            format: date

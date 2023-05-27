@@ -1,0 +1,144 @@
+<div [ngClass]="{'postit-global-block': true, 'expanded': userStory.expanded, 'editable':userStory.editMode}">
+    <div [ngClass]="userStory.is_changed ? 'postit-container postit-container-status-changed' : 'postit-container'">
+        <div class="postit-header">
+            <div class="postit-header-title">
+                <div class="postit-title" style="border:2px #0000ed solide" (click)="onClick()">US: {{userStory.id}}
+                </div>
+                <div class="postit-text" *ngIf="!userStory.editMode" (click)="userStory.toggleEditMode()">
+                    {{userStory.shortDescription}}
+                </div>
+            </div>
+            <div class="postit-header-action">
+                <div class="project-us-container project-us-container-changed-status">
+                    <label>PROJECT</label>
+                    <div class="project-us-text">{{userStory.project}}</div>
+                </div>
+                <div
+                    [ngClass]="userStory.is_changed ? 'topic-us-container topic-us-container-status-changed' : 'topic-us-container '">
+                    <label>TOPIC</label>
+                    <div class="topic-us-text"> {{userStory.topic?.name}}</div>
+                </div>
+                <div [ngClass]="userStory.is_changed ? 'postit-info postit-info-status-changed' : 'postit-info '">
+                    <div class="postit-info-data">
+                        <div class="storie-resp" [ngClass]="{'us-active': isUserSpeaking}">{{userStory.userCode}}
+                        </div>
+                        <div class="prio">
+                            <img *ngIf="userStory.urgencyIcon" src="https://pts.thinktank.de/{{userStory.urgencyIcon}}">
+                            <img *ngIf="!userStory.urgencyIcon" src="assets/img/default_prio_icn.png">
+                        </div>
+                        <div class="sprint-abbreviation">
+                            <div class="sprint-abbreviation-content" *ngIf="userStory.sprint">
+                                {{userStory.sprint.shortName}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="postit-info-action">
+                        <div
+                            [ngClass]="userStory.is_changed ? 'user-resp-values-task user-resp-values-task-status-changed' : 'user-resp-values-task '">
+                            {{userStory.storyPoints}}</div>
+                        <div class="add-comment" [ngClass]="userStory.ticketId?null:'cursor-not-allowed'" *ngIf="userStory.id">
+                            <a [ngClass]="userStory.ticketId?null:'disabled-link'" (click)="userStory.addComment()">
+                                <img src="https://pts.thinktank.de/images/comments_icn.gif" title="Add comments ...">
+                            </a>
+                        </div>                        
+                        <div class="add-chat" *ngIf="userStory.id" [ngClass]="userStory.ticketId?null:'cursor-not-allowed'">
+                            <a [ngClass]="userStory.ticketId?null:'disabled-link'" href="{{appUserStoryChatUrl}}" target="_blank">
+                                <img src="assets/img/pts_chat_empty.png" title="PTS-Chat ::  start now! ...">
+                            </a>
+                        </div>                        
+                    </div>
+                </div>
+                <div *ngIf = 'userStory?.state' [ngClass]="userStory.is_changed ? 'postit-status postit-status-status-changed' : 'postit-status '">
+                    {{userStory.state}}</div>
+                <div class="postit-close">
+                    <div
+                        [ngClass]="userStory.is_changed ? 'postit-close-circle postit-close-circle-status-changed' : 'postit-close-circle '">
+                        <i [ngClass]="{'fa': true, 'fa-angle-down': !userStory.expanded,'fa-angle-up':userStory.expanded}"
+                            (click)="getTasks(userStory?.ticketId)"></i> 
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="postit-text postit-text-edit" *ngIf="userStory.editMode ">
+            <textarea [(ngModel)]="userStory._shortDescription"></textarea>
+            <div class="action-container">
+                <div class="aply-chnages"><i class="fa fa-check" aria-hidden="true"
+                        (click)="addUserStory(userStory)"></i></div>
+                <div class="deny-chnages"><i class="fa fa-times" aria-hidden="true"
+                        (click)="userStory.toggleEditMode()"></i>
+                </div>
+                <div></div>
+            </div>
+        </div>
+
+        <div class="postit-text mx-1" *ngIf="!userStory.editMode" (click)="userStory.toggleEditMode()">
+            {{userStory.shortDescription}}
+        </div>
+
+        <div class="more-info-project-topic">
+            <div class="hr-styled"></div>
+            <div class="more-info-project-topic-container">
+                <div class="project-us-container project-us-container-changed-status">
+                    <label>PROJECT</label>
+                    <div class="project-us-text">{{userStory.project}}</div>
+                </div>
+                <div
+                    [ngClass]="userStory.is_changed ? 'topic-us-container topic-us-container-status-changed' : 'topic-us-container '">
+                    <label>TOPIC</label>
+                    <div class="topic-us-text"> {{userStory.topic?.name}}</div>
+                </div>
+                <nouislider [connect]="[true, false]" [hidden]="!userStory.expanded" [min]="0" [max]="100" [step]="1"
+                    [tooltips]="[ true ]" [ngModel]="(userStory?.progress) ? userStory?.progress : 0"
+                    (ngModelChange)="onChangeProgress($event)"
+                    [disabled]=" !(speaker?.code && speaker.code !=='' && (currentUser?.role.match('Scrum master') || currentUser && speaker.code !== currentUser?.userCode))">
+                </nouislider>
+
+            </div>
+        </div>
+        <div class="postit-collapse-container">
+            <app-task-list [objectId]="userStory.ticketId" [assignedTasksNumber]="assignedTasksNumber"
+                [ischanged]="userStory.is_changed"></app-task-list>
+            <app-comment-list [objectId]="userStory?.ticketId" [(addCommentMode)]="userStory.addCommentMode"
+                [(expanded)]="userStory.commentsExpanded" [ischanged]="userStory.is_changed"></app-comment-list>
+        </div>
+        <nouislider [connect]="[true, false]" [hidden]="!userStory.expanded" [min]="0" [max]="100" [step]="1"
+            [tooltips]="[ true ]" [ngModel]="(userStory?.progress) ? userStory?.progress : 0"
+            (ngModelChange)="onChangeProgress($event)"
+            [disabled]="!(speaker?.code && speaker.code!=='' && (currentUser?.role.match('Scrum master') || currentUser && speaker.code !== currentUser?.userCode))">
+        </nouislider>
+        <div class="postit-progress" [hidden]="userStory.expanded">
+            <div class="percent-value" [ngStyle]="{ 'width': (userStory.progress?userStory.progress:0)+'%' }"></div>
+        </div>
+        <div class="postit-info-main m-1">
+            <div [ngClass]="userStory.is_changed ? 'postit-info postit-info-status-changed' : 'postit-info '">
+                <div class="postit-info-data">
+                    <div class="storie-resp" [ngClass]="{'us-active': currentUser && isUserSpeaking}">{{userStory.userCode}}
+                    </div>
+                    <div class="prio">
+                        <img *ngIf="userStory.urgencyIcon" src="https://pts.thinktank.de/{{userStory.urgencyIcon}}">
+                        <img *ngIf="!userStory.urgencyIcon" src="assets/img/default_prio_icn.png">
+                    </div>
+                    <div class="sprint-abbreviation">
+                        <div class="sprint-abbreviation-content" *ngIf="userStory.sprint">{{userStory.sprint.shortName}}
+                        </div>
+                    </div>
+                </div>
+                <div class="postit-info-action">
+                    <div
+                        [ngClass]="userStory.is_changed ? 'user-resp-values-task user-resp-values-task-status-changed' : 'user-resp-values-task '">
+                        {{userStory.storyPoints}}</div>
+                    <div class="add-comment" [ngClass]="userStory.ticketId?null:'cursor-not-allowed'" *ngIf="userStory.id">
+                        <a [ngClass]="userStory.ticketId?null:'disabled-link'" (click)="userStory.addComment()">
+                            <img src="https://pts.thinktank.de/images/comments_icn.gif" title="Add comments ...">
+                        </a>
+                    </div>
+                    <div class="add-chat" *ngIf="userStory.id" [ngClass]="userStory.ticketId?null:'cursor-not-allowed'">
+                        <a [ngClass]="userStory.ticketId?null:'disabled-link'" href="{{appUserStoryChatUrl}}" target="_blank">
+                            <img src="assets/img/pts_chat_empty.png" title="PTS-Chat ::  start now! ...">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

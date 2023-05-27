@@ -1,0 +1,61 @@
+/**/
+
+.create-test-run-filter {
+    margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.create-test-run-btn-group {
+    padding: 0;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+.create-test-run-btn-group-btn {
+	border: 1px solid #516ea6;
+    color: #516ea6;
+    font-size: 14px;
+    background: #fff;
+    padding: 3px 12px;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+} 
+.create-test-run-btn-group-btn.active {
+    color: #fff;
+    background: #516ea6;
+}
+
+.create-test-case-filter {
+    margin-top: 20px;
+	margin-bottom: 20px;
+}
+
+.create-test-case-btn-group {
+    padding: 0;
+	flex-wrap: wrap;
+	gap: 4px;
+}
+.create-test-case-btn-group-btn {
+	border: 1px solid #516ea6;
+    color: #516ea6;
+    font-size: 14px;
+    background: #fff;
+    padding: 3px 12px;
+    margin: 0;
+    outline: none;
+    cursor: pointer;
+} 
+.create-test-case-btn-group-btn.active {
+    color: #fff;
+    background: #516ea6;
+}
+
+.close-button {
+	display: none;
+	margin-left: 8px;
+	font-size: 10px;
+}
+
+.create-test-case-btn-group-btn.active .close-button {
+	display: inline-block;
+}

@@ -1,0 +1,40 @@
+<div *ngFor="let userStory of userStoryList"
+     class="user-story-section">
+  <app-user-story-item [userStory]="userStory"></app-user-story-item>
+  <div *ngFor="let testsByTestCase of userStory.testsByTestCase let isLast=last"
+       class="test-case-container">
+    <app-test-case-item (sendRequestToParent)="deleteTestCase(userStory.testsByTestCase, $event)"
+                        [testCase]="testsByTestCase.testCase"
+                        [productEnvironments]="productEnvironments"
+                        [isTestCaseView]="isTestCaseView"
+                        [with_test_result]="true"
+                        [ngClass]="{'last-item': isLast}">
+    </app-test-case-item>
+    <div class="test-container"
+         [ngClass]="{'last-item': isLast}">
+      <!---->
+      <div class="test-section"
+           *ngFor="let test of testsByTestCase.testCase.testResult">
+        <div class="test-item">
+          <div class="d-flex">
+            <p class="flex-grow-1"> T{{test.testId}}-L{{test.testCaseLibraryId}}-V{{test.testCaseVersion}} ||
+              {{test.env?.Env_type}}</p>
+            <div class="status-container">
+              <span class="badge d-block btn-rounded test-status-green"
+                    *ngIf="test.testState === 'OK'">
+                <i class="icon-success"></i>
+              </span>
+              <span class="badge d-block btn-rounded test-status-red"
+                    *ngIf="test.testState === 'NOT_OK'">
+                <i class="icon-close"></i>
+              </span>
+              <span class="badge d-block btn-rounded test-status-grey"
+                    *ngIf="test.testState === null"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!---->
+    </div>
+  </div>
+</div>

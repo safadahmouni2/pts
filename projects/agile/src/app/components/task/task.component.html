@@ -1,0 +1,29 @@
+<div [ngClass]="'assigned-task '+task.displayProperties().class +(expanded?' expanded-tasks':'')">
+  <div class="assigned-task-header" (click)="toggleExpanded()"><i [ngClass]="{'fa': true, 'fa-angle-down': !expanded,'fa-angle-up':expanded}"></i>
+      {{task.displayProperties().abreviation}}{{task.id}} - 
+      <span *ngIf="!isStateEdit" (click)="onOpenStateEdit($event, task)" class ="assigned-task-status">
+        {{task.state}}
+      </span>
+      <ng-container *ngIf="isStateEdit && !saveTaskLoading" >
+        <select  class="form-control assigned-task-select" #state (click)="$event.stopPropagation()" (change)="getStateName(state.value)">
+          <option></option>
+          <option *ngFor="let stateItem of dropdownTaskStates" [value]="stateItem.stateId+';'+stateItem.stateName">
+            {{stateItem.stateName}}</option>
+        </select>
+
+          <div class="aply-chnages" (click)="toogleEditTaskState(true,$event, task)">
+            <i class="fa fa-check"></i>
+          </div>
+          <div class="deny-chnages"  (click)="toogleEditTaskState(false,$event, task)">
+            <i class="fa fa-times"></i>
+          </div>
+      </ng-container>
+      <div class="responsable" *ngIf="options?.showResponsible">{{task.responsibleCode}}</div>
+    <div class="open-user-story" *ngIf="options?.showLink">
+        <i class="fa fa-external-link" aria-hidden="true" (click)="onClick(task.id)"></i>
+  </div>
+  <div *ngIf="saveTaskLoading" class="assigned-task-spinner"> 
+    <img src="assets/img/loading2.gif">
+    </div>
+</div>
+<div class="assigned-task-content" [hidden]="!expanded" (click)="onClick(task.id)">{{task.text}}</div>

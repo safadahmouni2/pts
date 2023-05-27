@@ -1,0 +1,57 @@
+<header class="ds-header sprint-planning-header">
+    <div class="push-menu">
+        <nav class="navbar navbar-default" role="navigation">
+            <div class="container-fluid"> 
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header"> <a routerLink="/dashbord"><img src="assets/img/tt-slogan.png"></a> </div>
+                <!-- Collect the nav links, forms, and other content for toggling --> 
+                <!-- Push Menu Left --> 
+                <!-- /.navbar-collapse --> 
+            </div>
+            <!-- /.container-fluid --> 
+        </nav>
+    </div>
+    <div class="project-name">
+        <div class="middle-title">
+            <div  class="middle-title-content">
+                <div class="choose-product">
+                    {{product.productName}}
+                </div>
+            </div>
+            <div class="middle-title-container"><span class="middle-title-value">{{sprintname}}</span></div>
+        </div>
+    </div>
+    <app-header></app-header>
+</header>
+<div class="container">
+    <div class="sprint-backlog-container">
+        <div class="backlog-container-header">
+            <div class="bch-title">
+                <div [hidden]="displaySearch" class="only-title">Sprint Backlog</div>
+            </div>
+        </div>
+        <div class="backlog-containrer-user-stories">
+            <perfect-scrollbar class="container" >
+<app-user-story *ngFor="let userStory of userStories"  [userStory]="userStory" (click)="selectUS(userStory.id)"></app-user-story>    	
+            </perfect-scrollbar>
+
+        </div>
+    </div>
+    <app-us-detail *ngIf="usId" [usId]="usId" (onHideDetail)="hideDetail($event)" [ngClass]="{'width-expanded': !expandBar,'width-collapsed':expandBar}" (onNotify)="onChangeState($event)"></app-us-detail>
+    <div [ngClass]="{'todo-container-expanded': !expandBar,'todo-container-collapsed':expandBar}">
+        <div class="todo-container-header">
+            <div class="todo-collapse-icon" (click)="toogleExpandToDoBar()" >
+                <i [ngClass]="{'fa': true, 'fa-angle-double-right': !expandBar,'fa-angle-double-left':expandBar}" aria-hidden="true"></i>
+            </div>
+            <span>To do bar</span>
+        </div>
+        <div class="todo-container-tasks height-100">
+            <div class="assigned-tasks-container height-100" >
+                <div class="height-100" [dragula]='"nested-bag"' [dragulaModel]='nonAssignedtasks'>
+                    <app-task *ngFor="let task of nonAssignedtasks;" [attr.data-id]="task.id" [attr.data-us]=""  [task]="task"></app-task>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,50 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ name }}</h4>
+  <button
+    type="button"
+    class="close"
+    aria-label="Close"
+    (click)="activeModal.dismiss('Cross click')"
+  >
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-3">Trainee Name:</div>
+    <div class="col-9">
+      <input type="text" />
+    </div>
+    <div class="col-3">Degree:</div>
+    <div class="col-9">
+      <input name="degree" list="listdegr" [(ngModel)]="currentdegr" />
+      <datalist id="listdegr">
+        <select>
+          <option *ngFor="let degr of listdegr" [value]="degr"></option>
+        </select>
+      </datalist>
+    </div>
+    <div class="col-3">curriculum vitae:</div>
+    <div class="col-9">
+      <input type="file" />
+    </div>
+    <div class="col-3">Short Description:</div>
+    <div class="col-9">
+      <input type="text" size="" />
+    </div>
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea></textarea>
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button
+    type="button"
+    class="btn btn-lg btn-outline-success"
+    (click)="activeModal.close('Close click')"
+    (click)="status.status = 'Accepted'"
+  >
+    OK
+  </button>
+</div>

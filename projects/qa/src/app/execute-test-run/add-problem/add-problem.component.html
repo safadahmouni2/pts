@@ -1,0 +1,63 @@
+<div class="form-modal-header">
+    <h4 class="form-modal-title">Add Problem</h4>
+</div>
+<div class="form-modal-body">
+    <form [formGroup]="problemForm">
+
+        <div class="row modal-row">
+            <div class="modal-col-6">
+                <div class="form-group-pts-qa">
+                    <div class="label">Urgency</div>
+                    <input type="text" id="urgency" formControlName="urgency" class="form-control-pts-qa" (focus)="fieldFocus($event, 'Urgency')"
+                        (blur)="fieldBlur($event)" [ngClass]="{'focused': problem.urgency}" />
+                    <div class="conbobox-conatainer" *ngIf="showUrgencyDropdown">
+                        <div class="conbobox-item cursor-pointer" (click)="setUrgency($event, 'Low')">Low</div>
+                        <div class="conbobox-item cursor-pointer" (click)="setUrgency($event, 'Medium')">Medium</div>
+                        <div class="conbobox-item cursor-pointer" (click)="setUrgency($event, 'High')">High</div>
+                        <div class="conbobox-item cursor-pointer" (click)="setUrgency($event, 'Extremely_urgent')">Extremely urgent</div>
+                    </div>
+                    <label for="urgency" class="dropdown-label">
+                        <i class="icon-arrow-down align-middle" (click)="toggleUrgencyDropdown()"></i>
+                    </label>
+                </div>
+            </div>
+            <div class="modal-col-6">
+                <div class="form-group-pts-qa">
+                    <div class="label">Project</div>
+                    <input type="text" id="project" formControlName="project" class="form-control-pts-qa" (focus)="fieldFocus($event, 'Project')"
+                        (blur)="fieldBlur($event)" />
+                    <div class="conbobox-conatainer" *ngIf="showProjectDropdown">
+                        <div class="conbobox-item cursor-pointer" *ngFor="let project of projectOptions" (click)="setProject(project.project_name, $event)">{{project.project_name}}</div>
+                    </div>
+                    <label for="project" class="dropdown-label" (click)="toggleProjectDropdown()">
+                        <i class="icon-arrow-down align-middle"></i>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row modal-row">
+            <div class="modal-col">
+                <div class="form-group-pts-qa">
+                    <div class="label">Short Description</div>
+                    <input type="text" formControlName="shortDescription" class="form-control-pts-qa" (focus)="fieldFocus($event, 'Short description')"
+                        (blur)="fieldBlur($event)" />
+                </div>
+            </div>
+        </div>
+        <div class="row modal-row">
+            <div class="modal-col">
+                <div class="textarea-group test-case-textarea-group focused">
+                  <div class="label">Long Description</div>
+                  <textarea class="form-control-pts-qa add-problem-textarea-form-control" formControlName="longDescription" (focus)="fieldFocus($event, 'Long description')"
+                    (blur)="fieldBlur($event)"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="row modal-row">
+            <div class="modal-col buttons-col">
+                <button class="modal-btn modal-btn-secondary" type="reset" (click)="cancel()">cancel</button>
+                <button class="modal-btn modal-btn-primary" type="submit" (click)="addProblem()">save</button>
+            </div>
+        </div>
+    </form>
+</div>

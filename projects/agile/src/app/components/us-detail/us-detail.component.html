@@ -1,0 +1,445 @@
+<div class="user-story-details-container">
+  <div class="sprints-container-header">
+    <div class="sch-title">User Story Details</div>
+    <div class="pull-right close-us-details"><i class="icon-cancel" (click)="onClick()" aria-hidden="true"></i>
+    </div>
+    <div class="sch-status">
+      <label>Status: </label>
+      <div *ngIf="!isDailyScrum" [hidden]="!editStatus" class="pull-right edit-status" title="Change Status">
+        <div class="styled-select">
+          <select class="form-control" #state (change)="getStateName(state.value)">
+            <option></option>
+            <option *ngFor="let stateItem of dropdownListState" [value]="stateItem.stateId+';'+stateItem.stateName">
+              {{stateItem.stateName}}</option>
+          </select>
+        </div>
+        <div class="action-container">
+          <div class="aply-chnages" (click)="toogleEditStatus(true)"><i class="fa fa-check" aria-hidden="true"></i>
+          </div>
+          <div class="deny-chnages" (click)="toogleEditStatus(false)"> <i class="fa fa-times" aria-hidden="true"></i>
+          </div>
+          <div></div>
+        </div>
+      </div>
+      <div [hidden]="editStatus" (click)="!isDailyScrum && toogleEditStatus(false)" class="status-text" title="Change Status">
+        <span>{{getStateNameByStateId(usDetails?.stateId)}}</span>
+      </div>
+    </div>
+
+    <div class="sch-progress">
+      <label>Progress: </label>
+      <span>{{usDetails?.progress}}%</span></div>
+
+  </div>
+  <div class="user-story-details-main-content">
+    <perfect-scrollbar class="container" [config]="config">
+      <div class="usdmc-group-title">
+        <div class="usdmc-group-epic">
+          <div class="epic-id">U: {{usDetails?.id}} / {{usDetails?.ticketId}}</div>
+          <div class="epic-name">Project:<span class="group-name"> {{usDetails?.project}} </span></div>
+          <div class="epic-name"> <span class="epic-name-bold">Topic</span>:<ng-container *ngIf="usDetails?.topic?.id"><span class="group-id"> {{usDetails?.topic?.id}} </span> : <span class="group-name"> {{usDetails?.topic?.name}} </span></ng-container></div>
+          <div class="epic-name"> <span class="epic-name-bold">Sprint</span>:<ng-container *ngIf="usDetails?.sprint?.id"><span class="group-id"> {{usDetails?.sprint?.id}} </span> : <span class="group-name"> {{usDetails?.sprint?.name}} </span></ng-container></div>      
+        </div>
+        <div class="usdmc-group-infos">
+          <div class="ugi-sprint-resp" [hidden]="!usDetails?.userPhoto">
+            <label>Resp: </label>
+            <img *ngIf="usDetails && usDetails.userPhoto" class="user-img" [src]="serverpath + usDetails?.userPhoto"
+              data-original-title="LBJ : Lassaad Ben Jamaa " data-toggle="tooltip" data-placement="top"> </div>
+          <div class="ugi-sprint-prio">
+            <label>Prio: </label>
+            <div *ngIf="isDailyScrum" class="pull-right" [title]="usDetails && usDetails.urgency"><img [src]="srcUrgencyIcon"> </div>
+            <div *ngIf="!isDailyScrum" [hidden]="editResponsible" class="pull-right" title="Change Prio"><img [src]="srcUrgencyIcon"
+                (click)="toogleEditResponsible(false)"> </div>
+            <div *ngIf="!isDailyScrum" [hidden]="!editResponsible" class="pull-right edit-prio">
+              <div class="styled-select">
+                <select class="form-control" #urgency (change)="getUrgencySelected(urgency.value)">
+                  <option></option>
+                  <option *ngFor="let  urgencyItem of dropdownListUrgency"
+                    [value]="urgencyItem.urgencyName+';'+urgencyItem.urgencyIcon">{{urgencyItem.urgencyName}}</option>
+                </select>
+              </div>
+              <div class="action-container">
+                <div class="aply-chnages" (click)="toogleEditResponsible(true)"><i class="fa fa-check"
+                    aria-hidden="true"></i></div>
+                <div class="deny-chnages" (click)="toogleEditResponsible(false)"> <i class="fa fa-times"
+                    aria-hidden="true"></i></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="usdmc-main-content">
+        <div class="usdmc-editable-area">
+          <div class="uea-short-description" (click)="toogleDesc()">{{usDetails?.shortDescription}} <i class="fa "
+              [ngClass]="{'fa': true, 'fa-angle-down': !viewDesc,'fa-angle-up':viewDesc}"></i> </div>
+          <div class="uea-long-description" [hidden]="!viewDesc">
+            <div class="uld-text" [hidden]="editLongDescription">{{usDetails?.longDescription}}</div>
+            <div class="uld-text-text-area" [hidden]="!editLongDescription">
+              <textarea [(ngModel)]="_longDescription"></textarea>
+              <div class="action-container-us">
+                <div class="aply-chnages"><i aria-hidden="true" class="fa fa-check"
+                    (click)="updateLongDescription()"></i></div>
+                <div class="deny-chnages"><i aria-hidden="true" class="fa fa-times"
+                    (click)="toogleEditLongDescription()"></i></div>
+              </div>
+            </div>
+            <div *ngIf="!isDailyScrum" class="uacct-icon" (click)="toogleEditLongDescription()" [hidden]="editLongDescription"><i
+                class="fa fa-pencil" aria-hidden="true"></i></div>
+          </div>
+          <div class="uea-acceptance-criteria-container">
+            <div class="uacc-title">
+              <div class="uacct-text">Acceptance Criteria:</div>
+              <div *ngIf="!isDailyScrum" class="uacct-icon" (click)="toogleEditAcceptanceCriteria()" [hidden]="editAcceptanceCriteria"><i
+                  class="fa fa-pencil" aria-hidden="true"></i></div>
+            </div>
+            <div class="uacc-content" [hidden]="editAcceptanceCriteria" [innerHTML]="usDetails?.acceptanceCriteria">
+            </div>
+            <div class="uacc-content" [hidden]="!editAcceptanceCriteria">
+              <ckeditor [(ngModel)]="acceptanceCriteria" debounce="500" [config]="config"> </ckeditor>
+              <div class="action-container-us">
+                <div class="aply-chnages"><i aria-hidden="true" class="fa fa-check"
+                    (click)="updateAcceptanceCriteria()"></i></div>
+                <div class="deny-chnages"><i aria-hidden="true" class="fa fa-times"
+                    (click)="toogleEditAcceptanceCriteria()"></i></div>
+              </div>
+            </div>
+            <div class="uacc-editable-content"> </div>
+          </div>
+        </div>
+        <div class="usdmc-comments-area">
+          <div class="usca-title">
+            <div class="ut-text">Comments </div>
+            <div class="ut-text-icon" (click)="toogleAddComment()">+</div>
+          </div>
+          <div class="us-comments-container"
+            [ngClass]="{'us-comments-container': true, 'uc-collapsed': !editAcceptanceCriteria,'uc-expanded':editAcceptanceCriteria}">
+            <perfect-scrollbar class="container" [config]="config">
+              <div class="usca-content" [hidden]="addComment">
+                <app-comment *ngFor="let comment of comments;let index = index;let firstComment = first;" [comment]="comment"
+                  [expanded]="firstComment" [titleClass]="'uc-title'" [bodyClass]="'uc-comment'"></app-comment>
+              </div>
+              <div class="usca-add-content" [hidden]="!addComment">
+                <div class="text-area-comment-container">
+                  <textarea cols="" rows="" class="text-area-comment" [(ngModel)]="comment"></textarea>
+                </div>
+                <div class="action-container-us">
+                  <div class="aply-chnages"><i aria-hidden="true" class="fa fa-check"
+                      (click)="addCommentToUS(comment)"></i></div>
+                  <div class="deny-chnages"><i aria-hidden="true" class="fa fa-times" (click)="addComment = false"></i>
+                  </div>
+                </div>
+              </div>
+            </perfect-scrollbar>
+          </div>
+        </div>
+      </div>
+      <div class="collapsed-area-container">
+        <div class="ca-asssigned-history">
+          <accordion>
+            <accordion-group #groupSp [isDisabled]="isDailyScrum">
+              <div accordion-heading>
+                <div class="ca-asssigned-actions"> <i *ngIf="!isDailyScrum" class="fa "
+                    [ngClass]="{' fa-angle-up': groupSp?.isOpen, ' fa-angle-down': !groupSp?.isOpen}"></i> </div>
+                <div *ngIf="!isDailyScrum" class="pull-right title-header"> SP Sizing</div>
+
+                <div class="ugi-sprint-points">
+                  <label><i class="icon-empty-bucket"></i> Story Points: </label>
+                  <div class="points-circle">{{usDetails?.storyPoints}}</div>
+                </div>
+              </div>
+              <div class="panel-container">
+                <div class="calculated-estimation-container">
+                  <div class="user-interface-container">
+                    <h1>User interface</h1>
+                    <div class="choice-list-container">
+                      <div class="radio">
+                        <input type="radio" name="radio1" id="radio1" value="1" [(ngModel)]="ui_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio1"> Low = 1 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1" id="radio2" value="2" [(ngModel)]="ui_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio2"> Medium = 2 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1" id="radio3" value="3" [(ngModel)]="ui_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio3"> High = 3 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1" id="radio4" value="4" [(ngModel)]="ui_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio4"> Complexe = 4 </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="business-logic-container">
+                    <h1>Business logic</h1>
+                    <div class="choice-list-container">
+                      <div class="radio">
+                        <input type="radio" name="radio1.1" id="radio1.1" value="1" [(ngModel)]="bl_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio1.1"> Low = 1 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1.1" id="radio2.1" value="2" [(ngModel)]="bl_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio2.1"> Medium = 2 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1.1" id="radio3.1" value="3" [(ngModel)]="bl_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio3.1"> High = 3 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1.1" id="radio4.1" value="4" [(ngModel)]="bl_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio4.1"> Complexe = 4 </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="data-integration-container">
+                    <h1>Data integration</h1>
+                    <div class="choice-list-container">
+                      <div class="radio">
+                        <input type="radio" name="radio1.2" id="radio1.2" value="1" [(ngModel)]="di_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio1.2"> Low = 1 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1.2" id="radio2.2" value="2" [(ngModel)]="di_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio2.2"> Medium = 2 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1.2" id="radio3.2" value="3" [(ngModel)]="di_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio3.2"> High = 3 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1.2" id="radio4.2" value="4" [(ngModel)]="di_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio4.2"> Complexe = 4 </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="testing-container">
+                    <h1>Testing</h1>
+                    <div class="choice-list-container">
+                      <div class="radio">
+                        <input type="radio" name="radio1.3" id="radio1.3" value="1" [(ngModel)]="testing_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio1.3"> Low = 1 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1.3" id="radio2.3" value="2" [(ngModel)]="testing_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio2.3"> Medium = 2 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1.3" id="radio3.3" value="3" [(ngModel)]="testing_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio3.3"> High = 3 </label>
+                      </div>
+                      <div class="radio">
+                        <input type="radio" name="radio1.3" id="radio4.3" value="4" [(ngModel)]="testing_complexity"
+                          (change)="onSelectionChange()">
+                        <label for="radio4.3"> Complexe = 4 </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="bucket-sizing">
+                    <div class="bucket-container bucket-1" [ngClass]="{' selected': storyPoints == 1}"
+                      (click)="updateUserStory('storyPoints',1)"><i class="icon-empty-bucket"></i><span>1</span></div>
+                    <div class="calculated-value"></div>
+                    <div class="bucket-container bucket-2" [ngClass]="{' selected': storyPoints == 2}"
+                      (click)="updateUserStory('storyPoints',2)"><i class="icon-empty-bucket"></i><span>2</span></div>
+                    <div class="calculated-value"></div>
+                    <div class="bucket-container bucket-3" [ngClass]="{' selected': storyPoints == 3}"
+                      (click)="updateUserStory('storyPoints',3)"><i class="icon-empty-bucket"></i><span>3</span></div>
+                    <div class="calculated-value " [ngClass]="{' value-between': storyPoints > 3 && storyPoints < 5 }">
+                      <span [hidden]="!(storyPoints > 3 && storyPoints < 5 )">{{storyPoints}}</span> </div>
+                    <div class="bucket-container bucket-5" [ngClass]="{' selected': storyPoints == 5}"
+                      (click)="updateUserStory('storyPoints',5)"><i class="icon-empty-bucket"></i><span>5</span></div>
+                    <div class="calculated-value " [ngClass]="{' value-between': storyPoints > 5 && storyPoints < 8 }">
+                      <span [hidden]="!(storyPoints > 5 && storyPoints < 8 )">{{storyPoints}}</span> </div>
+                    <div class="bucket-container bucket-8" [ngClass]="{' selected': storyPoints == 8}"
+                      (click)="updateUserStory('storyPoints',8)"><i class="icon-empty-bucket"></i><span>8</span></div>
+                    <div class="calculated-value " [ngClass]="{' value-between': storyPoints > 8 && storyPoints < 13 }">
+                      <span [hidden]="!(storyPoints > 8 && storyPoints < 13 )">{{storyPoints}}</span> </div>
+                    <div class="bucket-container bucket-13" [ngClass]="{' selected': storyPoints == 13}"
+                      (click)="updateUserStory('storyPoints',13)"><i class="icon-empty-bucket"></i><span>13</span></div>
+                    <div class="calculated-value "
+                      [ngClass]="{' value-between': storyPoints > 13 && storyPoints < 21 }"> <span
+                        [hidden]="!(storyPoints > 13 && storyPoints < 21 )">{{storyPoints}}</span> </div>
+                    <div class="bucket-container bucket-21" [ngClass]="{' selected': storyPoints == 21}"
+                      (click)="updateUserStory('storyPoints',21)"><i class="icon-empty-bucket"></i><span>21</span></div>
+                  </div>
+                </div>
+              </div>
+            </accordion-group>
+          </accordion>
+        </div>
+        <app-task-list *ngIf='usDetails?.ticketId' [objectId]="usDetails?.ticketId" ></app-task-list>
+        <div class="ca-asssigned-tasks "> 
+          <accordion>
+            <accordion-group #grouptasks >
+              <div class="panel-header title-header" accordion-heading>
+                <div class="pull-left"> <i class="icon-assign-task"></i> Assign tasks</div>
+                <div class="ca-asssigned-actions" *ngIf='usDetails?.ticketId'>
+                  <div class="add-install" (click)="onSelectTaskType('User story',grouptasks);$event.stopPropagation()">
+                    +U</div>
+                  <div class="add-ticket" (click)="onSelectTaskType('Ticket',grouptasks);$event.stopPropagation()">+T
+                  </div>
+                  <div class="add-install"
+                    (click)="onSelectTaskType('HTML component',grouptasks);$event.stopPropagation()">+H</div>
+                  <div class="add-requirement"
+                    (click)="onSelectTaskType('Requirement',grouptasks);$event.stopPropagation()">+R</div>
+                  <div class="add-change" (click)="onSelectTaskType('Change',grouptasks);$event.stopPropagation()">+C
+                  </div>
+                  <div class="add-maintenance"
+                    (click)="onSelectTaskType('Maintenance',grouptasks);$event.stopPropagation()">+M</div>
+                  <div class="add-problem" (click)="onSelectTaskType('Problem',grouptasks);$event.stopPropagation()">+P
+                  </div>
+                  <div class="add-install" (click)="onSelectTaskType('Install',grouptasks);$event.stopPropagation()">+I
+                  </div>
+
+                  <i class="fa "
+                    [ngClass]="{' fa-angle-up': grouptasks?.isOpen, ' fa-angle-down': !grouptasks?.isOpen}"></i>
+                </div>
+              </div>
+              <div class="panel-container" *ngIf='usDetails?.ticketId'>
+                <div class="row tasks-line" *ngIf="addTask ">
+                  <div class="col-input-task">
+                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                      <div class="input-group-addon">{{value}}</div>
+                      <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Assign Tasks"
+                        [(ngModel)]="task.text">
+                    </div>
+                  </div>
+
+                  <div class="action-container">
+                    <div *ngIf="saveTaskLoading" class="aply-chnages" style="text-align: center"><img
+                        src="assets/img/loading2.gif" class="aply-chnages"></div>
+                    <div *ngIf="!saveTaskLoading" class="aply-chnages"><i [hidden]="!task.text" class="fa fa-check"
+                        aria-hidden="true" (click)="onAddTask()"></i></div>
+                    <div class="deny-chnages"> <i class="fa fa-times" aria-hidden="true" (click)="addTask = false;"></i>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex  tasks-line task-container" *ngIf="addTask ">
+                  <div class="col-input-fields input-container">
+                    <label class="sr-only" for="inlineFormInputGroup">Project</label>
+                    <div class="input-group project">
+
+
+
+
+                      <div class="input-group-addon"><i class="icon-binder"></i></div>
+                      <div class="styled-select">
+                        <select class="form-control" [(ngModel)]="task.project">
+                          <option value="" hidden>Project</option>
+                          <option *ngFor="let projectName of projectsList" value="{{projectName}}">{{projectName}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-user col-prio">
+                    <label class="sr-only" for="inlineFormInputGroup">Prio</label>
+                    <div class="input-group">
+                      <div class="input-group-addon"><i class="icon-prio"></i></div>
+                      <div class="styled-select">
+                        <select class="form-control" [(ngModel)]="task.prio">
+                          <option value="" hidden>Prio</option>
+                          <option *ngFor="let  urgencyItem of dropdownListUrgency" value="{{urgencyItem.urgencyName}}">
+                            {{urgencyItem.urgencyName}}</option>
+                        </select>
+
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-user col-resp">
+                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                    <div class="input-group">
+                      <div class="input-group-addon"><i class="fa fa-user-circle" aria-hidden="true"></i></div>
+                      <div class="styled-select">
+                        <select class="form-control" [(ngModel)]="task.responsibleCode">
+                          <option value="" hidden>Resp</option>
+                          <option *ngFor="let code of usersCode" value="{{code}}">{{code}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-estimation" *ngIf="task.type !== 'User story'">
+                    <label class="sr-only" for="inlineFormInputGroup">Estimation</label>
+                    <div class="input-group">
+                      <div class="input-group-addon"><i class="icon-clock"></i></div>
+                      <input type="text" pattern="[0-9]+([\.,][0-9]+)?" class="form-control" placeholder="Estimation"
+                        [(ngModel)]="task.estimation">
+                    </div>
+                  </div>
+                  <div class="col-user release-plan">
+                    <label class="sr-only" for="inlineFormInputGroup">Username</label>
+                    <div class="input-group"
+                      *ngIf="task.type !== 'User story'&& task.type !== 'Ticket'&& task.type !== 'HTML component'">
+                      <div class="input-group-addon"><i class="icon-calendar" aria-hidden="true"></i></div>
+                      <div class="styled-select">
+                        <select class="form-control" [(ngModel)]="planrealse">
+                          <option value="" hidden>P-release</option>
+                          <option *ngFor="let plan of plans" value="{{plan}}">{{plan}}</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="assigned-tasks-container  height-100 tasks-line">
+                  <div class="height-100" [dragula]='"nested-bag"' [dragulaModel]='tasks'>
+                    <app-task *ngFor="let task of tasks;" 
+                      [attr.data-id]="task.id" 
+                      [attr.data-us]="usId"
+                      [task]="task"
+                      [options]="taskOptions">
+                    </app-task>
+                  </div>
+                </div>
+              </div>
+            </accordion-group>
+          </accordion>
+        </div>
+        <div class="ca-asssigned-attachments">
+          <accordion>
+            <accordion-group #groupattachements>
+              <div class="panel-header title-header" accordion-heading >
+                <div class="pull-left"> <i class="fa fa-paperclip" aria-hidden="true"></i> Attachments</div>
+                <div class="ca-asssigned-actions" *ngIf="usDetails?.ticketId">
+                  <div class="add-attachment"><a
+                      href="mailto:?subject=[PTS#{{usDetails?.ticketId}}]{{usDetails?.text}} &cc=pts@pts.thinktank-tunisie.com"><i
+                        class="fa fa-envelope-o" aria-hidden="true"></i></a></div>
+                  <div class="add-attachment"><label for="file-upload" class="custom-file-upload">
+                      <i class="icon-upload"></i>
+                    </label>
+                    <input (change)="uploadDoc($event)" name="file"
+                      accept=".png,.jpg,.gif,.pdf,.doc,.docx,.txt,.wmv,.mp3,.mp4" type="file" style="display:none"
+                      id="file-upload" />
+                  </div>
+                  <i class="fa fa-angle-down fa fa-angle-down-changed-status"
+                    [ngClass]="{' fa-angle-up': groupattachements?.isOpen, ' fa-angle-down': !groupattachements?.isOpen}"></i>
+                </div>
+              </div>
+              <div class="panel-container" *ngIf="usDetails?.ticketId">
+                <div *ngFor="let attachment of attachments;"><a
+                    href="/services/ticketing/docService/doc/{{attachment.ticketId}}" download="{{attachment.name}}"><i
+                      class="fa fa-paperclip" aria-hidden="true"></i> {{attachment.name}}</a></div>
+              </div>
+            </accordion-group>
+          </accordion>
+        </div>
+      </div>
+    </perfect-scrollbar>
+  </div>
+</div>

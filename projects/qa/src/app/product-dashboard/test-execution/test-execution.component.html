@@ -1,0 +1,28 @@
+<div class='test-header'>
+    <h2 class='d-inline-block'>Test execution</h2>
+</div>
+<div class="form-container">
+    <div class="form-group-pts-qa">
+        <div class="label">Search for environment</div>
+        <input type="text" class="form-control-pts-qa" [(ngModel)]="textEnvFilter" (focus)="fieldFocus($event, 'Search for environment')"
+            (blur)="fieldBlur($event)" />
+    </div>
+    <div class="form-group-pts-qa">
+        <div class="label">Status</div>
+        <input type="text" id="project" [(ngModel)]="filterByState" class="form-control-pts-qa"
+            (focus)="fieldFocus($event, 'Status')" (blur)="fieldBlur($event)" />
+        <div class="conbobox-conatainer" *ngIf="showStatusDropdown">
+            <div class="conbobox-item cursor-pointer" (click)="setStatus('Functional', $event)">Functional</div>
+            <div class="conbobox-item cursor-pointer" (click)="setStatus('Maintenance', $event)">Maintenance</div>
+        </div>
+        <label for="project" class="dropdown-label">
+            <i class="icon-arrow-down align-middle" (click)="toggleStatusDropdown()"></i>
+        </label>
+    </div>
+</div>
+<app-environment-container 
+[textEnvFilter]='textEnvFilter'
+[filterByState]='filterByState'
+[productName]='globals.product?.product_name' 
+*ngIf='globals.product?.product_name'>
+</app-environment-container>

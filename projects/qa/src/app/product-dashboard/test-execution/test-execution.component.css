@@ -1,0 +1,31 @@
+.test-header {
+	border-bottom: 1px solid #5c78a7;
+}
+
+.test-header h2{
+	margin-top: 4px;
+	font-size: 24px;
+    color: #294898;
+    font-weight: 100;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.form-container {
+    gap: 16px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 14px;
+}
+
+.form-container .form-group-pts-qa {
+    margin-top: 5px;
+}
+
+.form-container .form-group-pts-qa:first-child {
+    width: 65%;
+}
+
+.form-container .form-group-pts-qa:last-child {
+    width: 35%;
+}

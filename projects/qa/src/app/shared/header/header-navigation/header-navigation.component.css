@@ -1,0 +1,153 @@
+.sprint-selector {
+	margin-left: 20px;
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.sprint-selector .dropdown {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.sprint-selector .dropdown-toggle {
+	background-color: transparent !important;
+	border: none !important;
+	padding: 0;
+	font-size: 19px;
+	color: #534f4e;
+}
+
+.sprint-selector .dropdown-toggle::after {
+	margin-left: 0;
+}
+
+.sprint-date {
+	font-size: 19px;
+	color: #b8b6b7;
+	font-weight: 300;
+}
+
+.dropdown-toggle::after {
+	content: "\e90a";
+	font-family: 'pts-qa' !important;
+	border: none;
+	color: #607da9;
+	font-size: 15px;
+	vertical-align: middle;
+	display: inline-block;
+}
+
+.log-out-btn {
+	margin-left: 700px;
+}
+
+.log-out-btn-date-aff {
+	margin-left: 480px;
+}
+
+.notification{
+	margin-right: 24px;
+	position: relative;
+	cursor: pointer;
+	border: none;
+}
+
+.notification-number{
+	width: 15px;
+	height: 15px;
+	background-color: #F32525;
+	border-radius: 50%;
+	color: #ffffff;
+	font-size: 11px;
+	line-height: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+	position: absolute;
+    top: 2px;
+    right: -5px;
+}
+
+.icon-notification{
+	font-size: 25px;
+    color: #607DA9;
+}
+
+.user-container {
+	color: #284998;
+	background: rgba(0, 0, 0, .1);
+	font-size: 14px;
+}
+
+.user-image {
+	height: 31px;
+	width: 31px;
+}
+
+.user-code {
+	padding: 0 10px;
+}
+
+.dropdown-sprint-item {
+    padding: 0.25rem 1.5rem;
+	cursor: pointer;
+}
+
+.dropdown-sprint-item.active,
+.dropdown-sprint-item.active:hover  {
+	background-color: rgba(81, 110, 166, 0.65);
+}
+
+.dropdown-sprint-item.active a,
+.dropdown-sprint-item.active:hover a {
+	color: #ffffff;
+}
+
+.dropdown-sprint-item:hover {
+	color: #16181b;
+    background-color: #e9ecef;
+}
+
+.dropdown-sprint-item:hover a{
+	color: #16181b;
+}
+
+.dropdown-sprint-item a{
+    color: #212529;
+	text-decoration: none;
+	white-space: nowrap;
+}
+
+.sprint-status {
+	font-size: 12px;
+	line-height: 15px;
+	padding: 3px 6px;
+	border-radius: 4px;
+	color: #fff;
+}
+
+.sprint-status.in-progress {
+	background: #04A20F;
+}
+
+.sprint-status.review {
+	background: #718BB1;
+}
+
+.sprint-status.retrospective {
+	background: #A0A1A5;
+}
+
+.sprint-status.delayed {
+	background: #F32525;
+}
+
+.sprint-status.created {
+	background: #F0AD4E;
+}
+
+.sprint-status.planned {
+	background: #F77306;
+}

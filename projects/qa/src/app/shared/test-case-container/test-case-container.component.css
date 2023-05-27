@@ -1,0 +1,10 @@
+.test-case-container {
+    max-height: calc(100vh - 178px);
+    overflow: auto;
+}
+
+@media (max-width: 1047px) {
+    .test-case-container {
+        max-height: calc(100vh - 211px);
+    }
+}

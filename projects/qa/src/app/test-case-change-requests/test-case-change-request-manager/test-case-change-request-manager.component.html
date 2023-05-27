@@ -1,0 +1,429 @@
+<div *ngIf="testCaseChangeRequest && testCaseLibrary &&testCaseChanges"
+     class="d-flex flex-column flex-grow-1">
+    <div class="d-flex justify-content-between align-items-end w-100">
+        <div class="test-case-details-id">
+            CR-{{testCaseChangeRequest.id}}: TC-{{testCaseChangeRequest.testCaseId}} /
+            T-{{testCaseChangeRequest.testId}}
+
+        </div>
+        <div class="d-flex test-case-buttons-status">
+            <button class="badge done mr-1" (click)="done()">Done</button>
+            <button class="badge reject-all mr-1" (click)="rejectAll()" [disabled]="testCaseLibraryUpdated">Reject all</button>
+            <button class="badge accept-all" (click)="acceptAll()" [disabled]="testCaseLibraryUpdated">Accept all</button>
+            </div>
+            </div>
+
+            <div class="test-case-change-details-content flex-grow-1">
+                <table class="tc-details-table-content w-100 h-100">
+                    <tr>
+                        <th>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex">
+                                    <span class="user-story-number">
+                                        TC-{{testCaseLibrary?.testCaseLibraryId}}-v{{testCaseVersion}}
+                                        <a title="Chat" target="_blank" href="#">
+                                            <i class="icon-person-chat"></i>
+                                        </a>
+                                    </span>
+                                    <app-show-actor-info [actorInfo]=testCaseLibrary>
+                                    </app-show-actor-info>
+                                </div>
+                                <div class="form-container">
+                                    <span class="status-text align-top">Status:</span>
+                                    <div class="status-container" (click)="toggleStatusDropdown()">
+                                        <span class="status-value">{{ testCaseLibrary?.state }}</span>
+                                        <i class="icon-arrow-down align-middle"></i>
+                                        <div class="conbobox-conatainer" *ngIf="showStatusDropdown">
+                                            <div *ngFor="let stateItem of listStatus"
+                                                (click)="selectState(stateItem.key, testCaseLibrary?.testCaseLibraryId, testCaseLibrary); $event.stopPropagation()"
+                                                class="conbobox-item cursor-pointer">
+                                                {{ stateItem.value }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </th>
+                        <th></th>
+                        <th>
+                            <div class="d-flex">
+                                <span class="user-story-number">
+                                    Test-{{testCaseChanges?.testId}}
+                                    <a title="Chat" target="_blank" href="#">
+                                        <i class="icon-person-chat"></i>
+                                    </a>
+                                </span>
+                                <app-show-actor-info [actorInfo]=testCaseChanges>
+                                </app-show-actor-info>
+                            </div>
+                        </th>
+                    </tr>
+                    <tr>
+                 <td>
+                  <div class="form-container">
+                        <div class="form-group-pts-qa"
+                             [class.focused]="testCaseLibrary?.shortDescription"
+                             [class.edited]="inputDescriptionFlag === 'changed'"
+                             [class.changed]="inputDescriptionFlag === 'treated'">
+                            <div class="label">Short description</div>
+                            <input [(ngModel)]="testCaseLibrary.shortDescription"
+                                   type="text"
+                                   class="form-control-pts-qa"
+                                   (focus)="fieldLibraryFocus($event,'shortDescription')"
+                                   (blur)="fieldBlur($event)" />
+
+                            <div class="form-buttons-container">
+                                <button [hidden]="libraryInputDescriptionFocused"
+                                        class="table-button"
+                                        (click)="saveTestCaseLibrary('shortDescription' ,$event)">
+                                    <i class="icon-success align-middle"></i>
+                                </button>
+                                <button [hidden]="libraryInputDescriptionFocused"
+                                        (click)="resetLibrary($event,'shortDescription')"
+                                        class="table-button">
+                                    <i class="icon-close align-middle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="action-button-container"
+                         *ngIf="inputDescriptionFlag !=='treated'&& inputDescriptionFlag!=='unchanged'">
+                        <button class="btn btn-back"
+                                (click)="acceptChanges('shortDescription',testCaseChanges.shortDescription)">
+                            <i class="icon-left"></i>
+                        </button>
+                        <button class="btn btn-delete"
+                                (click)="ignoreChanges('shortDescription',testCaseLibrary.shortDescription)">
+                            <i class="icon-delete"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-container">
+
+                        <div class="form-group-pts-qa"
+                             [class.focused]="testCaseLibrary?.shortDescription"
+                             [class.edited]="inputDescriptionFlag === 'changed'"
+                             [class.changed]="inputDescriptionFlag === 'treated'">
+                            <div class="label">Short description</div>
+                            <input [(ngModel)]="testCaseChanges.shortDescription"
+                                   type="text"
+                                   class="form-control-pts-qa"
+                                   readonly="true" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-container">
+                        <div class="form-group-pts-qa"
+                             (click)="toggleLibraryCategoryDropdown()"
+                             [class.focused]="testCaseLibrary.category"
+                             [class.edited]="inputCategoryFlag === 'changed'"
+                             [class.changed]="inputCategoryFlag === 'treated'">
+                            <div class="label">Category</div>
+                            <input [(ngModel)]="testCaseLibrary.category"
+                                   type="text"
+                                   class="form-control-pts-qa"
+                                   (focus)="fieldLibraryFocus($event,'category')"
+                                   (blur)="fieldBlur($event)" />
+                            <div class="conbobox-conatainer"
+                                 *ngIf="showLibraryCategoryDropdown">
+                                <div *ngFor="let catItem of testCaseCategories"
+                                     (click)="selectCategory(testCaseLibrary,catItem.key)"
+                                     class="conbobox-item cursor-pointer">{{ catItem.value }}</div>
+                            </div>
+                            <div class="dropdown-arrrow">
+                                <i class="icon-arrow-down align-middle"></i>
+                            </div>
+                            <div class="form-buttons-container posotion-after-arrow">
+                                <button [hidden]="libraryInputCategoryFocused"
+                                        class="table-button"
+                                        (click)="saveTestCaseLibrary( 'category',$event)">
+                                    <i class="icon-success align-middle"></i>
+                                </button>
+                                <button [hidden]="libraryInputCategoryFocused"
+                                        class="table-button"
+                                        (click)="resetLibrary($event,'category')">
+                                    <i class="icon-close align-middle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="action-button-container"
+                         *ngIf="inputCategoryFlag !=='treated'&& inputCategoryFlag!=='unchanged'">
+                        <button class="btn btn-back"
+                                (click)="acceptChanges('category',testCaseChanges.category)">
+                            <i class="icon-left"></i>
+                        </button>
+                        <button class="btn btn-delete"
+                                (click)="ignoreChanges('category',testCaseLibrary.category)">
+                            <i class="icon-delete"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-container">
+                        <div class="form-group-pts-qa"
+                             [class.focused]="testCaseChanges.category"
+                             [class.edited]="inputCategoryFlag === 'changed'"
+                             [class.changed]="inputCategoryFlag === 'treated'">
+                            <div class="label">Category</div>
+                            <input [(ngModel)]="testCaseChanges.category"
+                                   type="text"
+                                   class="form-control-pts-qa"
+                                   readonly="true" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="form-container">
+                        <div class="form-group-pts-qa"
+                             [class.focused]="testCaseLibrary.executionEstimationTime"
+                             [class.edited]="inputExecutionEstimationTimeFlag === 'changed'"
+                             [class.changed]="inputExecutionEstimationTimeFlag === 'treated'">
+                            <div class="label">Execution estimation time(h)</div>
+                            <input [(ngModel)]="testCaseLibrary.executionEstimationTime"
+                                   type="number"
+                                   class="form-control-pts-qa"
+                                   (focus)="fieldLibraryFocus($event,'executionEstimationTime')"
+                                   (blur)="fieldBlur($event)" />
+                            <div class="form-buttons-container">
+                                <button [hidden]="libraryInputExecutionEstimationTimeFocused"
+                                        class="table-button"
+                                        (click)="saveTestCaseLibrary('executionEstimationTime',$event)">
+                                    <i class="icon-success align-middle"></i>
+                                </button>
+                                <button [hidden]="libraryInputExecutionEstimationTimeFocused"
+                                        class="table-button"
+                                        (click)="resetLibrary($event,'executionEstimationTime')">
+                                    <i class="icon-close align-middle"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="action-button-container"
+                         *ngIf="inputExecutionEstimationTimeFlag!=='treated'&& inputExecutionEstimationTimeFlag!=='unchanged'">
+                        <button class="btn btn-back"
+                                (click)="acceptChanges('executionEstimationTime',testCaseChanges.executionEstimationTime)">
+                            <i class="icon-left"></i>
+                        </button>
+                        <button class="btn btn-delete"
+                                (click)="ignoreChanges('executionEstimationTime',testCaseLibrary.executionEstimationTime)">
+                            <i class="icon-delete"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div class="form-container">
+                        <div class="form-group-pts-qa"
+                             [class.focused]="testCaseChanges.executionEstimationTime"
+                             [class.edited]="inputExecutionEstimationTimeFlag === 'changed'"
+                             [class.changed]="inputExecutionEstimationTimeFlag === 'treated'">
+                            <div class="label">Execution estimation time(h)</div>
+                            <input [(ngModel)]="testCaseChanges.executionEstimationTime"
+                                   type="number"
+                                   class="form-control-pts-qa"
+                                   readonly="true" />
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div class="textarea-group "
+                         [class.edited]="inputPreConditionFlag === 'changed'"
+                         [class.changed]="inputPreConditionFlag === 'treated'">
+                        <div class="textarea-group"
+                             [ngClass]="{'focused' : testCaseLibrary.preCondition }">
+                            <div class="label">Preconditions</div>
+                            <div class="form-buttons-container-textarea">
+                                <button [hidden]="libraryInputPreConditionFocused"
+                                        class="table-button"
+                                        (click)="saveTestCaseLibrary('preCondition',$event)">
+                                    <i class="icon-success align-middle"></i>
+                                </button>
+                                <button [hidden]="libraryInputPreConditionFocused"
+                                        class="table-button"
+                                        (click)="resetLibrary($event,'preCondition')">
+                                    <i class="icon-close align-middle"></i>
+                                </button>
+                            </div>
+                            <textarea [(ngModel)]="testCaseLibrary.preCondition"
+                                      class="form-control-pts-qa"
+                                      (focus)="fieldLibraryFocus($event,'preCondition')"
+                                      (blur)="fieldBlur($event)"></textarea>
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <div class="action-button-container"
+                         *ngIf="inputPreConditionFlag!=='treated'&& inputPreConditionFlag!=='unchanged'">
+                        <button class="btn btn-back"
+                                (click)="acceptChanges('preCondition',testCaseChanges.preCondition)">
+                            <i class="icon-left"></i>
+                        </button>
+                        <button class="btn btn-delete"
+                                (click)="ignoreChanges('preCondition',testCaseLibrary.preCondition)">
+                            <i class="icon-delete"></i>
+                        </button>
+                    </div>
+                </td>
+                <td>
+                    <div class="textarea-group"
+                         [class.edited]="inputPreConditionFlag === 'changed'"
+                         [class.changed]="inputPreConditionFlag === 'treated'">
+                        <div class="textarea-group"
+                             [ngClass]="{'focused' : testCaseChanges.preCondition }">
+                            <div class="label">Preconditions</div>
+                            <textarea [(ngModel)]="testCaseChanges.preCondition"
+                                      class="form-control-pts-qa"
+                                      readonly="true"></textarea>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <table class="library-steps-table first-part mt-2">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Test steps</th>
+                                <th>Expected results</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table>
+                </td>
+                <td></td>
+                <td>
+                    <table class="library-steps-table first-part mt-2">
+                        <thead>
+                            <tr>
+                                <th>N°</th>
+                                <th>Test steps</th>
+                                <th>Expected results</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </td>
+            </tr>
+            <!-- test steps -->
+            <ng-container *ngFor="let testStepObject of testStepsObject let index = index">
+                <tr class="test-steps-row">
+                    <td>
+                        <table class="library-steps-table first-part">
+                            <tbody>
+                                <tr>
+                                    <td colspan="2">
+                                        <div class="form-group-table "
+                                             [class.deleted]="testStepObject.stepDescriptionStatus==='deleted'"
+                                             [class.removed]="testStepObject.stepDescriptionStatus === 'removed'"
+                                             [class.added]="testStepObject.stepDescriptionStatus === 'added'"
+                                             [class.edited]="testStepObject.stepDescriptionStatus === 'changed'"
+                                             [class.changed]="testStepObject.stepDescriptionStatus === 'treated'">
+                                            <textarea [(ngModel)]="testStepObject.libraryTestStep.stepDescription"
+                                                      type="text"
+                                                      class="form-control-pts-qa"
+                                                      (focus)="fieldStepFocus($event,'stepDescription',index)"
+                                                      (blur)="fieldBlur($event)"></textarea>
+                                            <div class="library-buttons-container left-side">
+                                                {{index + 1}}.
+                                            </div>
+                                            <div class="library-buttons-container">
+                                                <button [hidden]="testStepObject.inputTestStepFocused"
+                                                        class="table-button"
+                                                        (click)="saveTestStepLibraryChanges(testStepObject.libraryTestStep, 'stepDescription',index,$event)">
+                                                    <i class="icon-success align-middle"></i>
+                                                </button>
+                                                <button [hidden]="testStepObject.inputTestStepFocused"
+                                                        class="table-button"
+                                                        (click)="resetTestStep($event,'stepDescription',index)">
+                                                    <i class="icon-close align-middle"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td colspan="2">
+                                        <div class="form-group-table "
+                                             [class.deleted]="testStepObject.expectedResultStatus==='deleted'"
+                                             [class.removed]="testStepObject.expectedResultStatus === 'removed'"
+                                             [class.added]="testStepObject.expectedResultStatus === 'added'"
+                                             [class.edited]="testStepObject.expectedResultStatus === 'changed'"
+                                             [class.changed]="testStepObject.expectedResultStatus === 'treated'">
+                                            <textarea [(ngModel)]="testStepObject.libraryTestStep.expectedResult"
+                                                      type="text"
+                                                      class="form-control-pts-qa"
+                                                      (focus)="fieldStepFocus($event,'expectedResult',index)"
+                                                      (blur)="fieldBlur($event)"></textarea>
+                                            <div class="library-buttons-container">
+                                                <button [hidden]="testStepObject.inputTestStepExpectedResultFocused"
+                                                        class="table-button"
+                                                        (click)="saveTestStepLibraryChanges(testStepObject.libraryTestStep, 'expectedResult',index,$event)">
+                                                    <i class="icon-success align-middle"></i>
+                                                </button>
+                                                <button [hidden]="testStepObject.inputTestStepExpectedResultFocused"
+                                                        class="table-button"
+                                                        (click)="resetTestStep($event,'expectedResult',index)">
+                                                    <i class="icon-close align-middle"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                    <td>
+                        <div *ngIf="(testStepObject.expectedResultStatus!=='treated'
+                            && testStepObject.expectedResultStatus!=='unchanged'
+                            && testStepObject.expectedResultStatus!=='removed')
+                            ||
+                            (testStepObject.stepDescriptionStatus!=='treated'
+                            && testStepObject.stepDescriptionStatus!=='unchanged'
+                            && testStepObject.stepDescriptionStatus!=='removed')"
+                             class="action-button-container">
+                            <button class="btn btn-back"
+                                    (click)="acceptTestStepsChanges(index)">
+                                <i class="icon-left"></i>
+                            </button>
+                            <button class="btn btn-delete"
+                                    (click)="ignoreTestStepsChanges(index)">
+                                <i class="icon-delete"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td>
+                        <table class="library-steps-table second-part">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        {{index + 1}}.
+                                    </td>
+                                    <td>
+                                        {{testStepObject.changesTestStep.stepDescription}}
+                                    </td>
+                                    <td>
+                                        {{testStepObject.changesTestStep.expectedResult}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </ng-container>
+            <tr class="h-100"><td></td><td></td><td></td></tr>
+        </table>
+    </div>
+</div>

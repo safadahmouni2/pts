@@ -1,0 +1,65 @@
+
+.call-top-action .btn,
+.btn2 {
+    width: 100%;
+    height: 40px;
+    font-size: 14px;
+    text-align: center;
+    line-height: 30px;
+    color: rgba(255,255,255,0.9);
+    border-radius: 50px;
+    background: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+    background-size: 600%;
+    -webkit-animation: anime 16s linear infinite;
+    animation: anime 16s linear infinite;
+    position: relative;
+    z-index: 1;
+    font-weight: bold;
+
+  }
+.call-top-action .btn2 {
+    position: absolute;
+    margin-top: -36px;
+    left: 0px;
+    z-index: -1;
+    -webkit-filter: blur(20px);
+    filter: blur(20px);
+    opacity: 0.6;
+  }
+  @-webkit-keyframes anime {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  @keyframes anime {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+.call-top-action button:focus{
+    box-shadow: none;
+}
+  .new-smart-container .col-3 {
+    margin-bottom: 25px;
+  }
+  .new-smart-container textarea {
+    width: 100%;
+    height: 200px;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  .disabled{
+    color: lightgrey
+  }

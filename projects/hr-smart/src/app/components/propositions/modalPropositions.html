@@ -1,0 +1,48 @@
+<div class="rating-modal">
+  <div class="modal-header pb-1 pt-1">
+    <h4 class="modal-title">Assign points</h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="activeModal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-4">Type:</div>
+      <div class="col-8">
+        <input
+          name="proposition"
+          list="listPropositions"
+          [(ngModel)]="selectedProp"
+          (change)="onChange(proposition.type)"
+        />
+        <datalist id="listPropositions">
+          <select>
+            <option
+              *ngFor="let proposition of listPropositions"
+              [value]="proposition"
+              >{{ proposition.type }}</option
+            >
+          </select>
+        </datalist>
+      </div>
+      <div class="col-4">Points</div>
+      <div class="col-8">
+        <input type="text" />
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-lg btn-outline-success"
+      (click)="activeModal.close('Close click')"
+    >
+      OK
+    </button>
+  </div>
+</div>

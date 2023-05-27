@@ -1,0 +1,36 @@
+<div>
+  <div class="btn-group" dropdown placement="bottom right" container={{appendTo}}>
+    <button dropdownToggle type="button" [attr.aria-controls]="dropdownGeneratedId" class="show-more-btn">
+      <i class="icon-more"></i>
+    </button>
+    <div id="{{dropdownGeneratedId}}" *dropdownMenu class="dropdown-menu mt-2 p-2" role="menu"
+        [attr.aria-labelledby]="dropdownGeneratedId" [ngClass]="{'dropdown-right-align': rightAligned}">
+      <!---->
+      <div class="details-dropdown">
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="test-label">Created By:</div>
+          <div *ngIf="actorInfo?.creator" class="test-badge">{{actorInfo.creator}}</div>
+          <div  *ngIf="!actorInfo?.creator"  class="test-badge"> ? </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="test-label">at:</div>
+          <div *ngIf="actorInfo?.created" class="test-badge">{{actorInfo.created| date:"YYYY.MM.dd HH:mm"}} </div>
+          <div  *ngIf="!actorInfo?.created"  class="test-badge"> ? </div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between">
+          <div class="test-label">Modified By:</div>
+          <div  *ngIf="actorInfo?.modifier"  class="test-badge">{{actorInfo.modifier}} </div>
+          <div  *ngIf="!actorInfo?.modifier"  class="test-badge"> ? </div>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <div class="test-label">at:</div>
+          <div *ngIf="actorInfo?.modified" class="test-badge">{{actorInfo.modified| date:"YYYY.MM.dd HH:mm"}} </div>
+          <div *ngIf="!actorInfo?.modified" class="test-badge"> ? </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

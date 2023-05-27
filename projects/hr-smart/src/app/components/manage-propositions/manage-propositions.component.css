@@ -1,0 +1,63 @@
+.proposition-table{
+    width: 100%;
+}
+.proposition-table th {
+    font-size: 12px;
+    vertical-align: middle;    
+}
+.proposition-table td {
+    font-size: 12px;
+    vertical-align: middle;
+}
+.img-responsable{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid #17469e;
+}
+.accepted-prop{
+    color: #fff;
+    background-color: #62b58f;
+    font-weight: bold;
+    padding: 6px 10px 6px 10px;
+    border-radius: 9px;
+}
+.rejected-prop{
+    color: #fff;
+    background-color: #f2726f;
+    font-weight: bold;
+    padding: 6px 10px 6px 10px;
+    border-radius: 9px;
+}
+.onhold-prop{
+    color: #fff;
+    background-color: #ffc533;
+    font-weight: bold;
+    padding: 6px 10px 6px 10px;
+    border-radius: 9px;
+}
+.filter-container select,input {
+    background: transparent;
+    color: #515974;
+    height: 29px;
+    border: 1px solid #c6c9cc;
+    padding: 3px 10px 3px 10px;
+    width: 100%;
+    margin-right: 10px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    border-radius: 0;
+    font-size: 12px;
+}
+.dropdown-item .fa-check:before {
+    content: "\f00c";
+    color: #62b58f;
+    margin-right: 10px;
+}
+.dropdown-item .fa-times:before {
+    color: #f2726f;
+    margin-right: 14px;
+}
+.padding-top-15px {
+    padding-top: 15px;
+}

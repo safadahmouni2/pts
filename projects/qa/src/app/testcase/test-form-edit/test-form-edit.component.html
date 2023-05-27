@@ -1,0 +1,245 @@
+<div class="d-flex test-case-library-container">
+  <div class="user-story-number">
+    <div class="user-story-number">{{getTitle()}}</div>
+  </div>
+  <div class="right-action-buttons d-flex align-items-center justify-content-end flex-grow-1">
+
+
+    <button *ngIf="testCaseLoaded && testCaseExists"
+            (click)="deleteTestStep(testCaseId,userStoryId)"
+            title="Unassign Test Case"
+            class="btn btn-light btn-unlink">
+      <i class="icon-unlink"></i>
+    </button>
+
+
+    <button class="btn btn-light btn-exit"
+            (click)="onExit()"
+            title="Exit">
+      <i class="icon-exit"></i>
+    </button>
+    <a class="btn btn-light"
+       title="Chat"
+       href="{{chatUrl}}"
+       target="_blank"
+       [ngClass]="{'disabled': !isProd}">
+      <i class="icon-person-chat"></i>
+    </a>
+  </div>
+</div>
+<div class="form-container">
+  <div class="row">
+    <div class="col">
+      <div class="form-group-pts-qa"
+           [ngClass]="{'focused' : testSelectedForEdit.shortDescription }">
+        <div class="label">Short description</div>
+        <input [(ngModel)]="testSelectedForEdit.shortDescription"
+               type="text"
+               class="form-control-pts-qa"
+               (focus)="fieldFocus($event,'shortDescription')"
+               (blur)="fieldBlur($event)" />
+        <div class="form-buttons-container">
+          <button [hidden]="inputDescriptionFocused"
+                  class="table-button"
+                  (click)="updateTest(testSelectedForEdit,$event)">
+            <i class="icon-success align-middle"></i>
+          </button>
+
+          <button [hidden]="inputDescriptionFocused"
+                  (click)="testSelectedForEdit.shortDescription = ''"
+                  class="table-button">
+            <i class="icon-close align-middle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row-library">
+    <div class="col-category pr-3">
+      <div class="form-group-pts-qa"
+           (click)="toggleCategoryDropdown()"
+           [ngClass]="{'focused' : testSelectedForEdit.category }">
+        <div class="label">Category</div>
+        <input [(ngModel)]="testSelectedForEdit.category"
+               type="text"
+               class="form-control-pts-qa"
+               (focus)="fieldFocus($event,'category')"
+               (blur)="fieldBlur($event)" />
+        <div class="conbobox-conatainer"
+             *ngIf="showCategoryDropdown">
+          <div *ngFor="let catItem of testCaseCategories"
+               (click)="selectCategory(catItem.key)"
+               class="conbobox-item cursor-pointer">{{ catItem.value }}</div>
+        </div>
+        <div class="dropdown-arrrow">
+          <i class="icon-arrow-down align-middle"></i>
+        </div>
+        <div class="form-buttons-container posotion-after-arrow">
+          <button [hidden]="inputCategoryFocused"
+                  class="table-button"
+                  (click)="updateTest(testSelectedForEdit, $event)">
+            <i class="icon-success align-middle"></i>
+          </button>
+          <button [hidden]="inputCategoryFocused"
+                  class="table-button"
+                  (click)="ResetSelectCategory($event)">
+            <i class="icon-close align-middle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-execution-estimation px-3">
+      <div class="form-group-pts-qa"
+           [ngClass]="{'focused' : testSelectedForEdit.executionEstimationTime}">
+        <div class="label">Execution estimation time(h)</div>
+        <input [(ngModel)]="testSelectedForEdit.executionEstimationTime"
+               type="number"
+               class="form-control-pts-qa"
+               (focus)="fieldFocus($event,'executionEstimationTime')"
+               (blur)="fieldBlur($event)" />
+        <div class="form-buttons-container">
+          <button [hidden]="inputExecutionEstimationTimeFocused"
+                  class="table-button"
+                  (click)="updateTest(testSelectedForEdit, $event)">
+            <i class="icon-success align-middle"></i>
+          </button>
+
+          <button [hidden]="inputExecutionEstimationTimeFocused"
+                  class="table-button"
+                  (click)="testSelectedForEdit.executionEstimationTime = 0">
+            <i class="icon-close align-middle"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="textarea-group"
+    [ngClass]="{'focused' : testSelectedForEdit.preCondition}">
+    <div class="label">Preconditions</div>
+    <div class="form-buttons-container-textarea">
+        <button [hidden]="inputPreConditionFocused"
+                class="table-button"
+                (click)="updateTest(testSelectedForEdit, $event)">
+            <i class="icon-success align-middle"></i>
+        </button>
+        <button [hidden]="inputPreConditionFocused"
+                class="table-button"
+                (click)="testSelectedForEdit.preCondition = ''">
+            <i class="icon-close align-middle"></i>
+        </button>
+    </div>
+    <textarea [(ngModel)]="testSelectedForEdit.preCondition"
+              class="form-control-pts-qa"
+              (focus)="fieldFocus($event,'preCondition')"
+              (blur)="fieldBlur($event)"></textarea>
+  </div>
+  <div class="row">
+    <div class="col mt-3">
+      <tabset>
+        <tab heading="Test Steps">
+          <div class="row mt-4">
+            <div class="col">
+              <table class="library-steps-table">
+                <thead>
+                  <tr>
+                    <th>N°</th>
+                    <th>Test steps</th>
+                    <th>Expected results</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let testStep of : testSteps; let index = index">
+                    <tr class="library-steps-add-row">
+                      <td colspan="4">
+                        <div class="button-container"
+                             (click)="addFieldTestStep(index)">
+                          <i class="icon-plus align-middle"></i>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td colspan="2">
+                        <div class="form-group-table">
+                          <textarea [(ngModel)]="testStep.stepDescription"
+                                    type="text"
+                                    class="form-control-pts-qa"
+                                    (focus)="selectInputStep(testStep, 'one') ;"
+                                    (input)="onTestStepDescriptionLineChange($event,index)"></textarea>
+
+                          <div class="library-buttons-container left-side">
+                            {{index + 1}}.
+                          </div>
+
+                          <div class="library-buttons-container">
+                            <button *ngIf="isTestStepDescriptionDirty[index]"
+                                    (click)="sendTestStepDescription(testStep,index)"
+                                    class="table-button">
+                              <i class="icon-success align-middle"></i>
+                            </button>
+
+                            <button *ngIf="isTestStepDescriptionDirty[index]"
+                                    (click)="onResetStepDescription(testStep,index)"
+                                    class="table-button">
+                              <i class="icon-close align-middle"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td colspan="2">
+                        <div class="form-group-table">
+                          <textarea [(ngModel)]="testStep.expectedResult"
+                                    type="text"
+                                    class="form-control-pts-qa"
+                                    (focus)="selectInputStep(testStep, 'two')"
+                                    (input)="onTestStepExpectedResultLineChange($event,index)"></textarea>
+
+                          <div class="library-buttons-container">
+
+                            <button *ngIf="isTestStepExpectedResultDirty[index]"
+                                    (click)="sendTestStepExpectedResult(testStep, index)"
+                                    class="table-button">
+                              <i class="icon-success align-middle"></i>
+                            </button>
+                            <button *ngIf="(isTestStepExpectedResultDirty[index])"
+                                    (click)="onResetExpectedResult(testStep,index)"
+                                    class="table-button">
+                              <i class="icon-close align-middle"></i>
+                            </button>
+                            <button (click)="deleteTestStep(testStep.id, index)"
+                                    class="table-button">
+                              <i class="icon-trash align-middle"></i>
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+                <tr class="library-steps-add-row">
+                  <td colspan="4">
+                    <div class="button-container"
+                         (click)="addFieldUnderTestStep(this.testSteps.length);">
+                      <i class="icon-plus align-middle"></i>
+                    </div>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+        </tab>
+        <tab heading="Attachments">
+          <div class="attachment-btn-group-container d-flex align-items-start mb-4">
+          </div>
+        </tab>
+
+        <tab heading="Used in">
+          Used in
+        </tab>
+        <tab heading="History">
+          History
+        </tab>
+      </tabset>
+    </div>
+  </div>
+</div>

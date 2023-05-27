@@ -1,0 +1,23 @@
+.navbar {
+	background-color: #f2f2f2 !important;
+	padding: 0 14px;
+}
+.navbar-brand img {
+	margin-top: -15px;
+	height: 42px;
+}
+.navbar-brand span {
+	margin: 0 0 -17px 17px;
+	color: #284998;
+	font-size: 36px;
+	font-weight: 600;
+}
+
+@media (max-width: 1047px){
+	.navbar-brand img {
+		height: 30px;
+	}
+	.navbar-brand span {
+		font-size: 30px;
+	}
+}

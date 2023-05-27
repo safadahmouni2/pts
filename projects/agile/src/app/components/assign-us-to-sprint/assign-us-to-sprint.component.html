@@ -1,0 +1,199 @@
+<header class="ds-header scrum-dashboiard-header">
+	<div class="push-menu">
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a routerLink="/dashbord">
+						<img src="assets/img/tt-slogan.png">
+					</a>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div class="project-name">
+		<div class="middle-title">
+			<div class="middle-title-content">
+				<div class="styled-select">
+
+					<select class="choose-product">
+						<option>{{ myProduct?.productName }}</option>
+					</select>
+				</div>
+			</div>
+			<div class="middle-title-container">
+				<span class="middle-title-value">Assign user stories to sprints
+				</span>
+			</div>
+		</div>
+	</div>
+	<button *ngIf="isSMOrSMDByProduct" class="btn-create-sprint"><i class="icon-plus" (click)="onDisplaySprint()" ></i></button>
+	<app-header ></app-header>
+	<div class="bch-topics sch-sprints">
+		<div *ngIf="sprintsOptions.length >= 0" class="styled-" >
+			<angular2-multiselect [data]="sprintsOptions"  [(ngModel)]="selectedSprintItems" [settings]="allSprintsDropdownSettings">
+			</angular2-multiselect>
+		</div>
+	</div>
+	  <div class="sch-sprints">
+		  <div class="styled-select">
+			  <select class="form-control" [(ngModel)]="projectNameSelected">
+				  <option [ngValue]="null" class="disabled text-muted">All projects</option>
+				  <option *ngFor="let projectItem of dropdownProjectsList" [value]="projectItem">{{projectItem}}</option>
+			  </select>
+		  </div>
+	  </div>
+		<div class="bch-topics bch-status">
+			<div *ngIf="allSprintStatusOptions?.length > 0" class="styled-">
+				<angular2-multiselect [data]="allSprintStatusOptions" [(ngModel)]="selectedStateItems" [settings]="allStatusDropdownSettings">
+				</angular2-multiselect>
+			</div>
+		</div>
+	<div class="backlog-btn-container">
+		<a routerLink="/managment-us/{{myProduct?.productId}}" [state]="{ title:'BL-'+myProduct?.productName}">
+			<span alt=""  class="backlog-navbar backlog-navbar-sp-view">BL</span>
+		</a>
+	</div>  
+</header>
+<div *ngIf="loadingBacklog || loadingSprints" class="justify-content-center align-items-center d-flex" style="z-index: 10;position: absolute; width: 100%;height: 100%; background: #0000005c;">
+	<img src="assets/img/loading.gif" style="width: 170px;">
+</div>
+<div class="container">
+	<vertical-split-pane primary-component-initialratio="0.273">
+		<div class="split-pane-content-primary">
+			<div class="backlog-container-header">
+				<div class="bch-title tooltip-css">
+					<i class="icon-paper"></i>Backlog
+				</div>
+			</div>
+
+			<div class="backlog-containrer-user-stories">
+				<perfect-scrollbar class="container">
+					<div class="height-100 m-20" [dragula]='"nested-bag"' [dragulaModel]='notAssignedUserStories'>
+						<app-user-story *ngFor="let nonAssignedUserStory of notAssignedUserStories; let j = index;" [userStory]="nonAssignedUserStory" (onShowDetail)="ShowDetail($event)" [attr.data-id]="nonAssignedUserStory.id"
+							 [attr.data-index]="j" [currentUser]="currentUser"></app-user-story>
+					</div>
+				</perfect-scrollbar>
+			</div>
+		</div>
+		<div class="sep-assign"></div>
+		<div class="split-pane-content-secondary">
+			<div class="sprints-container-header">
+				<div class="sch-title">
+					<i class="icon-calendar"></i>Sprints
+				</div>
+			</div>
+			<div class="sprints-container-devided">
+				<app-us-detail (onHideDetail)="hideDetail($event)" *ngIf="usId" [usId]="usId"  class="us-detail-collapsed"></app-us-detail>
+				<app-create-sprint class="us-detail-collapsed create-sprint" *ngIf="showSprint" [productName]="productName" [spId]="spId" [productId]= 'productId' (displaySprintDetail) = "onHideSprint($event)"  (sprintRecentlyAdded) = "onSprintRecentlyAdded($event)"></app-create-sprint>
+				
+				<ng-template #popTemplate>
+						<div class="popover-status-container">
+
+						<div class="d-flex">
+							<div class="sprint-details-title">SP: <span>{{sprintDetailPopover.id}}{{sprintDetailPopover?.ticketId ? ' / ' + sprintDetailPopover.ticketId:''}}</span></div>
+							<div *ngIf="isSMOrSMDByProduct || isSMOrSMDBySprint" class="ml-auto d-flex align-items-center">
+								<button class="btn-popover-add-sprint" (click)="onCreateChildSprint(sprintDetailPopover.id)">Add sprint</button>
+							</div>
+						</div>
+
+						<div class="sprint-status-row">
+							<span class="sprint-popover-name">{{sprintDetailPopover.name}}</span>
+						</div>
+						
+						<div class="sprint-status-row">
+							<div>
+								<i class="icon-scrum-master sprint-popover-icon"></i>
+								<span class="sprint-popover-scrum-master">{{userSM}}</span>
+							</div>
+							<div class="margin-left-auto">
+								<i class="icon-deputy sprint-popover-icon margin-left-auto"></i>
+								<div class="sprint-popover-deputy-list" >
+									<div class="sprint-popover-deputy-item" *ngFor="let usersSMDeputy of usersSMDeputyList" >{{usersSMDeputy}}</div>
+								</div>
+							</div>
+						</div>
+
+						<div class="sprint-status-row comment-row" [ngClass]="sprintDetailPopover.ticketId?null:'cursor-not-allowed'" (click)="onTogglePopoverComments($event)">
+							<span class="sprint-status-detail">Comments</span>
+							<div class="margin-left-auto">
+								<i [ngClass]="{ 'icon-down': !showPopoverComments,'icon-up':showPopoverComments}"></i>
+							</div>
+						</div>
+						<div class="d-flex justify-content-end" [ngClass]="sprintDetailPopover.ticketId?null:'cursor-not-allowed'">
+							<img class="popover-add-comment" [ngClass]="sprintDetailPopover.ticketId?null:'disabled-link'" src="https://pts.thinktank.de/images/comments_icn.gif" (click)="onTogglePopoverCommentTextarea($event)" title="Add comments ...">
+						</div>
+							  
+						<accordion *ngIf="showPopoverComments" (click)="$event.stopPropagation()">
+							<accordion-group  *ngFor="let comment of sprintComments" heading="{{comment.authorCode}} - {{comment.creationDate}}" [panelClass]="'popover-comment-panel'"> 
+								<p>{{comment.text}}</p>
+							</accordion-group>
+						</accordion>
+						<div *ngIf="addCommentMode" class="popover-comment-textarea-container" (click)="$event.stopPropagation()">
+							<textarea class="popover-comment-textarea" [(ngModel)] = "commentText"></textarea>
+							<div class="comment-textarea-buttons">
+								<div class="apply-changes">
+									<i class="fa fa-check" (click)="addComment($event, commentText)"></i>
+								</div>
+								<div class="deny-changes">
+									<i class="fa fa-times" (click)="toggleAddCommentMode($event)"></i>
+								</div>
+							</div>
+						</div>
+						</div>
+				</ng-template>
+					
+			<ng-container *ngFor="let sprint of sprints | sprintsFilter :[selectedStateItems, projectNameSelected, selectedSprintItems]; let i = index;">
+				<div resizable class="sc-srprint-block" (click)="getSprintDetail(sprint)" [ngClass]="{'has-comment': addCommentMode}">
+					
+					<div class="scs-header cursor-pointer" [adaptivePosition]="true" [placement]="'right'" [popover]="popTemplate"  [outsideClick]="true" [isOpen]="isOpen" containerClass="sprint-details-popover">
+						<div class="scs-header-left">
+							<div class="scs-title" (click)="onClickSprint(sprint, $event)">
+								<ng-template [ngIf]="sprint.name" [ngIfElse]="id">{{ sprint.name }}</ng-template>
+								<ng-template #id>{{ sprint.id }}</ng-template>
+								</div>
+							<div class="scs-details">{{ sprint.sprintStartDate }} - {{ sprint.sprintEndDate }}</div>
+						</div>
+						<div class="scs-velocity-story-points">
+							<div class="scs-pointes">
+								<i class="icon-velocity"></i>
+								<span>--</span>
+							</div>
+
+							    <div class="scs-pointes">
+								    <i class="icon-empty-bucket"></i>
+								    <span>{{ sprint.getSumStoryPoints()}}</span>
+							    </div>
+						</div>
+						<div class="sp-postit-toolbar" (click)="$event.stopPropagation()">
+								<div class="sprint-status-details"><span class="sprint-status">{{sprint.state}}</span></div>
+								<div class="sprint-doc-details" [ngClass]="sprint.ticketId?null:'cursor-not-allowed'">
+										<a href="{{sprint.chatLinkUrl}}" target="_blank" class="popover-start-chat ml-auto" [ngClass]="sprint.ticketId?null:'disabled-link'">
+											<img src="assets/img/pts_chat_empty.png" title="PTS-Chat ::  start now! ..."/>
+										</a>
+								</div>
+						</div>
+					</div>
+					<div class="scs-container scrollbar-custom">
+						<perfect-scrollbar class="container">
+							<div class="height-100 m-20" 
+								[dragula]='"nested-bag"'
+								[dragulaModel]='sprint.userStories'
+								[attr.data-name]="sprint.name"
+								[attr.data-id]="sprint.id" 
+							 	[attr.data-userStories]="sprint.userStories">
+								<ng-container *ngFor="let userStory of sprint.userStories">
+									<app-user-story [userStory]="userStory" [attr.data-id]="userStory.id" [attr.data-index]="i" [currentUser]="currentUser" (onShowDetail)="ShowDetail($event)"></app-user-story>
+								</ng-container>
+							</div>
+						</perfect-scrollbar>
+					</div>
+
+				</div>
+				<app-create-sprint class="us-detail-collapsed create-sprint" *ngIf="spId && spId.id == sprint.id " [productName]="productName" [spId]="spId" [productId]= 'productId' (displaySprintDetail) = "onHideSprint($event)" ></app-create-sprint>
+				<app-create-sprint class="us-detail-collapsed create-sprint" *ngIf="showChildSprintCreation && sprintParentId == sprint.id " [productName]="productName" [spId]="spId" [sprintParentId]="sprintParentId" [productId]= 'productId' (displaySprintDetail) = "onHideSprint($event)"  (sprintRecentlyAdded) = "onSprintRecentlyAdded($event)"></app-create-sprint>
+			</ng-container>
+		
+			</div>
+		</div>
+	</vertical-split-pane>
+</div>

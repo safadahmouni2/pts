@@ -1,0 +1,8 @@
+export enum MeetingTypeEnum {
+    RETROSPECTIVE = 'RETROSPECTIVE',
+    REVIEW = 'REVIEW',
+    PLANNING = 'PLANNING',
+    DAILY_SCRUM = 'DAILY_SCRUM',
+    REFINEMENT = 'REFINEMENT',
+    GROOMING = 'GROOMING'
+};

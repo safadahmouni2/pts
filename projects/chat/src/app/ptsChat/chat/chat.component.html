@@ -1,0 +1,82 @@
+<div class="main-page" *ngIf="isReady">
+    <div class="chat-container" cdkDropListGroup>
+
+        <div class="drag-container" *ngFor="let section of tabSection;let index = index ">
+
+            <div class="section-header">
+                <div class="section-title">
+                    <div class="icon-container">
+                        <mat-icon>drag_indicator</mat-icon>
+                    </div>
+                    <h1 class="headline" *ngIf="!tabIsEdit[index]">{{section.title}}</h1>
+
+                    <input type="text" class="form-control" [(ngModel)]="tabTitle[index]" *ngIf="tabIsEdit[index]">
+                </div>
+                <div class="section-button">
+                    <mat-icon svgIcon="edit_outline" (click)="tabIsEdit[index] = true " *ngIf="!tabIsEdit[index]"></mat-icon>
+                    <mat-icon svgIcon="save_outline" (click)="tabIsEdit[index]  = false ;editSection(section.id,index)" *ngIf=" tabIsEdit[index] "></mat-icon>
+                </div>
+            </div>
+
+            <div cdkDropList [cdkDropListData]="section.sectionMessageList" class="draggable-list " (cdkDropListDropped)="drop($event,section.id) ">
+
+                <div class="draggable-box " *ngFor="let sectionMessage of section.sectionMessageList " cdkDrag>
+                    <div class="element-button ">
+                        <mat-icon>drag_indicator</mat-icon>
+
+                    </div>
+                    <div class="user-icon ">
+                        <span class="user-name ">{{sectionMessage.messageDto.creator}}</span>
+                    </div>
+                    <div class="message-container ">
+                        <p class="message ">{{sectionMessage.messageDto.description}}</p>
+                        <p class="date "> {{sectionMessage.messageDto.creationDate}} </p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+
+        <div class="drag-container ">
+            <div class="section-header ">
+                <div class="section-title ">
+                    <div class="icon-container ">
+                        <mat-icon>drag_indicator</mat-icon>
+                    </div>
+                    <h1 class="headline ">Uncategorized</h1>
+                </div>
+                <div class="section-button ">
+                    <mat-icon svgIcon="edit_outline " *ngIf="false "></mat-icon>
+                </div>
+            </div>
+
+            <div cdkDropList [cdkDropListData]="tabMessage " class="draggable-list ">
+                <div class="draggable-box " *ngFor="let meg of tabMessage " cdkDrag >
+                    <div class="element-button ">
+                        <mat-icon>drag_indicator</mat-icon>
+                    </div>
+                    <div class="user-icon ">
+                        {{isReady}}
+                        <span class="user-name ">{{meg.messageDto.creator}}</span>
+                    </div>
+                    <div class="message-container ">
+                        <div>{{meg.messageDto.description}}</div>
+                        <div>{{meg.messageDto.creationDate}}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="control-container ">
+            <h1 class="headline ">Ticket {{ticketId}} : {{description}}</h1>
+            <div class="control-button-container ">
+                <div class="control-button ">
+                    <mat-icon (click)="addSection(ticketId) ">playlist_add</mat-icon>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,73 @@
+<div class="test-case-change-list-container"
+     [ngClass]="{'panel-hidden':!showUserStoriesList}">
+  <div class="col-md-6 col-sm-12 search-us-autocomplete p-0">
+    <div class="us-container d-flex align-items-end">
+      <div class="create-test-run-form-group" *ngIf="withSearch">
+        <div class="form-group-pts-qa mt-0" (click)="toggleUserStoriesSearch()"
+             [ngClass]="{'focused' : usSearchField}">
+          <div class="label">Search US in current Sprint</div>
+
+          <input id="searchUsField"
+                 type="text"
+                 class="create-test-run-form-control"
+                 [(ngModel)]="usSearchField"
+                 (focus)="fieldFocus($event)"
+                 (blur)="fieldBlur($event)"
+                 (keyup)="onChangeSearchUsField($event)"
+          />
+          <div class="dropdown-arrrow">
+              <i class="icon-arrow-down align-middle"></i>
+          </div>
+
+        </div>
+        <div class="conbobox-container" *ngIf="showSearchUsDropdown">
+          <div *ngFor="let us of listUserStory" class="conbobox-item cursor-pointer d-flex justify-content-between"
+               (keyup)="openDropDown()"
+               (click)="onSelectUs(us, $event)">
+            <div *ngIf="us.text" class="us-description mr-2" title="{{us.text}}">{{us.text}} </div>
+            <div class="btn-dropdown-group d-flex align-items-center">
+            <button *ngIf="us.id" class="us-id" type="button"> {{us.id}}</button>
+            <div *ngIf="us.state" [ngClass]="{'in-analysis': us?.state.toLowerCase() === 'in analysis','in-design': us?.state.toLowerCase() === 'in design',
+                        'in-dev': us?.state.toLowerCase() === 'in dev', 'in-test': us?.state.toLowerCase() === 'in test',
+                        'closed': us?.state.toLowerCase() === 'completed', 'incomplete':us?.state.toLowerCase() === 'incomplete',
+                         'done': us?.state.toLowerCase() === 'done', 'ready': us?.state.toLowerCase() === 'ready'}"
+              class="us-status" type="button">{{us.state}}</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+      <button class="execute-test-run-collapse mt-0 ml-auto"
+      (click)="toggleUserStoriesList()">
+      <i [ngClass]="{'icon-right':showUserStoriesList, 'icon-left':!showUserStoriesList}"></i>
+      <i [ngClass]="{'icon-left':showUserStoriesList, 'icon-right':!showUserStoriesList}"></i>
+      </button>
+    </div>
+
+    <ng-container   *ngIf="showUserStoriesList">
+        <app-testcase-user-story  *ngIf="dataLogged"
+                                 [userStory]="userStory"></app-testcase-user-story>
+        <div class="user-story-test-case-seperator"></div>
+        <div *ngIf="dataLogged"
+             class="test-case-container flex-grow-1">
+            <div class="test-case-section">
+                <app-test-case-item *ngFor="let testCase of testCaseList "
+                                    (sendRequestToParent)="getUserStoryById(); unselectTestCase($event)"
+                                    (click)="selectTestCase(testCase)"
+                                    class="no-hierarchy"
+                                    [testCase]="testCase"
+                                    [has_container]="true"
+                                    [ngClass]="{'active': testCaseClass === testCase.usTestCaseId}">
+
+                </app-test-case-item>
+            </div>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="!showUserStoriesList">
+        <div class="hidden-panel">
+            <div class="hidden-panel-name-container">
+                <div class="hidden-panel-name">U: {{ userStory[0]?.id }}</div>
+            </div>
+        </div>
+    </ng-container>
+</div>

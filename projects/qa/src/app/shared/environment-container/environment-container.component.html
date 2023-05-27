@@ -1,0 +1,3 @@
+<div class="environment-container" *ngIf="!dataLoading">
+  <app-environment-section *ngFor="let environment of environmentList" [environment]="environment"></app-environment-section>
+</div>

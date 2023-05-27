@@ -1,0 +1,168 @@
+.test-header {
+	border-bottom: 1px solid #5c78a7;
+}
+
+.dashboard-row-margin {
+	margin-top: 10px !important;
+}
+
+.test-header {
+	border-bottom: 1px solid #5c78a7;
+}
+
+.test-header h2{
+	margin-top: 4px;
+	font-size: 24px;
+    color: #294898;
+    font-weight: 100;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+}
+
+.dashboard-container {
+    display: flex;
+    justify-content: center;
+    max-width: 1740px;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.project-card {
+    border: 1px solid rgba(180, 178, 179, .3);
+    padding: 12px;
+    width: 270px;
+    color: #534F4E;
+    cursor: pointer;
+}
+
+.project-card:hover {
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.project-card .project-title {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: 600;
+    color: #5C78A7;
+}
+
+.project-card .sprint-name {
+    line-height: 19px;
+}
+
+.project-card .sprint-date {
+    font-size: 14px;
+    color: #A0A1A5;
+    line-height: 17px;
+}
+
+.project-card .sprint-date .danger {
+    color: #F32525;
+}
+
+.project-card .sprint-date .warning {
+    color: #F77306;
+}
+
+.project-card .sprint-date .success {
+    color: #04A20F;
+}
+
+.project-card .sprint-status {
+    font-size: 14px;
+    font-weight: lighter;
+    line-height: 17px;
+    border-radius: 4px;
+    color: #fff;
+    display: inline-block;
+    padding: 1px 7px;
+    background: #718BB1;
+}
+
+.section-list .section .section-element {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    line-height: 19px;
+}
+
+.section-list,
+.section-list .section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.section-list .section:not(:last-child) {
+    border-bottom: 1px solid rgba(180, 178, 179, .3);
+    padding-bottom: 8px;
+}
+
+.section-list .section .section-element:first-child > p {
+    font-weight: 400;
+    color: #718BB1;
+}
+
+.section-list .section .section-element:first-child > div {
+    border-color: #718BB1;
+    color: #718BB1;
+}
+
+.section-list .section .section-element > p {
+    margin: 0;
+    font-weight: lighter;
+}
+
+.section-list .section .section-element > div {
+    width: 32px;
+    height: 19px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-width: 1px;
+    border-style: solid;
+    color: #fff;
+}
+
+.section-list .section .section-element.in-dev > div {
+    background: #718BB1;
+    border-color: #718BB1;
+}
+
+.section-list .section .section-element.in-test > div {
+    background: #F0AD4E;
+    border-color: #F0AD4E;
+}
+
+.section-list .section .section-element.done > div {
+    background: #F77306;
+    border-color: #F77306;
+}
+
+.section-list .section .section-element.ready > div {
+    background: #04a20f;
+    border-color: #04a20f;
+}
+.section-list .section .section-element.in-analysis > div {
+    background: #3f5864;
+    border-color: #3f5864;
+}
+
+.section-list .section .section-element.in-design > div {
+    background: #888;
+    border-color: #888;
+}
+
+.section-list .section .test-runs {
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    gap: 8px;
+    line-height: 19px;
+}
+
+.section-list .section .test-runs div:nth-child(even) {
+    font-weight: lighter;
+}

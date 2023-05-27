@@ -1,0 +1,71 @@
+<table class="test-case-list-table-header">
+  <thead>
+    <tr>
+      <th class="reorder-column"></th>
+      <th class="id-column">ID</th>
+      <th class="name-column">NAME</th>
+      <th class="path-column">PATH</th>
+      <th *ngIf="testCaseState !== 'InLibrary'&& testCaseState !== '' "
+          class="user-story-column">USER STORY</th>
+      <th class="last-update-column">LAST UPDATE</th>
+      <th class="effort-column">ESTIM. EFFORT</th>
+      <th class="select-column">
+        <!-- Select all -->
+        <label class="test-case-list-checkbox">
+          <input type="checkbox"
+                 id="checkAll"
+                 class="checkbox"
+                 (click)="checkUncheckAll($event)" />
+          <i class="checkbox-checked icon-success"></i>
+          <!-- Show only when some of the items are selected (not all of them) -->
+          <i class="indetermined"
+             *ngIf="someTestCaseSelected > 0 && someTestCaseSelected !== filteredTestCaseLibraryList.length"></i>
+        </label>
+      </th>
+    </tr>
+  </thead>
+</table>
+<div class="test-case-list-table-container">
+  <table class="test-case-list-table-content"
+         id="tc-list-table">
+    <tbody>
+      <tr *ngFor="let testCase of filteredTestCaseLibraryList"
+          (click)="openTestCaseDetails(testCase)">
+        <td class="reorder-column">
+          <span class="icon-move"></span>
+        </td>
+        <td class="id-column">
+          <span>{{getTitle(testCase)}}</span>
+        </td>
+        <td class="name-column">
+          {{testCase.shortDescription}}
+        </td>
+        <td class="path-column">
+          {{testCase.folder.folderPath}}
+        </td>
+        <td *ngIf="testCaseState !== 'InLibrary'&& testCaseState !== '' "
+            class="user-story-column">U: {{testCase.userStoryId}}</td>
+        <td class="last-update-column">
+          {{ testCase.modified | date:'yyyy.MM.dd'}}
+        </td>
+        <td class="effort-column">{{testCase.executionEstimationTime === null ? 0 : testCase.executionEstimationTime}}
+        </td>
+        <td class="select-column">
+          <label class="test-case-list-checkbox">
+            <input type="checkbox"
+                   id="checkboxId"
+                   class="checkbox"
+                   (click)="checkUncheckTestCase(testCase,false,$event)" />
+            <i class="checkbox-checked icon-success"></i>
+          </label>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Test case details panel -->
+<app-test-case-info-panel *ngIf="testCaseDetails"
+                          [testCaseDetails]="testCaseDetails"
+                          [testSteps]="testSteps"
+                          (closePanel)="closeTestCaseDetails()"></app-test-case-info-panel>

@@ -1,0 +1,348 @@
+
+<div class="rating-modal">
+  <div class="modal-header pb-1 pt-1">
+  <h4 class="modal-title">Create {{name}}</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body new-smart-container" [ngSwitch]="id">
+  <div *ngSwitchCase="'p.tech'">
+      <div class="row">
+
+    <div class="col-3">Topic/ Technology:</div>
+    <div class="col-9">
+      <input type="text" size="" id="topic" [(ngModel)]="prop.subject" name="topic">  </div>
+
+    <div class="col-3"> Departement:</div>
+    <div class="col-9">
+      <div id="departement" class="btn-group"  >
+        <label class="btn btn-success" [(ngModel)]="prop.departement.devolepment" btnCheckbox tabindex="0" role="button" name="dev">devolepment</label>
+        <label class="btn btn-success" [(ngModel)]="prop.departement.Quality" btnCheckbox tabindex="0" role="button" name="QU">Quality</label>
+        <label class="btn btn-success" [(ngModel)]="prop.departement.Design" btnCheckbox tabindex="0" role="button" name="des">Design</label>
+        <label class="btn btn-success" [(ngModel)]="prop.departement.Other" btnCheckbox tabindex="0" role="button" name="oth">Other</label>
+      </div>
+    </div>
+    <div class="col-3">date:</div>
+    <div class="col-9">
+          <div class="form-group">
+          <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" [(ngModel)]="prop.date">
+
+          </div>
+    </div>
+
+    <div class="col-3">Hours:</div>
+    <div class="col-9">
+      <input id="Hours" type="number" [(ngModel)]="prop.Hours" min="0.5" max="50" step="0.5" width="250" name="hours">
+    </div>
+
+    <div class="col-3">Urgency:</div>
+    <div class="col-9">
+      <input name="urgency" list="listurg"  name="urgency" [(ngModel)]="prop.urgency" />
+      <datalist id="listurg">
+        <select id="Urgency" >
+          <option *ngFor="let urg of listurg" [value]="urg" ></option>
+        </select>
+      </datalist>
+    </div>
+    <div class="col-3">Moderator:</div>
+    <div class="col-9">
+        <input name="urgency" list="allUser"  name="urgency" [(ngModel)]="prop.moderator"  />
+        <datalist id="allUser">
+          <select id="Urgency" >
+            <option *ngFor="let user of allUser" [value]="user.code" ></option>
+          </select>
+        </datalist>
+      </div>
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea id="description" name="description" [(ngModel)]="prop.description" ></textarea>
+    </div>
+      </div>
+
+
+  </div>
+  <div *ngSwitchCase="'pfe'" class="row">
+
+    <div class="col-3">Subject: </div>
+    <div class="col-9">
+      <input type="text" [(ngModel)]="prop.subject">
+    </div>
+
+    <div class="col-3">Trainee:</div>
+    <div class="col-9">
+      <input type="text">
+    </div>
+
+    <div class="col-3">Start Date/ End Date:</div>
+    <div class="col-9">
+      <form [formGroup]="myForm" >
+        <div>
+
+          <div class="form-group">
+            <input type="text" class="form-control mb-3" placeholder="Choose date range" bsDaterangepicker formControlName="range" [(ngModel)]="prop.date"/>
+
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="col-3">Urgency:</div>
+    <div class="col-9">
+      <input name="urgency" list="listurg" [(ngModel)]="prop.urgency"/>
+      <datalist id="listurg" >
+        <select>
+          <option *ngFor="let urg of listurg" [value]="urg"></option>
+        </select>
+      </datalist>
+    </div>
+
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea [(ngModel)]="prop.description"></textarea>
+    </div>
+  </div>
+  <div *ngSwitchCase="'trainee'" class="row">
+      <div class="col-3">Subject: </div>
+      <div class="col-9">
+        <input type="text" [(ngModel)]="prop.subject">
+      </div>
+    <div class="col-3">Trainee Name:</div>
+    <div class="col-9">
+      <input type="text">
+    </div>
+
+    <div class="col-3">Start Date/ End Date:</div>
+    <div class="col-9">
+      <form [formGroup]="myForm">
+        <div>
+
+          <div class="form-group">
+            <input type="text" class="form-control mb-3" placeholder="Choose date range" bsDaterangepicker formControlName="range" [(ngModel)]="prop.date"/>
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-3">Urgency:</div>
+    <div class="col-9">
+      <input name="urgency" list="listurg" [(ngModel)]="prop.urgency"/>
+      <datalist id="listurg">
+        <select>
+          <option *ngFor="let urg of listurg" [value]="urg"></option>
+        </select>
+      </datalist>
+    </div>
+
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea [(ngModel)]="prop.description"></textarea>
+    </div>
+
+
+  </div>
+  <div *ngSwitchCase="'emp'" class="row">
+
+    <div class="col-3">Employee Name:</div>
+    <div class="col-9">
+      <input name="emp" list="listemp"   [(ngModel)]="prop.subject"/>
+      <datalist id="listemp">
+        <select>
+          <option *ngFor="let emp of listemp" [value]="emp"></option>
+        </select>
+      </datalist>
+    </div>
+    <div class="col-3">Start Date/ End Date:</div>
+    <div class="col-9">
+      <form [formGroup]="myForm">
+        <div>
+
+          <div class="form-group">
+            <input type="text" class="form-control mb-3" placeholder="Choose date range" bsDaterangepicker formControlName="range"  [(ngModel)]="prop.date"/>
+
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-3">Urgency:</div>
+    <div class="col-9">
+      <input name="urgency" list="listurg"  [(ngModel)]="prop.urgency"/>
+      <datalist id="listurg">
+        <select>
+          <option *ngFor="let urg of listurg" [value]="urg" ></option>
+        </select>
+      </datalist>
+    </div>
+
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea  [(ngModel)]="prop.description"></textarea>
+    </div>
+
+
+  </div>
+  <div *ngSwitchCase="'rec'" class="row">
+
+    <div class="col-3"> Name:</div>
+    <div class="col-9">
+      <input type="text" [(ngModel)]="prop.subject">
+    </div>
+
+    <div class="col-3">curriculum vitae:</div>
+    <div class="col-9">
+      <input type="file">
+    </div>
+
+    <div class="col-3"> Experience:</div>
+    <div class="col-9">
+      <input type="text">
+    </div>
+
+    <div class="col-3">Availibility Date:</div>
+    <div class="col-9">
+      <div class="row">
+        <div class="col-xs-12 col-12 col-md-4 form-group">
+          <input type="text" class="form-control" #dp="bsDatepicker" bsDatepicker [bsValue]="bsValue" [(ngModel)]="prop.date">
+        </div>
+        <div class="col-xs-12 col-12 col-md-3 form-group">
+          <button class="btn btn-success" (click)="dp.toggle()" [attr.aria-expanded]="dp.isOpen">Date Picker</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-3">Urgency:</div>
+    <div class="col-9">
+      <input name="urgency" list="listurg" [(ngModel)]="prop.urgency"/>
+      <datalist id="listurg">
+        <select>
+          <option *ngFor="let urg of listurg" [value]="urg"></option>
+        </select>
+      </datalist>
+    </div>
+
+      <div class="col-3">Description:</div>
+      <div class="col-9">
+        <textarea [(ngModel)]="prop.description"></textarea>
+      </div>
+    </div>
+
+  <div *ngSwitchCase="'recr'" class="row">
+    <div class="col-3">Candidate:</div>
+    <div class="col-9">
+      <input type="text">
+    </div>
+    <div class="col-3"> Description:</div>
+      <div class="col-9">
+        <textarea [(ngModel)]="prop.description"></textarea>
+      </div>
+
+  </div>
+
+  <div *ngSwitchCase="'p.pfe'" class="row">
+    <div class="col-3">Subject:</div>
+    <div class="col-9">
+      <input type="text" [(ngModel)]="prop.subject"/>
+    </div>
+
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea [(ngModel)]="prop.description"></textarea>
+    </div>
+
+  </div>
+  <div *ngSwitchCase="'p.trn'" class="row">
+    <div class="col-3">Trainee Name:</div>
+    <div class="col-9">
+      <input type="text" [(ngModel)]="prop.subject"/>
+    </div>
+    <div class="col-3">Degree:</div>
+    <div class="col-9">
+      <input name="degree" list="listdegr"  />
+      <datalist id="listdegr">
+        <select>
+          <option *ngFor="let degr of listdegr" [value]="degr"></option>
+        </select>
+      </datalist>
+    </div>
+    <div class="col-3">curriculum vitae:</div>
+    <div class="col-9">
+      <input type="file">
+    </div>
+
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea [(ngModel)]="prop.description"></textarea>
+    </div>
+
+  </div>
+  <div *ngSwitchCase="'tba'" class="row">
+    <div class="col-3">Subject:</div>
+    <div class="col-9">
+      <input type="text" [(ngModel)]="prop.subject"/>
+    </div>
+
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea [(ngModel)]="prop.description"></textarea>
+    </div>
+    <div class="col-3">Source:</div>
+    <div class="col-9">
+      <input type="file">
+    </div>
+
+  </div>
+
+
+
+  <div *ngSwitchCase="'pro'" class="row">
+    <div class="col-3">Subject:</div>
+    <div class="col-9">
+      <input type="text" size="" [(ngModel)]="prop.subject"> </div>
+    <div class="col-3"> Departement:</div>
+    <div class="col-9">
+      <div class="btn-group">
+        <label class="btn btn-success" [(ngModel)]="prop.departement.devolepment" btnCheckbox tabindex="0" role="button">devolepment</label>
+        <label class="btn btn-success" [(ngModel)]="prop.departement.Quality" btnCheckbox tabindex="0" role="button">Quality</label>
+        <label class="btn btn-success" [(ngModel)]="prop.departement.Design" btnCheckbox tabindex="0" role="button">Design</label>
+        <label class="btn btn-success" [(ngModel)]="prop.departement.Other" btnCheckbox tabindex="0" role="button">Other</label>
+      </div>
+    </div>
+
+    <div class="col-3">Hours:</div>
+    <div class="col-9">
+      <input type="number" placeholder="Value"  min="0.5" max="50" step="0.5" width="250">
+    </div>
+    <div class="col-3">attached report:</div>
+    <div class="col-9">
+      <input type="file"> </div>
+    <div class="col-3">Urgency:</div>
+    <div class="col-9">
+      <input name="urgency" list="listurg" />
+      <datalist id="listurg">
+        <select>
+          <option *ngFor="let urg of listurg" [value]="urg"></option>
+        </select>
+      </datalist>
+    </div>
+
+    <div class="col-3">Description:</div>
+    <div class="col-9">
+      <textarea></textarea>
+    </div>
+
+  </div>
+
+  <div *ngSwitchDefault>
+    Choose a type of smart objective!
+  </div>
+
+</div>
+
+<div class="modal-footer ">
+  <div class="call-top-action btn2 col-3 text-center mt-3 p-0">
+  <button  class="btn btn-lg btn-outline-success" (click)='onSubmit(prop, id)' (click)="activeModal.close('Close click')">OK
+</button>
+</div>
+</div>
+</div>

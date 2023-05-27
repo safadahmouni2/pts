@@ -1,0 +1,184 @@
+{
+  "IcoMoonType": "selection",
+  "icons": [
+    {
+      "icon": {
+        "paths": [
+          "M61.122 749.346c12.701 12.701 33.34 12.701 46.040 0l404.837-405.631 405.631 405.631c12.701 12.701 33.34 12.701 46.040 0s12.701-33.34 0-46.040l-427.857-427.857c-6.35-6.35-14.288-9.526-23.020-9.526-7.938 0-16.67 3.175-23.020 9.526l-427.857 427.857c-13.495 12.701-13.495 33.34-0.794 46.040z"
+        ],
+        "attrs": [
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "down-arrow"
+        ]
+      },
+      "attrs": [
+        {}
+      ],
+      "properties": {
+        "order": 4,
+        "id": 2,
+        "name": "down-arrow",
+        "prevSize": 32,
+        "code": 59648
+      },
+      "setIdx": 0,
+      "setId": 0,
+      "iconIdx": 0
+    },
+    {
+      "icon": {
+        "paths": [
+          "M962.878 274.654c-12.701-12.701-33.34-12.701-46.040 0l-404.837 405.631-405.631-405.631c-12.701-12.701-33.34-12.701-46.040 0s-12.701 33.34 0 46.040l427.857 427.857c6.35 6.35 14.288 9.526 23.020 9.526 7.938 0 16.67-3.175 23.020-9.526l427.857-427.857c13.495-12.701 13.495-33.34 0.794-46.040z"
+        ],
+        "attrs": [
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "down-arrow"
+        ]
+      },
+      "attrs": [
+        {}
+      ],
+      "properties": {
+        "order": 5,
+        "id": 4,
+        "prevSize": 32,
+        "code": 59649,
+        "name": "down-arrow2"
+      },
+      "setIdx": 0,
+      "setId": 0,
+      "iconIdx": 1
+    },
+    {
+      "icon": {
+        "paths": [
+          "M320.695 962.878c-6.35 6.35-14.288 9.526-23.020 9.526s-16.67-3.175-23.020-9.526c-12.701-12.701-12.701-33.34 0-46.040l404.837-404.837-404.837-404.837c-12.701-12.701-12.701-33.34 0-46.040s33.34-12.701 46.040 0l427.857 427.857c12.701 12.701 12.701 33.34 0 46.040l-427.857 427.857z"
+        ],
+        "attrs": [
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "right-arrow"
+        ]
+      },
+      "attrs": [
+        {}
+      ],
+      "properties": {
+        "order": 3,
+        "id": 1,
+        "name": "right-arrow",
+        "prevSize": 32,
+        "code": 59650
+      },
+      "setIdx": 0,
+      "setId": 0,
+      "iconIdx": 2
+    },
+    {
+      "icon": {
+        "paths": [
+          "M703.305 61.122c6.35-6.35 14.288-9.526 23.020-9.526s16.67 3.175 23.020 9.526c12.701 12.701 12.701 33.34 0 46.040l-404.837 404.837 404.837 404.837c12.701 12.701 12.701 33.34 0 46.040s-33.34 12.701-46.040 0l-427.857-427.857c-12.701-12.701-12.701-33.34 0-46.040l427.857-427.857z"
+        ],
+        "attrs": [
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "right-arrow"
+        ]
+      },
+      "attrs": [
+        {}
+      ],
+      "properties": {
+        "order": 6,
+        "id": 3,
+        "prevSize": 32,
+        "code": 59651,
+        "name": "right-arrow2"
+      },
+      "setIdx": 0,
+      "setId": 0,
+      "iconIdx": 3
+    },
+    {
+      "icon": {
+        "paths": [
+          "M1015.031 971.778l-248.848-248.848c66.753-76.743 107.168-176.873 107.168-286.311-0-240.901-195.945-436.619-436.619-436.619-240.901 0-436.619 195.945-436.619 436.619s195.945 436.619 436.619 436.619c109.439 0 209.568-40.415 286.311-107.168l248.848 248.848c5.903 5.903 13.85 9.082 21.57 9.082s15.667-2.952 21.57-9.082c11.807-11.807 11.807-31.333 0-43.14zM61.19 436.619c0-207.071 168.472-375.315 375.315-375.315 207.071 0 375.315 168.472 375.315 375.315s-168.245 375.542-375.315 375.542c-206.843-0-375.315-168.472-375.315-375.542z"
+        ],
+        "attrs": [
+          {}
+        ],
+        "isMulticolor": false,
+        "isMulticolor2": false,
+        "grid": 0,
+        "tags": [
+          "magnifying-glass"
+        ]
+      },
+      "attrs": [
+        {}
+      ],
+      "properties": {
+        "order": 7,
+        "id": 0,
+        "name": "magnifying-glass",
+        "prevSize": 32,
+        "code": 59652
+      },
+      "setIdx": 0,
+      "setId": 0,
+      "iconIdx": 4
+    }
+  ],
+  "height": 1024,
+  "metadata": {
+    "name": "pts-boarding"
+  },
+  "preferences": {
+    "showGlyphs": true,
+    "showCodes": true,
+    "showQuickUse": true,
+    "showQuickUse2": true,
+    "showSVGs": true,
+    "fontPref": {
+      "prefix": "icon-",
+      "metadata": {
+        "fontFamily": "pts-boarding",
+        "majorVersion": 1,
+        "minorVersion": 0
+      },
+      "metrics": {
+        "emSize": 1024,
+        "baseline": 6.25,
+        "whitespace": 50
+      },
+      "embed": false
+    },
+    "imagePref": {
+      "prefix": "icon-",
+      "png": true,
+      "useClassSelector": true,
+      "color": 0,
+      "bgColor": 16777215
+    },
+    "historySize": 50,
+    "gridSize": 16
+  }
+}

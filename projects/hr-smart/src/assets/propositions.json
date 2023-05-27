@@ -1,0 +1,53 @@
+[
+  { "user":"ali",
+    "type": "Proposition of PFE",
+    "points": "150",
+    "subject": "subject 01",
+    "date":"19/01/2019",
+    "description":" it gives students a chance to demonstrate all they have learned. The project module is very different from other modules. Although students are supervised, the onus is on the student to define the problem boundaries, to investigate possible solutions, and to present the results in writing, verbally and in action. ",
+    "status":  "Accepted",
+    "urgency": "Extremly urgent"
+  },
+  {
+   "user": "salah",
+    "type":"Proposition of technology",
+    "points": "100",
+    "subject": "subject 02",
+    "date":"18/01/2019",
+    "description":"There were huge advances in aviation technology during the Second World War. Satellite technology offers the opportunity, as never before, for continuous television coverage of major international events. With computer technology, even people working on their own can produce professional-looking documents.",
+    "status":  "Rejected",
+    "urgency": "Urgent"
+  },
+  {
+    "user":  "mohamed",
+    "type":  "Recommandation Emp",
+    "points": "500",
+    "subject": "subject 03",
+    "date":"17/01/2019",
+    "description":"I highly recommend Jane Doe as a candidate for employment. Jane was employed by ABC Company as an Administrative Assistant from 20XX to 20XX. Jane was responsible for office support, including word processing, scheduling appointments and creating brochures, newsletters, and other office literature.",
+    "status":  "On hold",
+    "urgency": "High"
+  },
+  {
+    "user": "ali",
+    "type": "Proposition of trainee",
+    "points": "150",
+    "subject": "subject 04",
+    "date":"16/01/2019",
+    "description":"this is someone who is employed at a low level in a particular job in order to learn the skills needed for that job.",
+    "status":  "Accepted",
+    "urgency": "Medium"
+  },
+   {
+    "user":"salah",
+    "type": "Supervision Employee",
+    "points": "100",
+    "subject": "subject 05",
+    "date": "15/01/2019",
+    "description":"The supervisor is often the first person who is considered when a new employee needs to learn the job or when an employee is struggling to improve performance in the job. The supervisor is responsible to ensure that training occurs, and might do the training themselves or arrange it through a subject matter exper",
+    "status":  "On hold",
+    "urgency": "Low"
+    
+   }
+    
+ ]

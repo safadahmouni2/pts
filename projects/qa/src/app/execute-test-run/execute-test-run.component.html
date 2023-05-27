@@ -1,0 +1,167 @@
+<app-header></app-header>
+<ng-container *ngIf="testRun">
+  <div class="container-fliud px-4">
+    <div class="execute-test-run-header row align-items-end">
+      <div class="col-md-4 d-flex align-items-center justify-content-start">
+        <h2 class="d-inline-block">Execute Test Run: {{testRunId}}</h2>
+
+        <div class="actions-container">
+          <div class="right-action-buttons">
+            <a class="btn btn-light align-middle" title="Chat" href="{{chatUrl}}" target="_blank" [ngClass]="{'disabled': !isProd}">
+              <i class="icon-person-chat"></i>
+            </a>
+          </div>
+
+          <app-show-actor-info [actorInfo]=testRun>
+          </app-show-actor-info>
+
+          <div *ngIf=testRun.responsible class="test-run-badge">{{testRun.responsible}}</div>
+        </div>
+      </div>
+
+      <div class="col-md-8 d-flex text-left align-items-center pb-2">
+        <div class="text-left justify-content-end flex-grow-1 d-flex align-items-center">
+
+          <span class="counter-timer">
+            <span class="counter-timer-label">Estimated</span>
+            {{ estimatedEffort }}
+            <span class="extra-effort">({{diff}})</span>
+          </span>
+
+          <span class="counter-timer">
+            <span class="counter-timer-label">Total effort</span>
+            {{ hr }}:{{ min }}:{{ sec }}
+          </span>
+
+          <button *ngIf="testRun.state === 'CREATED' ||testRun.state === 'COMPLETED'"
+                  class="counter-button mr-0"
+                  (click)="start()"
+                  [ngClass]="{'disabled': testRun.state === 'COMPLETED'}"
+                  [disabled]="testRun.state === 'COMPLETED'">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 12.8 12.8">
+              <g>
+                <path fill="#ffffff"
+                      d="M0,6.72v-.65s.02-.09,.03-.13c.04-.28,.06-.56,.12-.84C.48,3.56,1.27,2.3,2.52,1.33,3.4,.65,4.39,.23,5.5,.07c.19-.03,.39-.05,.58-.07h.65s.09,.02,.13,.03c.28,.04,.56,.06,.84,.12,1.54,.33,2.8,1.13,3.77,2.38,.68,.88,1.1,1.87,1.26,2.98,.03,.19,.05,.39,.07,.58v.65s-.02,.09-.03,.13c-.04,.28-.06,.56-.12,.84-.33,1.54-1.13,2.8-2.38,3.77-.88,.68-1.87,1.1-2.98,1.26-.19,.03-.39,.05-.58,.07h-.65s-.09-.02-.13-.03c-.28-.04-.56-.06-.84-.12-1.54-.33-2.8-1.13-3.77-2.38-.68-.88-1.1-1.87-1.26-2.98-.03-.19-.05-.39-.07-.58ZM4.81,3.2v6.4l4.8-3.2L4.81,3.2Z">
+                </path>
+              </g>
+            </svg>
+            Start Test Run
+          </button>
+
+          <div *ngIf="testRun.state === 'IN_PROGRESS'"
+               class="counter-button counter-button-warning"
+               (click)="pause()">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 384 384">
+              <g id="Layer_1-2">
+                <path fill="#ffffff"
+                      d="M180,0c8,0,16,0,24,0,6.54,.85,13.11,1.49,19.61,2.6,36.06,6.16,67.97,21.24,95.29,45.55,33.41,29.73,54.3,66.65,62.15,110.77,1.24,6.98,1.98,14.05,2.95,21.08v24c-.58,4.69-1.09,9.39-1.76,14.07-5.48,38.35-20.89,72.21-46.66,101.12-29.58,33.18-66.34,53.9-110.15,61.82-7.09,1.28-14.28,2.01-21.43,2.99h-24c-4.68-.58-9.38-1.08-14.05-1.75-38.21-5.47-71.97-20.78-100.83-46.41C31.78,306.22,10.96,269.4,2.99,225.45,1.7,218.35,.98,211.15,0,204,0,196,0,188,0,180c.58-4.69,1.06-9.39,1.74-14.07C7.78,124.08,25.43,87.87,55.06,57.7,83.8,28.43,118.46,10.07,158.93,2.95c6.98-1.23,14.04-1.98,21.07-2.95Zm-12.27,263.83V120.31h-47.53v143.53h47.53Zm96.01-.01V120.3h-47.55v143.53h47.55Z">
+                </path>
+              </g>
+            </svg>
+            Pause
+          </div>
+
+          <div *ngIf="testRun.state === 'IN_PROGRESS'"
+               class="counter-button counter-button-danger mr-0"
+               (click)="finish()">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 391.25 391.26">
+              <g id="Layer_1-2">
+                <path fill="#ffffff"
+                      d="M184.24,0h22.93c5.04,.59,10.1,1.07,15.12,1.8,42.25,6.12,79.2,23.48,109.55,53.57,46.45,46.04,65.68,102.05,57.63,166.84-5.27,42.35-23.24,79.3-53.4,109.57-49.1,49.28-108.51,67.9-176.96,56.01-39.21-6.81-72.93-25.15-101.15-53.21-29.48-29.32-47.93-64.53-54.97-105.58C1.74,221.77,.98,214.45,0,207.17v-22.93c.59-5.02,1.07-10.06,1.79-15.06C7.91,126.95,25.48,90.25,55.24,59.6,84.79,29.18,120.52,10.22,162.36,2.99c7.25-1.25,14.58-2,21.88-2.99Zm-15.02,277.04c43.29-43.38,86.6-86.78,129.53-129.8-10.73-10.75-21.86-21.91-33.57-33.64-31.76,31.84-63.72,63.89-95.99,96.24-14.68-14.68-29.15-29.16-43.42-43.44-11.26,11.24-22.5,22.47-33.57,33.52,25.61,25.64,51.43,51.5,77.02,77.12Z">
+                </path>
+              </g>
+            </svg>
+            Finish
+          </div>
+
+          <div *ngIf="testRun.state === 'PAUSED'"
+               class="counter-button mr-0"
+               (click)="start()">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 12.8 12.8">
+              <g>
+                <path fill="#ffffff"
+                      d="M0,6.72v-.65s.02-.09,.03-.13c.04-.28,.06-.56,.12-.84C.48,3.56,1.27,2.3,2.52,1.33,3.4,.65,4.39,.23,5.5,.07c.19-.03,.39-.05,.58-.07h.65s.09,.02,.13,.03c.28,.04,.56,.06,.84,.12,1.54,.33,2.8,1.13,3.77,2.38,.68,.88,1.1,1.87,1.26,2.98,.03,.19,.05,.39,.07,.58v.65s-.02,.09-.03,.13c-.04,.28-.06,.56-.12,.84-.33,1.54-1.13,2.8-2.38,3.77-.88,.68-1.87,1.1-2.98,1.26-.19,.03-.39,.05-.58,.07h-.65s-.09-.02-.13-.03c-.28-.04-.56-.06-.84-.12-1.54-.33-2.8-1.13-3.77-2.38-.68-.88-1.1-1.87-1.26-2.98-.03-.19-.05-.39-.07-.58ZM4.81,3.2v6.4l4.8-3.2L4.81,3.2Z">
+                </path>
+              </g>
+            </svg>
+            Continue
+          </div>
+
+        </div>
+        <button class="close-btn ml-3" routerLink="/product-dashboard" >
+            <i class="icon-close"></i>
+            </button>
+      </div>
+    </div>
+
+    <div class="execute-test-run-container d-flex">
+
+      <div class="test-run-test-cases-list-container flex-grow-1"
+           [ngClass]="{'panel-hidden':!showTestCasesList}">
+        <button class="execute-test-run-collapse ml-auto"
+                (click)="toggleTestCasesList()">
+          <i [ngClass]="{'icon-right':showTestCasesList, 'icon-left':!showTestCasesList}"></i>
+          <i [ngClass]="{'icon-left':showTestCasesList, 'icon-right':!showTestCasesList}"></i>
+        </button>
+        <app-test-cases-list (sendTestToParent)="detectTestCaseChange($event)"
+                             (changeUserStoryId)="userStoryIdChange($event)"
+                             (newItemEvent)="detectNewItem($event)"
+                             *ngIf="showTestCasesList && testRun && tests"
+                             [selectedTestId]="testSelected?.testId"
+                             [tests]="tests"
+                             [testRunStatus]="testRun.state"
+                             [counterRunning]="running"></app-test-cases-list>
+        <div class="hidden-panel"
+             *ngIf="!showTestCasesList">
+          <div class="hidden-panel-name-container">
+            <div class="hidden-panel-name">Test cases list</div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="test-case-container flex-grow-1" [ngClass]="{'panel-hidden':!showTestRun}">
+          <button class="execute-test-run-collapse ml-auto" (click)="toggleTestRun()">
+              <i [ngClass]="{'icon-right':showTestRun, 'icon-left':!showTestRun}"></i>
+              <i [ngClass]="{'icon-left':showTestRun, 'icon-right':!showTestRun}"></i>
+            </button>
+            <ng-container *ngIf="showTestRun">
+        <app-test-run-test-case *ngIf="!showEditTestComponent  && testSelected"
+                                [testRunId]="testRun.testRunId"
+                                [tests]="tests"
+                                [testRunStatus]="testRun.state"
+                                [counterRunning]="running"
+                                [test]="testSelected"
+                                (changeUserStoryId)="userStoryIdChange($event)"
+                                [newItem]="newItem"
+                                (refreshTotalEffort)="changeTotalEffort()"
+                                (edited)="onShowEditTest(true)"
+                                (sendTestToParent)="detectTestCaseChange($event)">
+        </app-test-run-test-case>
+
+        <app-test-form-edit *ngIf="showEditTestComponent && testSelected"
+                            [testSelectedForEdit]="testSelected"
+                            class="library-opened"
+                            (exitComponent)="onShowEditTest(false)">
+        </app-test-form-edit>
+      </ng-container>
+      <div class="hidden-panel" *ngIf="!showTestRun">
+          <div class="hidden-panel-name-container">
+            <div class="hidden-panel-name">T{{testSelected?.testId}}{{testSelected.userStoryId?'-U'+testSelected.userStoryId:''}}-L{{testSelected?.testCaseLibraryId || '?'}}-V{{testSelected?.testCaseVersion}}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="test-run-user-story-container"
+           [ngClass]="{'panel-hidden':!showUserStory}">
+        <app-user-story-details [userStoryId]="userStoryId"
+                                *ngIf="userStoryId"
+                                [hidden]="isHidden"></app-user-story-details>
+      </div>
+    </div>
+  </div>
+</ng-container>

@@ -1,0 +1,65 @@
+<div class="effort-popup"
+     (click)="onPopupClick()">
+    <div class="effort-popup-header d-flex justify-content-between align-items-center">
+        <span>{{title}}</span>
+
+        <div role="progressbar"
+             *ngIf="!clicked"
+             [attr.aria-valuenow]="progress"
+             aria-valuemin="0"
+             aria-valuemax="100"
+             [style]="'--value:' + progress">
+            <i class="icon-close"
+               (click)="decline()"></i>
+        </div>
+    </div>
+    <div class="effort-popup-notice d-flex justify-content-start align-items-center">
+        <i class="icon-warning"></i>
+        <span>{{message}}</span>
+    </div>
+    <div class="effort-popup-details d-flex justify-content-between align-items-center">
+        <div class="effort-test-case">
+            <span class="effort-test-case-id">{{testId}}</span>
+            <span>{{testShortDescription}}</span>
+        </div>
+        <div class="effort-time">
+            {{testEffort.startTime}} -{{testEffort.endTime}}
+        </div>
+    </div>
+    <form [formGroup]="effortForm">
+        <div class="effort-popup-fields d-flex align-items-end">
+            <div class="form-group-pts-qa flex-grow-1"
+                 (click)="toggleEffortDropdown()"
+                 [ngClass]="{ 'is-invalid': isInvalid('effort') }">
+                <div class="label">Effort (h) *</div>
+                <input type="text"
+                       class="form-control-pts-qa"
+                       id="effort"
+                       formControlName="effort"
+                       (focus)="fieldFocus($event)"
+                       (blur)="fieldBlur($event)"
+                       (keydown)="$event.stopPropagation()"
+                       appEffortInputValidator>
+                <div class="conbobox-conatainer"
+                     *ngIf="showEffortDropdown">
+                    <div *ngFor="let effortItem of effortList"
+                         (click)="selectEffort(effortItem.value)"
+                         class="conbobox-item cursor-pointer">{{ effortItem.key }}</div>
+                </div>
+                <label for="effort"
+                       class="dropdown-label">
+                    <i class="icon-arrow-down align-middle"
+                       (click)="toggleEffortDropdown()"></i>
+                </label>
+            </div>
+            <button class="btn-save-effort"
+                    [disabled]="effortForm.invalid"
+                    (click)="accept()">SAVE</button>
+        </div>
+            <div *ngIf="isInvalid('effort')"
+                class="error-message">
+                Please select a valid effort value.
+            </div>
+        
+    </form>
+</div>

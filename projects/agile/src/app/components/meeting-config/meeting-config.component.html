@@ -1,0 +1,492 @@
+<div class="form-row">
+    <div class="col-12">
+      <div class="collapsed-area-container">
+        <div class="ca-asssigned-history">
+          <accordion>
+            <accordion-group>
+              <div accordion-heading>
+                <div class="ca-asssigned-actions">
+                  <!-- Should collapse the meeting accordion and toggle the form -->
+                  <div class="add-meeting">+ Meeting</div>
+                  <i class="fa fa-angle-up"></i>
+                </div>
+                <div class="ugi-sprint-points">
+                  <label><i class="icon-calendar"></i> Meetings</label>
+                </div>
+              </div>
+
+              <!-- Start Form -->
+              <div class="panel-container">
+                <!-- Form should be displayed only when clicking on add meeting button -->
+                <ng-container>
+                  <div class="d-flex tasks-line task-container">
+                    <div class="col-subject">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">S</div>
+                        <input type="text" class="form-control" placeholder="Meeting subject" [(ngModel)]="meetingConfig.meetName" />
+                      </div>
+                    </div>
+
+                    <div class="col-location">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <i class="icon-microsoft-teams"></i>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Meeting URL / Location" [(ngModel)]="meetingConfig.location"/>
+                      </div>
+                    </div>
+
+                    <div class="col-actions">
+                      <div class="action-container">
+                          <div class="aply-chnages">
+                              <i class="fa fa-check" (click)="saveMeetingConfig()"></i>
+                          </div>
+                          <div class="deny-chnages">
+                              <i class="fa fa-times"></i>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex tasks-line task-container">
+                    <div class="col-type">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">T</div>
+                        <div class="styled-select mr-0 w-100">
+                          <select class="form-control"[(ngModel)]="selectedMeetingType" name="meetType">
+                            <option value="" hidden >Meeting type</option>
+                            <option value="DAILY_SCRUM">Daily scrum</option>
+                            <option value="REVIEW">Review</option>
+                            <option value="PLANNING">Planning</option>
+                            <option value="RETROSPECTIVE">Retrospective</option>
+                            <option value="REFINEMENT">Refinement</option>
+                            <option value="GROOMING">Grooming</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-date">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0" (clickOutside)="onHideTimePocker()">
+                        <div class="input-group-addon">
+                          <i class="icon-clock"></i>
+                        </div>
+                        <div class="form-control cursor-pointer" (click)="onShowTimePocker()">
+                          <ng-container *ngIf="meetingConfig.appMeetStartTime">{{ meetingConfig.appMeetStartTime | date : "HH:mm" }}</ng-container>
+                          <span class="placeholder" *ngIf="!meetingConfig.appMeetStartTime">Start time</span>
+                        </div>
+                        <div class="timepicker-container"  *ngIf="showTimePicker">
+                          <timepicker [showMeridian]="false" [(ngModel)]="meetingConfig.appMeetStartTime"></timepicker>
+                          <button class="time-picker-button" (click)="onSubmitStartTime()">
+                            OK
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-date mr-0">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <i class="icon-old-timer"></i>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Duration"
+                          [(ngModel)]="meetingConfig.meetDuration" [typeahead]="durationOptions" [typeaheadMinLength]="0" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="d-flex tasks-line task-container">
+                    <div class="col-recurrence">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <i class="icon-recurrence"></i>
+                        </div>
+                        <div class="styled-select mr-0 w-100">
+                            <select class="form-control" [(ngModel)]="selectedMeetingRecurrenceType" name="recurrenceType">
+                              <option value="" hidden>Recurrence</option>
+                              <option value="SINGLE">Single</option>
+                              <option value="DAILY">Daily</option>
+                              <option value="WEEKLY">Weekly</option>
+                              <option value="MONTHLY">Monthly</option>
+                              <option value="YEARLY">Yearly</option>
+                           </select>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- If recurrence is single -->
+                    <ng-container *ngIf="false">
+                      <div class="col-date mr-0">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <i class="icon-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Date" bsDatepicker [bsConfig]="{
+                              dateInputFormat: 'YYYY-MM-DD',
+                              customTodayClass: 'custom-today-class'
+                            }" />
+                        </div>
+                      </div>
+                    </ng-container>
+
+                    <!-- If recurrence is daily or weekly -->
+                    <ng-container>
+                      <div class="col-occurence">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            Occures every
+                          </div>
+                          <input type="text" class="form-control" placeholder="1" value="1" />
+                          <div class="form-control">
+                            <span>days</span>
+                            <span *ngIf="false">weeks</span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-date">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <i class="icon-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control" placeholder="From date" bsDatepicker
+                            [bsConfig]="{
+                              dateInputFormat: 'YYYY-MM-DD',
+                              customTodayClass: 'custom-today-class'
+                            }" />
+                        </div>
+                      </div>
+                      <div class="col-date mr-0">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <i class="icon-calendar"></i>
+                          </div>
+                          <input type="text" class="form-control" placeholder="To date" bsDatepicker [bsConfig]="{
+                              dateInputFormat: 'YYYY-MM-DD',
+                              customTodayClass: 'custom-today-class'
+                            }" />
+                        </div>
+                      </div>
+                    </ng-container>
+                  </div>
+
+                  <!-- Week days: Display if recurrence is weekly -->
+                  <div class="d-flex tasks-line task-container" *ngIf="false">
+                    <div class="col-week-day">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <input type="checkbox" />
+                        </div>
+                        <div class="mr-0 w-100">
+                          <div class="form-control">Mon</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-week-day">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <input type="checkbox" />
+                        </div>
+                        <div class="mr-0 w-100">
+                          <div class="form-control">Tue</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-week-day">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <input type="checkbox" />
+                        </div>
+                        <div class="mr-0 w-100">
+                          <div class="form-control">Wed</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-week-day">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <input type="checkbox" />
+                        </div>
+                        <div class="mr-0 w-100">
+                          <div class="form-control">Thu</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-week-day">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <input type="checkbox" />
+                        </div>
+                        <div class="mr-0 w-100">
+                          <div class="form-control">Fri</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-week-day">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <input type="checkbox" />
+                        </div>
+                        <div class="mr-0 w-100">
+                          <div class="form-control">Sat</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-week-day mr-0">
+                      <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                        <div class="input-group-addon">
+                          <input type="checkbox" />
+                        </div>
+                        <div class="mr-0 w-100">
+                          <div class="form-control">Sun</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+
+                <!-- Meetings loop -->
+                <div class="assigned-meeting" *ngIf="false">
+                  <div class="assigned-meeting-header">
+                    <!-- Display when meeting is expanded -->
+                    <i class="fa fa-angle-up"></i>
+                    <!-- Display when meeting is collapsed -->
+                    <i class="fa fa-angle-down" *ngIf="false"></i>
+                    MEET10585115 - Daily standup meeting
+                    <div class="assigned-meeting-type">DS</div>
+                  </div>
+
+                  <!-- Meeting form -->
+                  <div *ngIf="false" class="assigned-meeting-content">
+                    <div class="d-flex tasks-line task-container">
+                      <div class="col-subject">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">S</div>
+                          <input type="text" class="form-control" placeholder="Meeting subject" />
+                        </div>
+                      </div>
+
+                      <div class="col-location">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <i class="icon-microsoft-teams"></i>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Meeting URL / Location" />
+                        </div>
+                      </div>
+
+                      <div class="col-actions">
+                        <div class="action-container">
+                            <div class="aply-chnages">
+                                <i class="fa fa-check"></i>
+                            </div>
+                            <div class="deny-chnages">
+                                <i class="fa fa-times"></i>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex tasks-line task-container">
+                      <div class="col-type">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">T</div>
+                          <div class="styled-select mr-0 w-100">
+                            <select class="form-control">
+                              <option hidden>Meeting type</option>
+                              <option>Daily standup</option>
+                              <option>Sprint review</option>
+                              <option>Sprint planning</option>
+                              <option>Sprint retrospective</option>
+                              <option>Sprint refinement</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+
+                      <div class="col-date">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <i class="icon-clock"></i>
+                          </div>
+                          <div class="form-control cursor-pointer" (click)="onShowTimePocker()">
+                            <ng-container *ngIf="meetingConfig.appMeetStartTime">{{ meetingConfig.appMeetStartTime | date : "HH:mm" }}</ng-container>
+                            <span class="placeholder" *ngIf="!meetingConfig.appMeetStartTime">Start time</span>
+                          </div>
+                          <div class="timepicker-container" [ngClass]="{'timepicker-warning': !meetingConfig.appMeetStartTime && isStartPickerOkClicked}" *ngIf="showTimePicker">
+                            <timepicker [showMeridian]="false" [(ngModel)]="meetingConfig.appMeetStartTime"></timepicker>
+                            <button class="time-picker-button" (click)="onSubmitDsStartTime()">
+                              OK
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col-date mr-0">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <i class="icon-old-timer"></i>
+                          </div>
+                          <input type="text" class="form-control" placeholder="Duration"
+                            [(ngModel)]="durationField" [typeahead]="durationOptions" [typeaheadMinLength]="0" />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex tasks-line task-container">
+                      <div class="col-recurrence">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <i class="icon-recurrence"></i>
+                          </div>
+                          <div class="styled-select mr-0 w-100">
+                            <select class="form-control">
+                              <option hidden>Recurrence</option>
+                              <option>Single</option>
+                              <option>Daily</option>
+                              <option>Weekly</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!-- If recurrence is single -->
+                      <ng-container *ngIf="false">
+                        <div class="col-date mr-0">
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">
+                              <i class="icon-calendar"></i>
+                            </div>
+                            <input type="text" class="form-control" placeholder="Date" bsDatepicker [bsConfig]="{
+                                dateInputFormat: 'YYYY-MM-DD',
+                                customTodayClass: 'custom-today-class'
+                              }" />
+                          </div>
+                        </div>
+                      </ng-container>
+
+                      <!-- If recurrence is daily or weekly -->
+                      <ng-container>
+                        <div class="col-occurence">
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">
+                              Occures every
+                            </div>
+                            <input type="text" class="form-control" placeholder="1" value="1" />
+                            <div class="form-control">
+                              <span>days</span>
+                              <span *ngIf="false">weeks</span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-date">
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">
+                              <i class="icon-calendar"></i>
+                            </div>
+                            <input [(ngModel)]="meetingConfig.startDate" type="text" class="form-control" placeholder="From date" bsDatepicker
+                              [bsConfig]="{
+                                dateInputFormat: 'YYYY-MM-DD',
+                                customTodayClass: 'custom-today-class'
+                              }" />
+                          </div>
+                        </div>
+                        <div class="col-date mr-0">
+                          <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                            <div class="input-group-addon">
+                              <i class="icon-calendar"></i>
+                            </div>
+                            <input [(ngModel)]="meetingConfig.endDate" type="text" class="form-control" placeholder="To date" bsDatepicker
+                              [bsConfig]="{
+                                dateInputFormat: 'YYYY-MM-DD',
+                                customTodayClass: 'custom-today-class'
+                              }" />
+                          </div>
+                        </div>
+                      </ng-container>
+                    </div>
+
+                    <!-- Week days: Display if recurrence is weekly -->
+                    <div class="d-flex tasks-line task-container">
+                      <div class="col-week-day">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <input type="checkbox" />
+                          </div>
+                          <div class="mr-0 w-100">
+                            <div class="form-control">Mon</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-week-day">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <input type="checkbox" />
+                          </div>
+                          <div class="mr-0 w-100">
+                            <div class="form-control">Tue</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-week-day">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <input type="checkbox" />
+                          </div>
+                          <div class="mr-0 w-100">
+                            <div class="form-control">Wed</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-week-day">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <input type="checkbox" />
+                          </div>
+                          <div class="mr-0 w-100">
+                            <div class="form-control">Thu</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-week-day">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <input type="checkbox" />
+                          </div>
+                          <div class="mr-0 w-100">
+                            <div class="form-control">Fri</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-week-day">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <input type="checkbox" />
+                          </div>
+                          <div class="mr-0 w-100">
+                            <div class="form-control">Sat</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-week-day mr-0">
+                        <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                          <div class="input-group-addon">
+                            <input type="checkbox" />
+                          </div>
+                          <div class="mr-0 w-100">
+                            <div class="form-control">Sun</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- End Meeting form -->
+                </div>
+              </div>
+              <!-- End Form -->
+            </accordion-group>
+          </accordion>
+        </div>
+      </div>
+    </div>
+  </div>

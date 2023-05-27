@@ -1,0 +1,19 @@
+<nav class="navbar-styles">
+    <div class="basic-navbar-display-setting">
+        <div class="logo-navigation d-flex">
+            <div class="pts-logo"><img src="/assets/images/shared/thinktank-logo.svg" alt="User name"></div>
+            <div class="navigation">
+                <ul>
+                    <li><a href="#" class="active d-flex align-items-center">Home</a></li>
+                    <li><a [href]="env.agileUrl" target="PTS" class="d-flex align-items-center"><span>Agile</span><mat-icon>open_in_new</mat-icon></a></li>
+                    <li><a [href]="env.qaUrl" target="PTSQA" class="d-flex align-items-center"><span>Quality</span><mat-icon>open_in_new</mat-icon></a></li>
+                </ul>
+            </div>
+        </div>
+        <a class="user-avatar" href="#">
+            <div>
+                <img  [src]="(currentUser?.photo)?'https://pts.thinktank.de'+currentUser.photo:'/assets/images/shared/avatar-placeholder.png'" alt="{{currentUser?.code}}">
+            </div> 
+        </a>
+    </div>
+</nav>

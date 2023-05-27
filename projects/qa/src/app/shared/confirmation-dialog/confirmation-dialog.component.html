@@ -1,0 +1,17 @@
+<div class="form-modal-header">
+    <h4 class="form-modal-title">{{ title }}</h4>
+</div>
+<div class="form-modal-body">
+    <div class="row modal-row">
+        <div class="modal-col" *ngIf="!options?.enableMessageHtml">
+            {{ message }}
+        </div>
+        <div class="modal-col" *ngIf="options?.enableMessageHtml" [innerHTML]="message"></div>
+    </div>
+    <div class="row modal-row">
+        <div class="modal-col buttons-col">
+            <button class="modal-btn modal-btn-secondary" type="button" (click)="decline()">{{ btnCancelText }}</button>
+            <button class="modal-btn modal-btn-primary" type="button" (click)="accept()">{{ btnOkText }}</button>
+        </div>
+    </div>
+</div>

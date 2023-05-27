@@ -1,0 +1,65 @@
+<div class="execute-test-run-user-story-container d-flex flex-column">
+  <div class="d-flex">
+    <div class="flex-grow-1 user-story-number">
+      U: {{userStory?.id}}
+    </div>
+    <div class="right-action-buttons">
+      <a class="btn btn-light"
+         title="Chat"
+         href="{{chatUrl}}"
+         target="_blank"
+         [ngClass]="{'disabled': !isProd}">
+        <i class="icon-person-chat"></i>
+      </a>
+    </div>
+  </div>
+
+  <div class="flex-grow-1">
+    <perfect-scrollbar style="height: 100%">
+      <span class="user-story-title"
+            (click)="toggleUserStoryDetails()">
+        {{userStory?.product}}
+        <i [ngClass]="{'icon-arrow-up' : showDetails, 'icon-arrow-down' : !showDetails}"></i>
+      </span>
+      <div class="user-story-details"
+           *ngIf="showDetails">
+        <span class="user-story-description">
+          WHO/WHAT/WHY<br>
+          {{userStory?.topicName}}
+          <!--          As a team member with administration rights I want to be able to see and also-->
+          <!--          edit administrational related topics-->
+        </span>
+
+        <span class="user-story-title">Acceptance Criteria :</span>
+        <span class="user-story-description">
+          <!--        {{userStory?.acceptanceCriteria}}  -->
+          <!--          - administration tab is visible forever with over all roles (Administrator)-->
+        </span>
+      </div>
+    </perfect-scrollbar>
+  </div>
+
+  <div class="attachment-container d-flex flex-column mt-2"
+       (click)="toggleAttachments()">
+    <div class="attachment-header d-flex">
+      <div class="flex-grow-1">
+        <i class="icon-paper-clip align-middle"></i>
+        Attachments
+      </div>
+      <div class="right-action-buttons">
+        <button title="Add comment"
+                class="rounded-icon">
+          <i class="icon-upload"></i>
+        </button>
+        <button title="Chat"
+                class="btn btn-light">
+          <i class="icon-arrow-down align-middle"></i>
+        </button>
+      </div>
+    </div>
+    <div class="attachments-list"
+         *ngIf="showAttachments">
+      <span class="attachment-name">unit_test_10280275.docx</span>
+    </div>
+  </div>
+</div>

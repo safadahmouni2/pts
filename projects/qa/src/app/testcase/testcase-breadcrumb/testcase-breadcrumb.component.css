@@ -1,0 +1,115 @@
+/* bread crumb */
+
+.library-breadcrumb-item {
+    display: inline-block;
+    font-size: 14px;
+    color: #444444;
+    font-weight: 500;
+}
+
+.library-breadcrumb-item i {
+    font-size: 19px;
+    margin-right: 8px;
+}
+
+.library-breadcrumb-item:not(:last-child):after {
+    content: "\e916";
+    display: inline-block;
+    font-family: 'pts-qa' !important;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: middle;
+    margin: 0 8px;
+    font-size: 13px;
+}
+
+/* Input */
+.create-test-run-form-group {
+    height: 42px;
+    position: relative;
+}
+
+.create-test-run-form-group .label {
+    color: #b2b2b2;
+    font-size: 17px;
+    height: 30px;
+    line-height: 30px;
+    position: absolute;
+    top: 10px;
+    left: 4px;
+    z-index: 2;
+    pointer-events: none;
+    transition-duration: .2s;
+}
+
+.create-test-run-form-group.focused .label {
+    font-size: 12px;
+    height: 20px;
+    line-height: 20px;
+    top: 0px;
+}
+
+.create-test-run-form-control {
+    border: none;
+    border-bottom: 2px solid #b2b2b2;
+    color: #444444;
+    display: block;
+    width: 100%;
+    height: 42px;
+    padding: 12px 58px 0 8px;
+    outline: none;
+    background: none;
+}
+
+.search-label {
+    display: block;
+    position: absolute;
+    right: 5px;
+    top: 4px;
+    font-size: 23px;
+    color: #b2b2b2;
+    cursor: pointer;
+}
+
+.search-label button{
+    background: transparent;
+    color: #b2b2b2;
+    padding: 0;
+    border: unset;
+    outline: unset;
+    box-shadow: unset;
+}
+
+.btn.btn-secondary {
+    color: #fff;
+    padding: 0 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+    border: none;
+    font-weight: 700;
+    height: 19px;
+}
+
+.btn.btn-secondary i,
+.btn.btn-success i {
+    margin-right: 4px;
+}
+
+.btn.btn-secondary,
+.btn.btn-secondary:hover,
+.btn.btn-secondary:active,
+.btn.btn-secondary:focus {
+    background: #a0a1a5!important;
+}
+
+.action-container {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+}

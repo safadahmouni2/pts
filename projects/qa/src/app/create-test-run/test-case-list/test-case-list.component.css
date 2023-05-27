@@ -1,0 +1,121 @@
+.test-case-list-table-header {
+    background: #efebea;
+    width: 100%;
+}
+
+.test-case-list-table-content tr:nth-child(even) {
+    background: #fbf9fa;
+}
+
+.test-case-list-table-content tr:hover {
+    background-color: #e9ecef;
+    cursor: pointer;
+}
+
+.test-case-list-table-header th,
+.test-case-list-table-content td {
+    padding: 4px 10px;
+    color: #434343;
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.reorder-column {
+    width: 34px;
+}
+
+.id-column {
+    width: 105px;
+}
+
+.path-column {
+    width: 200px;
+    word-break: break-word;
+}
+
+.user-story-column {
+    width: 115px;
+}
+
+.last-update-column {
+    width: 110px;
+}
+
+.effort-column {
+    width: 120px;
+}
+
+.select-column {
+    width: 63px;
+}
+
+.test-case-list-table-content td.id-column {
+    color: #516ea6;
+}
+
+.test-case-list-table-content td.effort-column {
+    text-align: center;
+}
+
+.test-case-list-table-content td.select-column {
+    width: 46px;
+}
+
+.test-case-list-table-container {
+    overflow-y: scroll;
+    width: 100%;
+    height: calc(100vh - 340px);
+}
+
+.test-case-list-table-content {
+    width: 100%;
+    font-weight: 100;
+    font-size: 18px;
+}
+
+.test-case-list-checkbox {
+    position: relative;
+    height: 26px;
+    width: 26px;
+    vertical-align: middle;
+    display: inline-block;
+    cursor: pointer;
+    border: 3px solid #d3d3d3;
+    border-radius: 3px;
+    background: #fbf9fa;
+    margin-bottom: 0;
+}
+
+.test-case-list-checkbox .checkbox {
+    cursor: pointer;
+    opacity: 0;
+}
+
+.checkbox-checked {
+    color: #4bbd05;
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    font-size: 16px;
+    pointer-events: none;
+    display: none;
+}
+
+.indetermined {
+    background: #4bbd05;
+    position: absolute;
+    top: 8px;
+    left: 2px;
+    pointer-events: none;
+    height: 3px;
+    width: 16px;
+    border-radius: 3px;
+}
+
+.test-case-list-checkbox .checkbox:checked + .checkbox-checked {
+    display: block;
+}
+
+.icon-move {
+    cursor: move;
+}

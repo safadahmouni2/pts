@@ -1,0 +1,4 @@
+<div class="usca-main-coment">
+    <div [ngClass]="titleClass" (click)="toggleExpanded()"><i class="fa" [ngClass]="{' fa-angle-up': expanded, ' fa-angle-down': !expanded}"></i> {{comment.authorCode}} - {{comment.creationDate}}</div>
+    <div [ngClass]="bodyClass"  [hidden]="!expanded">{{comment.text}}</div>
+</div>

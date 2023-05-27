@@ -1,0 +1,123 @@
+<header>
+  <div class="container-fluid container-padding">
+    <div class="slim-header-left">
+      <img src="https://pts.thinktank.de/scrum/assets/img/tt-slogan.png" class="slim-logo-img">
+      <h2 class="slim-logo">
+        <a href="#">HR.
+          <span class="tt-blue">Boarding</span>
+        </a>
+      </h2>
+    </div>
+    <div class="slim-header-right">
+
+      <div class="dropdown dropdown-c">
+        <a href="#" class="logged-user" data-toggle="dropdown">
+          <img [src]="'https://pts.thinktank.de' + ((!currentUSER || !currentUSER.photo)?'/images/photos/no_photo.jpg':currentUSER?.photo)">
+          <span>{{currentUSER?.code}}</span>
+          <i class="fa fa-angle-down"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="container-fluid container-padding">
+  <div class="row row-sm mg-t-20">
+    <div class="col-lg-12">
+      <div class="row row-sm">
+        <div class="col-lg-12 mg-t-20 mg-lg-t-0">
+          <div class="card card-table">
+            <div class="card-header">
+              <h6 class="slim-card-title float-left medium-blue-color"> {{processDetail.USER }}</h6>
+              <div class="bloc-detail">
+                <h6 class="float-left mrge-60 ">{{processDetail.department}}</h6>
+                <div class="progress progress-color  float-left" style="margin-left: 65px;width: 100px;margin-top:  -8px;">
+                       <div class="progress-bar" role="progressbar" [attr.aria-valuenow]="processDetail.progress"
+                           aria-valuemin="0" aria-valuemax="100"  *ngIf="processDetail.progress	&gt; 22" [style.width]="processDetail.progress+'%'" >
+                        {{processDetail.progress}}%
+                      </div>  
+                      <div class="progress-bar width-prg-under-22" role="progressbar" [attr.aria-valuenow]="processDetail.progress"
+                           aria-valuemin="0" aria-valuemax="100" *ngIf="processDetail.progress &lt; 22" >
+                        {{processDetail.progress}}%
+                      </div>  						
+                </div>
+                <div  class=" float-left mrge-60">
+                  <span [ngClass]="{'square-8':true,'bg-success':processDetail.STATUS=='GREEN','bg-warning':processDetail.STATUS=='ORANGE','bg-danger':processDetail.STATUS=='RED','mg-r-5 rounded-circle':true}"></span>
+                </div>
+                <div class="float-left mrge-60">
+                  <h6>{{processDetail.dead_line | date:'dd MMMM yyyy'}}</h6>
+                </div>
+              </div>
+
+              <h6 class="slim-card-title float-right">{{processDetail.pr_name }} tasks</h6>
+            </div>
+            <div class="table-responsive">
+              <div class="section-wrapper">
+                <div class="accordion">
+                  <div class="card" *ngFor="let tasksCategorie of tasksCategorie">
+                    <div class="card-header" (click)="getTasksList(tasksCategorie.id)">
+                      <span [ngClass]="{'collapsed':!processListDetail || !processListDetail[tasksCategorie.id] || !processListDetail[tasksCategorie.id].expanded,'tx-gray-800 transition':true}">
+                        {{tasksCategorie.name}}
+                        <span class="tasks-count">Completed {{tasksCategorie.completed_tasks}}/{{tasksCategorie.total_tasks}}</span>
+                      </span>
+                    </div>
+                    <div [ngClass]="{'collapse':true,'show':processListDetail && processListDetail[tasksCategorie.id].expanded}" *ngIf="processListDetail && processListDetail[tasksCategorie.id]">
+                      <div class="card-body">
+                        <div class="table-responsive">
+                          <table class="table mg-b-0 tx-13">
+                            <tbody>
+                              <div class="table-responsive">
+                                <ul class="task-feature d-flex flex-column">
+
+                                  <aside [ngClass]="{'task-opened':task.expanded,'clearfix':true}" *ngFor="let task of processListDetail[tasksCategorie.id].data">
+                                    <div class="panel-header d-flex flex-row justify-content-center align-items-center">
+
+                                      <div (click)="openLinkInNewTab(task.pts_url)">{{task.type.substring(0,1)}}{{task.ticket_id}}
+                                        <br>
+                                        <span class="pts-description">{{task.category}}</span>
+                                      </div>
+                                      <div class="title-project" (click)="toggleTaskExpanded(task)">{{task.short_description}}</div>
+                                      <div class="ml-auto">
+                                        <img *ngIf="task.urgencyIcon" [src]="'https://pts.thinktank.de'+task.urgencyIcon">
+                                        <img *ngIf="!task.urgencyIcon" src="assets/img/default_prio_icn.png">
+
+                                        <img *ngIf="task.responsible_photo" [src]="'https://pts.thinktank.de'+task.responsible_photo" class="img-resp">
+                                        <img *ngIf="!task.responsible_photo" src="assets/img/default_prio_icn.png" class="img-resp">
+                                      </div>
+                                      <div class="bloc-icon">
+                                        <a href="{{task.chat_url}}" target="PTS">
+                                          <img src="https://pts.thinktank.de/images/chat/pts_chat_empty.png"> </a>
+
+                                        <a target="PTS" href={{task.mailto_url}}>
+                                          <img src="assets/img/mail.png" class="pts-email-icon"> </a>
+                                      </div>
+                                      <div>{{task.dead_line | date:'dd MMMM yyyy'}}
+                                        <br> {{task.status}}</div>
+                                      <div class="last-child">
+                                      </div>
+                                    </div>
+                                    <div class="panel-body" *ngIf="task.expanded">
+                                      <span class="tx-11 d-block pos-left">
+                                        <b>Description:</b> {{task.long_description}}</span>
+                                      <span class="tx-11 d-block pos-left">
+                                        <b>Solution:</b> {{task.solution}}</span>
+                                    </div>
+                                  </aside>
+                                </ul>
+                              </div>
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- accordion -->
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

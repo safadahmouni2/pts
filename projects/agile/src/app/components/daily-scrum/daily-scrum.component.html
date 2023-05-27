@@ -1,0 +1,10 @@
+﻿<app-dashboard-header *ngIf="sprintId" [(userStatusUpdateLoading)]="userStatusUpdateLoadingChange"  [sprintId]="sprintId"></app-dashboard-header>
+
+<div class="container">
+
+  <app-dragndrop *ngIf="sprintId"  [sprintId]="sprintId" [currentUser]="currentUser"></app-dragndrop>
+
+
+  <app-teamlist *ngIf="sprintId" [(userStatusUpdateLoading)]="userStatusUpdateLoadingChange" [sprintId]="sprintId" [currentUser]="currentUser" ></app-teamlist>
+
+</div>

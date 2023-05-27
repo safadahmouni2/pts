@@ -1,0 +1,269 @@
+<div class="container-fluid">
+  <div class="row">
+    <app-menu class="col-xl-2 col-lg-2 col-md-2 col-sm-3 p-0 expanded-menu menu-mobile-on"
+      [ngClass]="{ 'collapsed-menu': this.collapsed }">
+    </app-menu>
+
+    <div class="col w-resp-content p-0">
+      <app-search-bar (freeSearch)='onSearch($event)'></app-search-bar>
+
+      <div class="container-fluid scroll-bar-content">
+        <div class="main-content">
+          <div class="main-block col-12 pr-0 pl-0">
+            <div class="header">
+              <h1 class="f-s-18">Manage propositions</h1>
+            </div>
+            <!-- Start filter bar -->
+            <div class="col-12 d-flex justify-content-between filter-container">
+              <input type="text" placeholder="Type" tooltip="Filter by smart objective types" [(ngModel)]="searchtype"
+                list="smartobject" />
+              <datalist id="smartobject">
+                <select>
+                  <option *ngFor="let proposition of filterName">{{
+                    proposition.name
+                  }}</option>
+                </select>
+              </datalist>
+              <input type="text" placeholder="Responsable" tooltip="Filter by responsable"
+                [(ngModel)]="searchresponsable" list="propositions2" />
+
+              <datalist id="propositions2">
+                <select>
+                  <option *ngFor="let user of allUser"
+                    class="d-flex justify-content-between align-items-center  notif-content text-center">
+                    <div class="col-3 p-0">
+                      {{
+                        user.code
+                      }}
+                    </div>
+                  </option>
+                </select>
+              </datalist>
+              <input type="text" placeholder="Urgency" tooltip="Filter by urgency" [(ngModel)]="searchurgency"
+                list="propositions3" />
+              <datalist id="propositions3">
+                <select>
+                  <option *ngFor="let proposition of filterUrgency">{{
+                    proposition.urgency
+                  }}</option>
+                </select>
+              </datalist>
+              <input type="text" placeholder="Decision" tooltip="Filter by decision" [(ngModel)]="searchdecision"
+                list="propositions4" />
+              <datalist id="propositions4">
+                <select>
+                  <option *ngFor="let proposition of filterDecision">{{
+                    proposition.status
+                  }}</option>
+                </select>
+              </datalist>
+            </div>
+            <!-- End filter bar -->
+            <table class="table table-hover proposition-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th width="20%">Type</th>
+                  <th width="20%">Subject</th>
+                  <th width="4%">Action</th>
+                  <th width="20%" class="text-center">Date</th>
+                  <th class="text-center">Responsable</th>
+                  <th class="text-center">Urgency</th>
+                  <th class="text-center">Decision</th>
+                  <th width="40%">Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="cursor-pointer" *ngFor="
+                let proposition of smartobject
+                | myfilter: [searchtype , 'type']
+                | myfilter: [searchresponsable , 'responsable' ]
+                | myfilter: [searchurgency , 'urgency']
+                | myfilter: [searchdecision , 'decision']
+                | freeSearch: freeSearch;
+                let i = index
+              ">
+                  <ng-container *ngIf="proposition.type != 'pt' && proposition.type != 'tech'">
+                    <th>{{ i + 1 }}</th>
+                    <td>{{ proposition.name}}</td>
+                    <!-- start subject -->
+                    <!-- trainee -->
+                    <ng-container *ngIf="proposition.type == 'trainee'">
+                      <td> Supervision Trainee: {{ proposition.subject }}</td>
+                    </ng-container>
+                    <!-- emp -->
+                    <ng-container *ngIf="proposition.type == 'emp'">
+                      <td> Supervision Employee: {{ proposition.subject }}</td>
+                    </ng-container>
+                    <!-- rec -->
+                    <ng-container *ngIf="proposition.type == 'rec'">
+                      <td> Recommandation Employee: {{ proposition.subject }}</td>
+                    </ng-container>
+                    <ng-container
+                      *ngIf="proposition.type != 'trainee' && proposition.type != 'emp' && proposition.type != 'rec'">
+                      <td>{{ proposition.subject }}</td>
+                    </ng-container>
+                    <td class="text-center" [ngSwitch]="proposition.type">
+                      <div *ngSwitchCase="'Proposition of subject PFE'" class="position-relative" dropdown
+                        placement="bottom left" dropdownToggle>
+                        <i class="fas fa-th-large"></i>
+                        <ul id="notifications" *dropdownMenu class="dropdown-menu dropdown-menu-left" role="menu"
+                          aria-labelledby="button-custom-html">
+                          <li role="menuitem">
+                            <a class="dropdown-item" (click)="openSO('Supervision of PFE')">Supervision of PFE</a>
+                          </li>
+                          <li role="menuitem">
+                            <a class="dropdown-item" (click)="openSO('Proposition of trainee')">Proposition of
+                              trainee</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div *ngSwitchCase="'Proposition of training'" class="position-relative" dropdown
+                        placement="bottom left" dropdownToggle>
+                        <i class="fas fa-th-large"></i>
+                        <ul id="notifications" *dropdownMenu class="dropdown-menu dropdown-menu-left" role="menu"
+                          aria-labelledby="button-custom-html">
+                          <li role="menuitem">
+                            <a class="dropdown-item" (click)="openSO('Training')">Training</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <div *ngSwitchCase="'Proposition of trainee'" class="position-relative" dropdown
+                        placement="bottom left" dropdownToggle>
+                        <i class="fas fa-th-large"></i>
+                        <ul id="notifications" *dropdownMenu class="dropdown-menu dropdown-menu-left" role="menu"
+                          aria-labelledby="button-custom-html">
+                          <li role="menuitem">
+                            <a class="dropdown-item" (click)="openSO('Supervision of student trainee')">Supervision of
+                              student trainee</a>
+                          </li>
+                        </ul>
+                      </div>
+                      <!-- end subject -->
+                      <div *ngSwitchDefault class="position-relative" dropdown placement="bottom left" dropdownToggle>
+                        <i class="fas fa-th-large"></i>
+                      </div>
+                    </td>
+                    <ng-container *ngIf="proposition.type == 'rec'">
+                      <td class="text-center"> Availibility date: {{ proposition.date }}</td>
+                    </ng-container>
+                    <ng-container *ngIf="proposition.type != 'rec'">
+                      <td class="text-center">{{ proposition.date }}</td>
+                    </ng-container>
+
+                    <th class="text-center">
+                      <ng-container>
+                    <td> {{ proposition.creator }}</td>
+                  </ng-container>
+                  </th>
+                  <td class="text-center" [ngSwitch]="proposition.urgency">
+                    <div *ngSwitchCase="'Extremly urgent'">
+                      <img src="assets/images/extremly_urgent_icn.png" tooltip="Extremly urgent" />
+                    </div>
+                    <div *ngSwitchCase="'Meduim'">
+                      <img src="assets/images/medium_icn.png" tooltip="Meduim" />
+                    </div>
+                    <div *ngSwitchCase="'High'">
+                      <img src="assets/images/high_icn.png" tooltip="High" />
+                    </div>
+                    <div *ngSwitchCase="'low'">
+                      <img src="assets/images/low_icn.png" tooltip="Low" />
+                    </div>
+                    <div *ngSwitchCase="'Urgent'">
+                      <img src="assets/images/extremly_urgent_icn.png" tooltip="Urgent" />
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <div class="position-relative" dropdown placement="bottom left" dropdownToggle>
+                      <div [ngClass]="{
+                            'accepted-prop': proposition.status == 'Accepted',
+                            'rejected-prop': proposition.status == 'Rejected',
+                            'onhold-prop': proposition.status == 'Onhold'
+                          }">
+                        <div *ngIf="proposition.status == 'Accepted'">
+                          Accepted
+                        </div>
+                        <div *ngIf="proposition.status == 'Rejected'">
+                          Rejected
+                        </div>
+                        <div *ngIf="proposition.status == 'Onhold'">On hold</div>
+                        <div *ngIf="proposition.status == 'Onhold'">
+                          <ul id="notificationss" *dropdownMenu class="dropdown-menu dropdown-menu-left" role="menu"
+                            aria-labelledby="button-custom-html">
+                            <li role="menuitem">
+                              <a class="dropdown-item" (click)="open(proposition)"><i
+                                  class="fas fa-check"></i>Accept</a>
+                            </li>
+                            <li role="menuitem">
+                              <a class="dropdown-item" (click)="open2()"><i class="fas fa-times"></i>Reject</a>
+                            </li>
+                          </ul>
+                          <!-- acceptProposition -->
+                          <ng-template #acceptProposition let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Assign points</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="d()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col-3 padding-top-15px">Points:</div>
+                                <div class="col-9">
+                                  <input type="text" [(ngModel)]="so.points" placeholder="{{ SOpoints }}" disabled />
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-lg btn-outline-success"
+                                (click)="updateSmartObject(proposition , 'Accepted')">
+                                OK
+                              </button>
+                            </div>
+
+                          </ng-template>
+                          <!-- rejectProposition -->
+                          <ng-template #rejectProposition let-c="close" let-d="dismiss">
+                            <div class="modal-header">
+                              <h4 class="modal-title">Reject proposition</h4>
+                              <button type="button" class="close" aria-label="Close" (click)="d()">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>
+                            <div class="modal-body">
+                              <h5>Are you sure to reject?</h5>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-lg btn-outline-success"
+                                (click)="updateSmartObject(proposition , 'Rejected')">
+                                Yes
+                              </button>
+                              <button type="button" class="btn btn-lg btn-outline-success" (click)="d()">
+                                No
+                              </button>
+                            </div>
+
+                          </ng-template>
+                        </div>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="position-relative" dropdown placement="bottom" dropdownToggle>{{proposition.description}}
+                    <ul id="dropdown-split" *dropdownMenu class="dropdown-menu" role="menu"
+                      aria-labelledby="button-split">
+                      <li role="menuitem"><a class="dropdown-item">Creator: {{proposition.creator}} </a></li>
+                      <li role="menuitem"><a class="dropdown-item">Created At: {{proposition.createdAt}}</a></li>
+                      <li role="menuitem" *ngIf="proposition.updator!=null"><a class="dropdown-item">Updated At:
+                          {{proposition.updatedAt}}</a></li>
+                    </ul>
+                  </td>
+                  </ng-container>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+{
+"userStoryList": [
+  {
+  "userStoryNr": "15264850",
+  "name": "Create test case",
+  "state": "IN_DEV",
+  "description": "As a tester, I need to create a test case",
+  "responsibleId": "14785236",
+  "sprintNr": "12457886"
+  },{
+  "userStoryNr": "15264851",
+  "name": "Create test case",
+  "state": "IN_TEST",
+  "description": "As a tester, I need to create a test case",
+  "responsibleId": "14785236",
+  "sprintNr": "12457886"
+  },{
+  "userStoryNr": "15264852",
+  "name": "Create test case",
+  "state": "IN_TEST",
+  "description": "As a tester, I need to create a test case",
+  "responsibleId": "14785236",
+  "sprintNr": "12457886"
+  },{
+  "userStoryNr": "15264853",
+  "name": "Create test case",
+  "state": "IN_DEV",
+  "description": "As a tester, I need to create a test case",
+  "responsibleId": "14785236",
+  "sprintNr": "12457889"
+  }
+]
+}

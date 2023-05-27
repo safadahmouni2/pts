@@ -1,0 +1,63 @@
+<div class="container-fluid">
+  <div class="row">
+    <app-menu
+      class="col-xl-2 col-lg-2 col-md-2 col-sm-3 p-0 expanded-menu menu-mobile-on"
+      [ngClass]="{ 'collapsed-menu': this.collapsed }"
+    >
+    </app-menu>
+
+    <div class="col w-resp-content p-0">
+      <app-search-bar (freeSearch)='onSearch($event)'></app-search-bar>
+
+      <div class="container-fluid scroll-bar-content">
+        <div class="main-content">
+          <div class="main-block">
+            <div class="row">
+              <div class="col-3">User Name:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+
+              <div class="col-3">Last Name:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+              <div class="col-3">Password:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+              <div class="col-3">Password Confirmation:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+              <div class="col-3">Skype ID:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+              <div class="col-3">Phone Number:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+              <div class="col-3">Street:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+              <div class="col-3">City:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+              <div class="col-3">PostCode:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+              <div class="col-3">Profession:</div>
+              <div class="col-9">
+                <input type="text" size="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="participants-container" style="position: relative;">
+    <h1>Participants</h1>
+    <div *ngIf="userStatusUpdateLoading" class="justify-content-center align-items-center d-flex"
+      style="z-index: 10;position: absolute; width: 100%;height: 100%; background: #0000005c;">
+      <img src="assets/img/loading.gif" style="width: 120px;">
+    </div>
+    <div class="parent-us">
+      <perfect-scrollbar class="container" >
+        <div class="person-container " *ngFor="let user of users let i = index;" [ngClass]="{ 'not-connected': (user.appParticipantStateId === 1017910 ||user.appParticipantStateId== null ) ,
+                        'connected': (user.appParticipantStateId === 1017909  || user.appParticipantStateId === 1017911)}">
+          <input *ngIf="user.appParticipantStateId === 1017911 || user.appParticipantStateId === 1017909" id="checkbox{{i}}" type="radio" name="participants"
+            [value]="user.appParticipantId" [ngModel]="speaker.id" [disabled]="!currentUser?.role.match('Scrum master')" (click)="onclick(user.appParticipantId)">
+          <input *ngIf="DsId && DsId !==0 && currentUser?.role.match('Scrum master') && (!user.appParticipantStateId || user.appParticipantStateId == null|| user.appParticipantStateId === 1017910)"
+            id="checkbox{{i}}" type="radio" name="participants" [value]="user.appParticipantId" (click)="joinUserToDailyScrum(user)">
+          <label for="checkbox{{i}}" class="ok-checkbox-icon">
+            <div class="waves"></div>
+            <div class="waves-1"></div>
+            <img class="img_circle" [src]="serverpath + getSprintMemberPhoto(user.userCode)">
+            <div class="person-role">
+              <span>{{user.userCode}}</span>
+            </div>
+          </label>
+        </div>
+      </perfect-scrollbar>
+    </div>
+  </div> 

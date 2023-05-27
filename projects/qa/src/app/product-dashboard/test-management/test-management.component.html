@@ -1,0 +1,28 @@
+<div class="test-header d-flex align-items-center">
+	<h2 class="d-inline-block flex-grow-1">Test Management</h2>
+	<div class="header-actions d-flex">
+		<div class="btn-group d-flex">
+			<button title="US View" (click)="changeView(true,false)" class="btn-group-btn" [class.active]="isUserStoryView && !isTestCaseToBeCreated">
+				<i class="icon-scheme"></i>
+			</button>
+			<button title="Test Case View" (click)="changeView(false,false)" class="btn-group-btn" [class.active]="!isUserStoryView && !isTestCaseToBeCreated">
+				<i class="icon-list"></i>
+			</button>
+			<button title="Test Case To Be Created" (click)="changeView(true,true)" class="btn-group-btn" [class.active]="isTestCaseToBeCreated && isUserStoryView">
+				<i class="icon-multi-add"></i>
+			</button>
+		</div>
+	</div>
+</div>
+
+<app-user-story-view
+	*ngIf="isUserStoryView && globals.sprint?.Sprint_ID"
+	[sprintId]="globals.sprint?.Sprint_ID"
+	[productName]="globals.product?.product_name"
+	[isTestCaseToBeCreated]="isTestCaseToBeCreated"
+></app-user-story-view>
+
+<app-test-case-view
+	*ngIf="!isUserStoryView && globals.sprint?.Sprint_ID && !isTestCaseToBeCreated"
+	[sprintId]="globals.sprint?.Sprint_ID"
+></app-test-case-view>

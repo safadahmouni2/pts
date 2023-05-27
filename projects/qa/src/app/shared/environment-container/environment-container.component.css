@@ -1,0 +1,5 @@
+.environment-container {
+    max-height: calc(100vh - 178px);
+    height: 100%;
+    overflow: auto;
+}

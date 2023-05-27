@@ -1,0 +1,249 @@
+:host {
+    display: flex;
+    flex-direction: column;
+}
+
+.main-page {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Chat container */
+
+.chat-container {
+    height: calc(100vh - 69px);
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.item-grid-list {
+    padding: 20px;
+}
+
+.section-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.drag-container {
+    padding: 20px 57px 20px 13px;
+    display: flex;
+    flex-direction: column;
+    background: #F5F5F5;
+    border-radius: 9px;
+    margin-bottom: 24px;
+}
+
+.drag-container:first-child {
+    margin-top: 25px;
+}
+
+.draggable-list {
+    display: flex;
+    flex-direction: column;
+    padding-left: 44px;
+    min-height: 2px;
+}
+
+.draggable-box {
+    padding: 15px 13px;
+    border-radius: 9px;
+    background: #E6EBEF;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    box-sizing: border-box;
+    cursor: move;
+    font-size: 14px;
+    min-height: 75px;
+    margin-top: 15px;
+}
+
+.draggable-box .message-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 12px;
+    color: #42454A;
+    gap: 5px;
+    max-width: calc(100% - 100px);
+}
+
+.draggable-box .message-container .date {
+    color: #93979B;
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+}
+
+.draggable-box .element-button {
+    height: 44px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 12px;
+    color: #42454A;
+}
+
+.draggable-box .element-button mat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+}
+
+.example-list {
+    border: solid 1px #ccc;
+    min-height: 60px;
+    background: white;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+}
+
+.section-title {
+    display: flex;
+    align-items: center;
+    color: #42454A;
+    max-width: calc(100% - 24px);
+    overflow: hidden;
+    margin-right: 16px;
+    flex: 1;
+}
+
+.section-title .headline {
+    margin-left: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.section-button mat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+    cursor: pointer;
+}
+
+::ng-deep .section-button mat-icon path:nth-child(2) {
+    fill: #42454A;
+}
+
+.section-title .icon-container {
+    width: 32px;
+}
+
+.section-title .icon-container mat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 32px;
+}
+
+.user-icon {
+    width: 44px;
+    height: 44px;
+    font-weight: bold;
+    font-size: 14px;
+    background-color: #fff;
+    border-radius: 50%;
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.user-icon::before {
+    content: "";
+    background: #5C78A7;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    position: absolute;
+    left: -2px;
+    top: -2px;
+}
+
+.user-name {
+    position: absolute;
+    left: -2px;
+    top: -2px;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2), 0 8px 10px 1px rgba(0, 0, 0, 0.14), 0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+    opacity: 0;
+}
+
+.cdk-drag-animating {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.draggable-box:last-child {
+    border: none;
+}
+
+.draggable-list.cdk-drop-list-dragging .draggable-box:not(.cdk-drag-placeholder) {
+    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+
+/* Control container */
+
+.control-container {
+    background: #f5f5f5;
+    border-top: 3px solid #5978a6;
+    min-height: 66px;
+    bottom: 0;
+    position: sticky;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.control-button-container {
+    padding: 0 10px;
+}
+
+.control-button {
+    width: 55px;
+    height: 55px;
+    background-color: #294898;
+    border-radius: 50%;
+    color: #FFF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.control-button mat-icon {
+    width: 38px;
+    height: 38px;
+    font-size: 38px;
+}
+
+.control-container .headline {
+    color: #5978a6;
+    padding: 10px 17px;
+    white-space: nowrap;
+    max-width: calc(100% - 109px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
